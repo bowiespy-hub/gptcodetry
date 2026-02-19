@@ -1,0 +1,1809 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>ATE - Aether Trinity Evolution</title>
+
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200..700&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            ink: "#05060A",
+            obsidian: "#0B0D14",
+            surface: "#0F1424",
+            panel: "#121A2E",
+            stroke: "rgba(255,255,255,0.10)",
+            stroke2: "rgba(255,255,255,0.14)",
+            gold: "#D4AF37",
+            gold2: "#F4E09A",
+            violet: "#8B5CF6",
+            violet2: "#A78BFA",
+            cyan: "#22D3EE",
+            rose: "#FB7185",
+            lime: "#A3E635",
+          },
+          fontFamily: {
+            display: ["Manrope", "Noto Sans TC", "sans-serif"],
+            body: ["Noto Sans TC", "Manrope", "sans-serif"],
+          },
+          boxShadow: {
+            glass: "0 18px 60px rgba(0,0,0,0.35)",
+            glow: "0 0 24px rgba(139,92,246,0.22)",
+            gold: "0 0 24px rgba(212,175,55,0.20)",
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root { color-scheme: dark; }
+    body {
+      min-height: 100dvh;
+      background: #05060A;
+      -webkit-tap-highlight-color: transparent;
+      overflow-x: hidden;
+      font-family: Manrope, "Noto Sans TC", sans-serif;
+    }
+    .ms { font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0,'wght' 420,'GRAD' 0,'opsz' 24; }
+    .ms.fill { font-variation-settings: 'FILL' 1,'wght' 520,'GRAD' 0,'opsz' 24; }
+
+    .glass {
+      background: rgba(18, 26, 46, 0.62);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .glass2 {
+      background: linear-gradient(145deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.02) 100%);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .fade-in { animation: fadeIn .22s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform: translateY(6px);} to {opacity:1; transform: translateY(0);} }
+
+    .pulse-ring { animation: pulseRing 1.7s infinite; }
+    @keyframes pulseRing {
+      0% { box-shadow: 0 0 0 0 rgba(139,92,246,0.35); }
+      70% { box-shadow: 0 0 0 14px rgba(139,92,246,0); }
+      100% { box-shadow: 0 0 0 0 rgba(139,92,246,0); }
+    }
+
+    .toast {
+      animation: toastIn .25s ease-out;
+    }
+    @keyframes toastIn {
+      from { opacity:0; transform: translateY(10px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+
+    .shimmer::before{
+      content:"";
+      position:absolute; inset:-40% -60%;
+      background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,0.10) 50%, transparent 65%);
+      transform: translateX(-40%);
+      animation: shimmer 2.4s infinite;
+    }
+    @keyframes shimmer { to { transform: translateX(40%);} }
+  </style>
+</head>
+
+<body class="bg-ink text-slate-100 selection:bg-violet selection:text-white">
+  <!-- Ambient Background -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-[18%] left-[15%] w-[95%] h-[55%] bg-violet/18 rounded-full blur-[130px]"></div>
+    <div class="absolute -bottom-[18%] right-[-12%] w-[70%] h-[45%] bg-cyan/10 rounded-full blur-[120px]"></div>
+    <div class="absolute inset-0 opacity-[0.045]" style="background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 240 240%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');"></div>
+  </div>
+
+  <!-- App Frame -->
+  <div class="relative z-10 mx-auto w-full max-w-md min-h-[100dvh] flex flex-col pb-24">
+    <!-- Views -->
+    <section id="view-hub" class="flex flex-col flex-1 fade-in">
+      <header class="pt-12 px-6 pb-4">
+        <!-- Profile Card -->
+        <div class="glass rounded-3xl overflow-hidden shadow-glass">
+          <div class="relative">
+            <div class="h-24 w-full"
+                 style="background:
+                   radial-gradient(120% 160% at 12% 10%, rgba(212,175,55,0.28) 0%, rgba(212,175,55,0) 56%),
+                   radial-gradient(120% 160% at 90% 35%, rgba(139,92,246,0.34) 0%, rgba(139,92,246,0) 55%),
+                   linear-gradient(135deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.02) 100%);">
+            </div>
+
+            <button id="btn-profile" class="absolute left-5 -bottom-7 flex items-center gap-3">
+              <div class="relative">
+                <div class="h-16 w-16 rounded-full overflow-hidden border border-white/15 bg-surface shadow-glass">
+                  <img id="profile-avatar" alt="avatar" class="h-full w-full object-cover" />
+                </div>
+                <div class="absolute -right-1 -bottom-1 glass2 rounded-full px-2 py-1 border border-white/10 shadow-glass">
+                  <div class="flex items-center gap-1">
+                    <span class="ms fill text-gold text-[16px]">workspace_premium</span>
+                    <span id="profile-level-mini" class="text-[10px] text-slate-200 font-bold tracking-wide">LV 1</span>
+                  </div>
+                </div>
+              </div>
+            </button>
+
+            <div class="px-5 pt-10 pb-4">
+              <div class="flex items-start justify-between">
+                <div class="pl-20">
+                  <div class="flex items-center gap-2">
+                    <h1 id="profile-name" class="text-xl font-extrabold tracking-tight text-white leading-none">覺醒女神</h1>
+                    <span id="profile-badge" class="hidden text-[10px] px-2 py-1 rounded-full border border-gold/30 bg-gold/10 text-gold font-bold tracking-widest">ELITE</span>
+                  </div>
+                  <p id="profile-title" class="text-[11px] text-slate-400 font-medium tracking-wide mt-1">Aether Trinity Evolution</p>
+                </div>
+
+                <button id="btn-reset" class="glass2 rounded-full px-3 py-2 border border-white/10 text-slate-200/90 hover:text-white active:scale-95 transition-transform"
+                        title="系統重置（保留在這裡）">
+                  <span class="ms text-[18px]">restart_alt</span>
+                </button>
+              </div>
+
+              <div class="mt-4">
+                <div class="flex items-center justify-between text-[11px] text-slate-300 font-medium">
+                  <span class="tracking-widest uppercase text-slate-400">Current XP</span>
+                  <span class="text-violet2 font-bold"><span id="hub-xp">0</span> / <span id="hub-xpmax">100</span></span>
+                </div>
+                <div class="mt-2 h-3 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+                  <div id="hub-xpbar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan shadow-glow rounded-full transition-all duration-500"></div>
+                </div>
+              </div>
+
+              <div class="mt-4 flex items-center justify-between">
+                <div class="flex items-center gap-2 glass2 px-3 py-2 rounded-full border border-white/10">
+                  <span class="ms fill text-rose text-[18px]">local_fire_department</span>
+                  <span class="text-sm font-bold text-white"><span id="hub-streak">0</span> Days</span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <div class="glass2 px-3 py-2 rounded-full border border-white/10">
+                    <span class="text-[11px] text-slate-300 font-semibold">完成度</span>
+                    <span class="ml-2 text-sm font-extrabold text-white"><span id="hub-completion">0</span>%</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Daily Verse -->
+        <div class="mt-5 glass2 rounded-3xl p-5 border border-white/10 shadow-glass relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-semibold">DAILY VERSE</div>
+            <div class="text-[10px] text-gold font-bold tracking-widest">BIBLE</div>
+          </div>
+          <div id="daily-verse" class="text-[15px] leading-relaxed text-white font-semibold"></div>
+          <div id="daily-verse-ref" class="mt-2 text-[11px] text-slate-400 font-medium"></div>
+        </div>
+      </header>
+
+      <main class="px-6 pb-6 flex-1 space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-extrabold tracking-wide text-white">今日進化概覽</h2>
+          <div class="flex items-center gap-2">
+            <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
+              <span id="hub-date">Today</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4">
+          <!-- Body -->
+          <button onclick="navTo('body')" class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-rose/10 rounded-full blur-3xl"></div>
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">BODY</div>
+                <div class="mt-1 text-lg font-extrabold text-white">身體進化</div>
+                <div class="mt-2 text-[12px] text-slate-400 font-medium">水分 / 計時任務 / 排便</div>
+              </div>
+              <div class="text-right">
+                <div class="text-2xl font-extrabold text-white"><span id="hub-body-score">0</span>%</div>
+                <div class="text-[11px] text-slate-400 font-semibold">今日完成</div>
+              </div>
+            </div>
+            <div class="mt-4 h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+              <div id="hub-body-bar" class="h-full w-[0%] bg-gradient-to-r from-rose via-violet2 to-cyan rounded-full transition-all duration-500"></div>
+            </div>
+          </button>
+
+          <div class="grid grid-cols-2 gap-4">
+            <!-- Mind/Spirit -->
+            <button onclick="navTo('mind')" class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform relative overflow-hidden">
+              <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-violet/10 rounded-full blur-3xl"></div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">MIND & SPIRIT</div>
+              <div class="mt-1 text-lg font-extrabold text-white">心智 / 靈修</div>
+              <div class="mt-2 text-[12px] text-slate-400 font-medium">閱讀 / 反思 / 經文</div>
+            </button>
+
+            <!-- Calendar -->
+            <button onclick="navTo('calendar')" class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform relative overflow-hidden">
+              <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">HISTORY</div>
+              <div class="mt-1 text-lg font-extrabold text-white">進化日曆</div>
+              <div class="mt-2 text-[12px] text-slate-400 font-medium">補填 / 查看全部紀錄</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Settle -->
+        <button id="btn-settle" class="relative w-full rounded-2xl overflow-hidden shadow-glow border border-violet/25 active:scale-[0.99] transition-transform">
+          <div class="absolute inset-0 bg-gradient-to-r from-violet/40 via-violet2/25 to-cyan/25"></div>
+          <div class="absolute inset-0 opacity-30 shimmer"></div>
+          <div class="relative px-5 py-4 flex items-center justify-between">
+            <div>
+              <div class="text-sm font-extrabold text-white">結算今天</div>
+              <div class="text-[12px] text-slate-300 font-medium mt-0.5">依完成度結算 XP（取消/倒扣也會反映）</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="text-right">
+                <div class="text-xs text-slate-300 font-semibold">預估</div>
+                <div class="text-lg font-extrabold text-gold">+<span id="hub-xp-est">0</span> XP</div>
+              </div>
+              <span class="ms fill text-white text-[20px]">auto_awesome</span>
+            </div>
+          </div>
+        </button>
+
+      </main>
+    </section>
+
+    <!-- BODY VIEW -->
+    <section id="view-body" class="hidden flex-col flex-1 fade-in">
+      <header class="pt-10 px-4">
+        <div class="flex items-center justify-between">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">chevron_left</span>
+          </button>
+          <div class="text-center">
+            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-semibold">AETHER TRINITY EVOLUTION</div>
+            <div class="mt-1 text-2xl font-extrabold text-white">身體進化</div>
+          </div>
+          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">today</span>
+          </button>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
+            <span id="body-date">Today</span>
+          </div>
+          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
+            完成度 <span class="ml-2 text-white font-extrabold"><span id="body-completion">0</span>%</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="px-4 pt-5 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-5">
+        <!-- Water -->
+        <section class="glass rounded-3xl p-5 shadow-glass border border-white/10 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-44 h-44 bg-cyan/10 rounded-full blur-3xl"></div>
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">HYDRATION</div>
+              <div class="mt-1 text-lg font-extrabold text-white">水分攝入</div>
+              <div class="mt-2 text-[12px] text-slate-400 font-medium">目標：<span id="water-goal">1900</span> ml（按 +/- 會同步倒扣完成度）</div>
+            </div>
+            <div class="text-right">
+              <div class="text-3xl font-extrabold text-white"><span id="water-val">0</span></div>
+              <div class="text-[12px] text-slate-400 font-semibold">ml</div>
+            </div>
+          </div>
+
+          <div class="mt-4 h-3 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+            <div id="water-bar" class="h-full w-[0%] bg-gradient-to-r from-cyan via-violet2 to-gold rounded-full transition-all duration-500"></div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <button onclick="modifyWater(-250)" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-slate-200 active:scale-95 transition-transform">
+              -250
+            </button>
+            <button onclick="modifyWater(250)" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-white active:scale-95 transition-transform">
+              +250
+            </button>
+            <button onclick="modifyWater(500)" class="relative overflow-hidden rounded-2xl py-3 font-extrabold text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">
+              +500
+            </button>
+          </div>
+        </section>
+
+        <!-- Tasks -->
+        <section class="space-y-3">
+          <div class="flex items-center justify-between px-1">
+            <div class="text-lg font-extrabold text-white">今日任務</div>
+            <div class="text-[11px] text-slate-400 font-semibold">計時可：開始/暫停/重置/直接完成/取消重算</div>
+          </div>
+          <div id="task-list" class="space-y-3"></div>
+        </section>
+
+        <!-- Bowel -->
+        <section class="glass rounded-3xl p-5 shadow-glass border border-white/10">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">HEALTH</div>
+              <div class="mt-1 text-lg font-extrabold text-white">排便狀況</div>
+              <div class="mt-2 text-[12px] text-slate-400 font-medium">切換不會累加分數；分數只依當下狀態計算</div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="setBowel('未完成')" id="bowel-a" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">未完成</button>
+              <button onclick="setBowel('正常')" id="bowel-b" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">正常</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <!-- MIND VIEW -->
+    <section id="view-mind" class="hidden flex-col flex-1 fade-in">
+      <header class="pt-10 px-4">
+        <div class="flex items-center justify-between">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">chevron_left</span>
+          </button>
+          <div class="text-center">
+            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-semibold">MIND & SPIRIT</div>
+            <div class="mt-1 text-2xl font-extrabold text-white">心智與靈修</div>
+          </div>
+          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">today</span>
+          </button>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
+            <span id="mind-date">Today</span>
+          </div>
+          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
+            完成度 <span class="ml-2 text-white font-extrabold"><span id="mind-completion">0</span>%</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="px-4 pt-5 pb-6 flex-1 overflow-y-auto no-scrollbar">
+        <div class="glass2 rounded-full p-1 border border-white/10 flex relative">
+          <div id="tab-slider" class="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] bg-gradient-to-r from-violet to-violet2 rounded-full shadow-glow transition-transform duration-300"></div>
+          <button id="tab-btn-mind" onclick="switchTab('mind')" class="flex-1 relative z-10 py-2.5 text-sm font-extrabold text-white text-center rounded-full">心智</button>
+          <button id="tab-btn-spirit" onclick="switchTab('spirit')" class="flex-1 relative z-10 py-2.5 text-sm font-semibold text-slate-300 text-center rounded-full">靈修</button>
+        </div>
+
+        <!-- Mind tab -->
+        <div id="tab-mind" class="mt-5 space-y-5">
+          <!-- Reading timer -->
+          <section class="glass rounded-3xl p-5 shadow-glass border border-white/10 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-gold/10 rounded-full blur-3xl"></div>
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">FOCUS</div>
+                <div class="mt-1 text-lg font-extrabold text-white">深度閱讀</div>
+                <div class="mt-2 text-[12px] text-slate-400 font-medium">可自由倒數，也可直接完成</div>
+              </div>
+              <button onclick="toggleReadingDone()" id="reading-done-btn" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+                直接完成
+              </button>
+            </div>
+
+            <div class="mt-5 flex items-center justify-center">
+              <button onclick="openDuration('reading')" class="glass2 border border-white/10 rounded-full px-4 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+                設定 <span id="reading-min">20</span> min
+              </button>
+            </div>
+
+            <div class="mt-4 flex items-center justify-center">
+              <div id="reading-display" class="text-6xl font-light tracking-tighter tabular-nums text-white">20:00</div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-3 gap-2">
+              <button id="reading-start" onclick="toggleReading()" class="glass2 border border-white/10 rounded-2xl py-3 font-extrabold text-white active:scale-95 transition-transform">開始</button>
+              <button onclick="resetReading()" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-slate-200 active:scale-95 transition-transform">重置</button>
+              <button onclick="cancelReading()" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-slate-200 active:scale-95 transition-transform">取消</button>
+            </div>
+          </section>
+
+          <!-- Growth -->
+          <section class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass">
+            <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">GROWTH REFLECTION</div>
+            <div class="mt-1 text-lg font-extrabold text-white">今日反思</div>
+            <input id="growth-input" class="mt-4 w-full rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-4 focus:outline-none focus:ring-2 focus:ring-violet/40"
+                   placeholder="寫下今天的核心洞察..." />
+            <div class="mt-2 text-[11px] text-slate-400 font-medium">輸入會自動保存（可補填過去日期）</div>
+          </section>
+
+          <!-- Brand -->
+          <section class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass">
+            <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">BRAND STRATEGY</div>
+            <div class="mt-1 text-lg font-extrabold text-white">品牌策略筆記</div>
+            <textarea id="brand-input" class="mt-4 w-full h-32 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-4 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
+                      placeholder="紀錄你的策略思考..."></textarea>
+            <div class="mt-2 text-[11px] text-slate-400 font-medium">有輸入就算本日 Mind 記錄（影響完成度）</div>
+          </section>
+        </div>
+
+        <!-- Spirit tab -->
+        <div id="tab-spirit" class="hidden mt-5 space-y-5">
+          <!-- Silent devotional timer -->
+          <section class="glass rounded-3xl p-5 shadow-glass border border-white/10 relative overflow-hidden">
+            <div class="absolute -top-12 -right-12 w-48 h-48 bg-violet/10 rounded-full blur-3xl"></div>
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">SILENCE</div>
+                <div class="mt-1 text-lg font-extrabold text-white">靜默靈修</div>
+                <div class="mt-2 text-[12px] text-slate-400 font-medium">10 分鐘計時（無音樂），可自由倒數或直接完成</div>
+              </div>
+              <button onclick="toggleDevotionDone()" id="devotion-done-btn" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+                直接完成
+              </button>
+            </div>
+
+            <div class="mt-5 flex items-center justify-center">
+              <button onclick="openDuration('devotion')" class="glass2 border border-white/10 rounded-full px-4 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+                設定 <span id="devotion-min">10</span> min
+              </button>
+            </div>
+
+            <div class="mt-4 flex items-center justify-center">
+              <div id="devotion-display" class="text-6xl font-light tracking-tighter tabular-nums text-white">10:00</div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-3 gap-2">
+              <button id="devotion-start" onclick="toggleDevotion()" class="glass2 border border-white/10 rounded-2xl py-3 font-extrabold text-white active:scale-95 transition-transform">開始</button>
+              <button onclick="resetDevotion()" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-slate-200 active:scale-95 transition-transform">重置</button>
+              <button onclick="cancelDevotion()" class="glass2 border border-white/10 rounded-2xl py-3 font-bold text-slate-200 active:scale-95 transition-transform">取消</button>
+            </div>
+          </section>
+
+          <!-- Scripture + Note -->
+          <section class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass">
+            <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">SCRIPTURE</div>
+            <div class="mt-1 text-lg font-extrabold text-white">經文與領受</div>
+
+            <label class="mt-4 block text-[11px] text-slate-400 font-semibold">經文出處</label>
+            <input id="scripture-input" class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-4 focus:outline-none focus:ring-2 focus:ring-violet/40"
+                   placeholder="例如：詩篇 23:1" />
+
+            <label class="mt-4 block text-[11px] text-slate-400 font-semibold">心得筆記</label>
+            <textarea id="spirit-input" class="mt-2 w-full h-32 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-4 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
+                      placeholder="記錄你的領受..."></textarea>
+
+            <div class="mt-2 text-[11px] text-slate-400 font-medium">有輸入就算本日 Spirit 記錄（影響完成度）</div>
+          </section>
+        </div>
+      </main>
+    </section>
+
+    <!-- CALENDAR VIEW -->
+    <section id="view-calendar" class="hidden flex-col flex-1 fade-in">
+      <header class="pt-10 px-4">
+        <div class="flex items-center justify-between">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">chevron_left</span>
+          </button>
+          <div class="text-center">
+            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-semibold">EVOLUTION CALENDAR</div>
+            <div class="mt-1 text-2xl font-extrabold text-white">進化日曆</div>
+          </div>
+          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <span class="ms text-[18px]">today</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="px-4 pt-5 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-4">
+        <section class="glass rounded-3xl p-4 border border-white/10 shadow-glass">
+          <div class="flex items-center justify-between glass2 rounded-2xl p-2 border border-white/10">
+            <button onclick="changeMonth(-1)" class="px-3 py-2 rounded-xl hover:bg-white/5 active:scale-95 transition-transform">
+              <span class="ms text-[18px]">chevron_left</span>
+            </button>
+            <div id="cal-title" class="text-lg font-extrabold text-white"></div>
+            <button onclick="changeMonth(1)" class="px-3 py-2 rounded-xl hover:bg-white/5 active:scale-95 transition-transform">
+              <span class="ms text-[18px]">chevron_right</span>
+            </button>
+          </div>
+
+          <div class="mt-4 grid grid-cols-7 text-center text-[11px] font-semibold text-slate-400">
+            <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+          </div>
+
+          <div id="cal-grid" class="mt-3 grid grid-cols-7 gap-1.5"></div>
+
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-[11px] text-slate-400 font-semibold">
+              完美日：完成度 ≥ 70%
+            </div>
+            <div class="text-[11px] text-slate-400 font-semibold">
+              當前連勝：<span id="cal-streak" class="text-gold font-extrabold">0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Reward -->
+        <section class="glass2 rounded-3xl p-5 border border-white/10 shadow-glass relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-gold/12 rounded-full blur-3xl"></div>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">WEEKLY</div>
+              <div class="mt-1 text-lg font-extrabold text-white">神祕獎勵</div>
+              <div class="mt-1 text-[12px] text-slate-400 font-medium">累積 3 個完美日解鎖（全域）</div>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-extrabold text-gold"><span id="reward-count">0</span>/3</div>
+              <div class="text-[11px] text-slate-400 font-semibold">Perfect</div>
+            </div>
+          </div>
+          <div class="mt-3 h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+            <div id="reward-bar" class="h-full w-[0%] bg-gradient-to-r from-gold via-gold2 to-violet2 rounded-full transition-all duration-500"></div>
+          </div>
+          <button id="reward-btn" disabled class="mt-4 w-full rounded-2xl py-3 text-sm font-extrabold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed">
+            尚未解鎖
+          </button>
+        </section>
+
+        <!-- Detail -->
+        <section class="glass rounded-3xl p-5 border border-white/10 shadow-glass">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">DETAIL</div>
+              <div id="detail-date" class="mt-1 text-lg font-extrabold text-white">點擊日期查看</div>
+            </div>
+            <div class="flex items-center gap-2">
+              <button onclick="setActiveFromDetail()" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">
+                補填這天
+              </button>
+              <button onclick="settleSelectedDay()" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">
+                結算這天
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-2 gap-3">
+            <div class="glass2 rounded-2xl p-3 border border-white/10">
+              <div class="text-[11px] text-slate-400 font-semibold">完成度</div>
+              <div class="mt-1 text-2xl font-extrabold text-white"><span id="detail-percent">0</span>%</div>
+              <div class="mt-1 text-[11px] text-slate-400 font-semibold">完美日：<span id="detail-perfect" class="text-slate-300">否</span></div>
+            </div>
+            <div class="glass2 rounded-2xl p-3 border border-white/10">
+              <div class="text-[11px] text-slate-400 font-semibold">XP</div>
+              <div class="mt-1 text-2xl font-extrabold text-gold">+<span id="detail-xp">0</span></div>
+              <div class="mt-1 text-[11px] text-slate-400 font-semibold">已結算：<span id="detail-settled" class="text-slate-300">否</span></div>
+            </div>
+          </div>
+
+          <div class="mt-4 space-y-3">
+            <div class="glass2 rounded-2xl p-4 border border-white/10">
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">BODY</div>
+              <div class="mt-2 text-[12px] text-slate-300 font-semibold">水：<span id="detail-water" class="text-white font-extrabold">-</span> / <span id="detail-water-goal">-</span> ml</div>
+              <div class="mt-1 text-[12px] text-slate-300 font-semibold">排便：<span id="detail-bowel" class="text-white font-extrabold">-</span></div>
+              <div class="mt-2 text-[12px] text-slate-300 font-semibold">任務：</div>
+              <div id="detail-tasks" class="mt-2 space-y-1 text-[12px]"></div>
+            </div>
+
+            <div class="glass2 rounded-2xl p-4 border border-white/10">
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">MIND</div>
+              <div class="mt-2 text-[12px] text-slate-300 font-semibold">閱讀：<span id="detail-reading" class="text-white font-extrabold">-</span></div>
+              <div class="mt-1 text-[12px] text-slate-300 font-semibold">反思：<span id="detail-growth" class="text-white/90 italic">-</span></div>
+              <div class="mt-1 text-[12px] text-slate-300 font-semibold">策略：<span id="detail-brand" class="text-white/90 italic">-</span></div>
+            </div>
+
+            <div class="glass2 rounded-2xl p-4 border border-white/10">
+              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-semibold">SPIRIT</div>
+              <div class="mt-2 text-[12px] text-slate-300 font-semibold">靜默：<span id="detail-devotion" class="text-white font-extrabold">-</span></div>
+              <div class="mt-1 text-[12px] text-slate-300 font-semibold">經文：<span id="detail-scripture" class="text-white/90 italic">-</span></div>
+              <div class="mt-1 text-[12px] text-slate-300 font-semibold">心得：<span id="detail-spirit" class="text-white/90 italic">-</span></div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </section>
+
+    <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-6 pt-2">
+      <div class="glass mx-auto w-[92%] max-w-[390px] rounded-full flex justify-between items-center py-3 px-6 shadow-glass border border-white/10 bg-obsidian/80">
+        <button onclick="navTo('hub')" class="navbtn flex flex-col items-center gap-1 w-16" data-view="hub">
+          <span class="ms fill text-[24px]" id="nav-ico-hub">dashboard</span>
+          <span class="text-[11px] font-extrabold" id="nav-txt-hub">Hub</span>
+        </button>
+        <button onclick="navTo('body')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="body">
+          <span class="ms text-[24px]" id="nav-ico-body">fitness_center</span>
+          <span class="text-[11px] font-semibold" id="nav-txt-body">Body</span>
+        </button>
+        <button onclick="navTo('mind')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="mind">
+          <span class="ms text-[24px]" id="nav-ico-mind">auto_stories</span>
+          <span class="text-[11px] font-semibold" id="nav-txt-mind">Mind</span>
+        </button>
+        <button onclick="navTo('calendar')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="calendar">
+          <span class="ms text-[24px]" id="nav-ico-calendar">calendar_month</span>
+          <span class="text-[11px] font-semibold" id="nav-txt-calendar">Evo</span>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast-wrap" class="fixed left-0 right-0 bottom-28 z-[60] flex justify-center px-4 pointer-events-none"></div>
+
+  <!-- Modal: Profile -->
+  <div id="modal-profile" class="hidden fixed inset-0 z-[80]">
+    <div class="absolute inset-0 bg-black/55"></div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md glass rounded-3xl p-5 border border-white/10 shadow-glass">
+      <div class="flex items-center justify-between">
+        <div class="text-lg font-extrabold text-white">個人設定</div>
+        <button onclick="closeModal('modal-profile')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+          <span class="ms text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-3">
+        <div>
+          <label class="text-[11px] text-slate-400 font-semibold">名字</label>
+          <input id="inp-name" class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40" />
+        </div>
+        <div>
+          <label class="text-[11px] text-slate-400 font-semibold">頭像圖片 URL</label>
+          <input id="inp-avatar" class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"
+                 placeholder="https://..." />
+          <div class="mt-2 text-[11px] text-slate-400 font-medium">（你原本可改頭像/名字 → 這裡恢復）</div>
+        </div>
+        <div>
+          <label class="text-[11px] text-slate-400 font-semibold">標題</label>
+          <input id="inp-title" class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 mt-2">
+          <button onclick="saveProfile()" class="rounded-2xl py-3 font-extrabold text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">
+            保存
+          </button>
+          <button onclick="confirmReset()" class="glass2 border border-white/10 rounded-2xl py-3 font-extrabold text-white active:scale-95 transition-transform">
+            系統重置
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Duration -->
+  <div id="modal-duration" class="hidden fixed inset-0 z-[90]">
+    <div class="absolute inset-0 bg-black/55"></div>
+    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md glass rounded-3xl p-5 border border-white/10 shadow-glass">
+      <div class="flex items-center justify-between">
+        <div class="text-lg font-extrabold text-white">設定倒數時間</div>
+        <button onclick="closeModal('modal-duration')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+          <span class="ms text-[18px]">close</span>
+        </button>
+      </div>
+
+      <div class="mt-4">
+        <div class="text-[12px] text-slate-300 font-semibold" id="dur-title">—</div>
+        <div class="mt-3 glass2 rounded-2xl border border-white/10 p-4">
+          <label class="text-[11px] text-slate-400 font-semibold">分鐘（1–180）</label>
+          <input id="dur-min" type="number" min="1" max="180"
+                 class="mt-2 w-full rounded-2xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
+          <div class="mt-3 grid grid-cols-4 gap-2">
+            <button onclick="quickMin(5)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">5</button>
+            <button onclick="quickMin(10)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">10</button>
+            <button onclick="quickMin(20)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">20</button>
+            <button onclick="quickMin(30)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-bold text-white active:scale-95 transition-transform">30</button>
+          </div>
+        </div>
+
+        <button onclick="applyDuration()" class="mt-4 w-full rounded-2xl py-3 font-extrabold text-ink bg-gradient-to-r from-violet via-violet2 to-cyan shadow-glow active:scale-95 transition-transform">
+          套用
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /***********************
+     * 0) STORAGE + MIGRATE
+     ***********************/
+    const STORAGE_KEY = "ate_ultra_v1";
+    const LEGACY_KEY = "ate_release_v7_final";
+
+    const DEFAULT_AVATAR = "https://lh3.googleusercontent.com/aida-public/AB6AXuCAYOzNGEzdDG66QmmNGCUlkdnwk7zJo0-6al0p4StVVrRy7UvwIFfnSbzk1yro93SGmClDJXzHkeK0f3pOKlJ7_0wH9VzNbQ3ATQRP2P4Msi2j3L88v-cPqgWfProkys6HXeVgnOq9poVFtfNyxvn9pqj2xho4IOb0kutPRkMrNn2qgl6IG3CfgZJFN6h_2N_KyQQzgP3uX0T6tGAkUnEDgaVjHUIXMZVxocw3H1i2okCF0BovjWGbicSrh5A42xuvBTiOpnUCuI0";
+
+    const VERSES = [
+      { t: "你要剛強壯膽，不要懼怕，也不要驚惶；因為你無論往哪裡去，耶和華你的神必與你同在。", r: "約書亞記 1:9" },
+      { t: "當將你的事交託耶和華，並倚靠他，他就必成全。", r: "詩篇 37:5" },
+      { t: "你們要休息，要知道我是神。", r: "詩篇 46:10" },
+      { t: "主是我的牧者，我必不致缺乏。", r: "詩篇 23:1" },
+      { t: "凡事謝恩；因為這是神在基督耶穌裡向你們所定的旨意。", r: "帖撒羅尼迦前書 5:18" },
+      { t: "你所做的，要交託耶和華，你所謀的，就必成立。", r: "箴言 16:3" },
+      { t: "應當一無掛慮，只要凡事藉著禱告、祈求和感謝，將你們所要的告訴神。", r: "腓立比書 4:6" },
+      { t: "我們行善不可喪志；若不灰心，到了時候就要收成。", r: "加拉太書 6:9" },
+      { t: "神所賜出人意外的平安，必在基督耶穌裡保守你們的心懷意念。", r: "腓立比書 4:7" },
+      { t: "愛是恆久忍耐，又有恩慈。", r: "哥林多前書 13:4" },
+      { t: "求你指教我們怎樣數算自己的日子，好叫我們得著智慧的心。", r: "詩篇 90:12" },
+      { t: "耶和華是我的亮光，是我的拯救，我還怕誰呢？", r: "詩篇 27:1" },
+      { t: "在指望中要喜樂，在患難中要忍耐，禱告要恆切。", r: "羅馬書 12:12" },
+      { t: "我的恩典夠你用的，因為我的能力是在人的軟弱上顯得完全。", r: "哥林多後書 12:9" },
+      { t: "你們要先求他的國和他的義，這些東西都要加給你們了。", r: "馬太福音 6:33" },
+    ];
+
+    const state = loadState();
+
+    function loadState() {
+      const current = localStorage.getItem(STORAGE_KEY);
+      if (current) return JSON.parse(current);
+
+      // migrate legacy if exists
+      const legacy = localStorage.getItem(LEGACY_KEY);
+      if (legacy) {
+        try {
+          const old = JSON.parse(legacy) || {};
+          const migrated = freshState();
+
+          // migrate daily entries
+          Object.keys(old).forEach(k => {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(k)) return;
+            const e = old[k];
+            migrated.days[k] = defaultDay(k);
+            migrated.days[k].waterMl = e.water || 0;
+            migrated.days[k].bowelStatus = e.bowel ? "正常" : "未完成";
+            migrated.days[k].tasks = migrated.days[k].tasks.map(t => {
+              if (e.tasks && typeof e.tasks[t.id] !== "undefined") return { ...t, done: !!e.tasks[t.id] };
+              return t;
+            });
+            migrated.days[k].reading = { ...migrated.days[k].reading, done: !!e.readingDone };
+            migrated.days[k].mind.growth = e.growthNote || "";
+            migrated.days[k].mind.brand = e.brandNote || "";
+            migrated.days[k].spirit.scripture = e.scripture || "";
+            migrated.days[k].spirit.note = e.spiritNote || "";
+          });
+
+          save(migrated);
+          return migrated;
+        } catch(e) {}
+      }
+      const s = freshState();
+      save(s);
+      return s;
+    }
+
+    function freshState(){
+      return {
+        profile: {
+          name: "覺醒女神",
+          title: "Aether Trinity Evolution",
+          avatar: DEFAULT_AVATAR,
+        },
+        gamification: {
+          level: 1,
+          xp: 0,
+          xpMax: 100,
+        },
+        ui: {
+          view: "hub",
+          activeDate: todayKey(),
+          mindTab: "mind",
+          calYM: (() => {
+            const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+          })(),
+          selectedDate: todayKey(),
+        },
+        days: {} // dateKey -> DayEntry
+      };
+    }
+
+    function defaultDay(dateKey){
+      return {
+        date: dateKey,
+        waterGoalMl: 1900,
+        waterMl: 0,
+        bowelStatus: "未完成", // "未完成" | "正常"
+        tasks: [
+          { id: 1, type: "timer", title: "深蹲練習", sub: "核心肌群", minutes: 15, remainingSec: 15*60, running: false, done: false },
+          { id: 2, type: "timer", title: "每日肌肉訓練", sub: "30 分鐘", minutes: 30, remainingSec: 30*60, running: false, done: false },
+          { id: 3, type: "check", title: "健康早餐", sub: "建議 08:30 AM", done: false },
+        ],
+        reading: { minutes: 20, remainingSec: 20*60, running: false, done: false },
+        devotion: { minutes: 10, remainingSec: 10*60, running: false, done: false },
+        mind: { growth: "", brand: "" },
+        spirit: { scripture: "", note: "" },
+        settle: { settled: false, xpAwarded: 0, percentAtSettle: 0 }
+      };
+    }
+
+    function ensureDay(key){
+      if (!state.days[key]) state.days[key] = defaultDay(key);
+      return state.days[key];
+    }
+
+    function save(s = state){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(s));
+    }
+
+    /***********************
+     * 1) DATE + SCORE
+     ***********************/
+    function todayKey(){
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    }
+
+    function formatKey(key){
+      const [y,m,d] = key.split("-");
+      return `${y}年${m}月${d}日`;
+    }
+
+    function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+    function computeCompletion(day){
+      const waterRatio = clamp(day.waterGoalMl ? day.waterMl / day.waterGoalMl : 0, 0, 1);
+
+      const tasksDone = day.tasks.reduce((acc,t)=> acc + (t.done?1:0), 0);
+      const bowelDone = day.bowelStatus !== "未完成" ? 1 : 0;
+      const readingDone = day.reading.done ? 1 : 0;
+
+      // Mind: 有任一輸入就算
+      const mindDone = (day.mind.growth.trim() || day.mind.brand.trim()) ? 1 : 0;
+
+      // Devotion timer done
+      const devotionDone = day.devotion.done ? 1 : 0;
+
+      // Spirit: 有任一輸入就算
+      const spiritDone = (day.spirit.scripture.trim() || day.spirit.note.trim()) ? 1 : 0;
+
+      const binaryTotal = 3 /*tasks*/ + 1 /*bowel*/ + 1 /*reading*/ + 1 /*mind*/ + 1 /*devotion*/ + 1 /*spirit*/;
+      const total = 1 + binaryTotal; // water is 0..1
+      const done = waterRatio + tasksDone + bowelDone + readingDone + mindDone + devotionDone + spiritDone;
+
+      const ratio = total ? done / total : 0;
+      const percent = Math.round(ratio * 100);
+      const perfect = ratio >= 0.70; // ✅ 完美日規則
+
+      // XP estimate (可被倒扣，結算會用 delta 反映)
+      let xp = 30 + Math.round(170 * ratio);
+      if (perfect) xp += 20;
+      xp = clamp(xp, 0, 220);
+
+      return { waterRatio, tasksDone, bowelDone, readingDone, mindDone, devotionDone, spiritDone, total, done, ratio, percent, perfect, xp };
+    }
+
+    function computeStreak(){
+      // consecutive perfect days ending today
+      let streak = 0;
+      let k = todayKey();
+      while(true){
+        const day = ensureDay(k);
+        const c = computeCompletion(day);
+        if (!c.perfect) break;
+        streak++;
+        const d = new Date(k + "T00:00:00");
+        d.setDate(d.getDate() - 1);
+        k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      }
+      return streak;
+    }
+
+    function allPerfectCount(){
+      let c = 0;
+      Object.keys(state.days).forEach(k=>{
+        const cc = computeCompletion(ensureDay(k));
+        if (cc.perfect) c++;
+      });
+      return c;
+    }
+
+    /***********************
+     * 2) TOAST + HAPTIC
+     ***********************/
+    function toast(title, msg){
+      const wrap = document.getElementById("toast-wrap");
+      const el = document.createElement("div");
+      el.className = "toast pointer-events-none w-full max-w-md";
+      el.innerHTML = `
+        <div class="glass2 border border-white/10 shadow-glass rounded-2xl px-4 py-3">
+          <div class="text-sm font-extrabold text-white">${escapeHtml(title)}</div>
+          <div class="mt-1 text-[12px] text-slate-300 font-medium leading-relaxed">${escapeHtml(msg)}</div>
+        </div>
+      `;
+      wrap.appendChild(el);
+      setTimeout(()=>{ el.style.opacity="0"; el.style.transform="translateY(8px)"; el.style.transition="all .25s ease"; }, 2200);
+      setTimeout(()=>{ el.remove(); }, 2600);
+      try { navigator.vibrate && navigator.vibrate(18); } catch(e){}
+    }
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;" }[m]));
+    }
+
+    /***********************
+     * 3) NAV + TABS
+     ***********************/
+    function navTo(view){
+      // pause all running timers on view switch (avoid background bugs)
+      pauseAllTimers();
+      state.ui.view = view;
+      save();
+      renderAll();
+    }
+
+    function switchTab(tab){
+      state.ui.mindTab = tab;
+      save();
+      renderMindTabs();
+    }
+
+    function goToday(){
+      state.ui.activeDate = todayKey();
+      state.ui.selectedDate = todayKey();
+      save();
+      renderAll();
+      toast("已回到今天", "你可以直接記錄今日或補填過去日期。");
+    }
+
+    /***********************
+     * 4) PROFILE + RESET
+     ***********************/
+    function openModal(id){
+      document.getElementById(id).classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+    }
+    function closeModal(id){
+      document.getElementById(id).classList.add("hidden");
+      document.body.style.overflow = "";
+    }
+
+    function saveProfile(){
+      const name = document.getElementById("inp-name").value.trim() || "覺醒女神";
+      const avatar = document.getElementById("inp-avatar").value.trim() || DEFAULT_AVATAR;
+      const title = document.getElementById("inp-title").value.trim() || "Aether Trinity Evolution";
+      state.profile.name = name;
+      state.profile.avatar = avatar;
+      state.profile.title = title;
+      save();
+      closeModal("modal-profile");
+      renderProfile();
+      toast("已保存", "個人設定已更新。");
+    }
+
+    function confirmReset(){
+      const ok = confirm("【系統重置】確定要清除所有紀錄並從 0 開始嗎？");
+      if(!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      // keep legacy too? user wants full reset.
+      localStorage.removeItem(LEGACY_KEY);
+      location.reload();
+    }
+
+    /***********************
+     * 5) BODY ACTIONS
+     ***********************/
+    function activeKey(){ return state.ui.activeDate || todayKey(); }
+
+    function modifyWater(delta){
+      const d = ensureDay(activeKey());
+      d.waterMl = Math.max(0, d.waterMl + delta);
+      save();
+      renderAll();
+      toast(delta>0 ? "水分 +"+delta+"ml" : "水分 "+delta+"ml", "完成度會同步倒扣/加分。");
+    }
+
+    function setBowel(val){
+      const d = ensureDay(activeKey());
+      d.bowelStatus = val;
+      save();
+      renderAll();
+      toast("排便狀況已更新", val === "正常" ? "已記錄：正常" : "已記錄：未完成");
+    }
+
+    function toggleCheckTask(id){
+      const d = ensureDay(activeKey());
+      const t = d.tasks.find(x=>x.id===id);
+      if(!t) return;
+      t.done = !t.done;
+      save();
+      renderAll();
+      toast(t.done ? "任務完成" : "取消完成", t.title);
+    }
+
+    /***********************
+     * 6) TIMERS (Tasks / Reading / Devotion)
+     *    - start/pause
+     *    - reset (back to minutes)
+     *    - cancel (stop + not done + reset)
+     *    - direct complete (done = true)
+     *    - can edit duration
+     ***********************/
+    let intervals = {}; // key -> interval id
+
+    function pauseAllTimers(){
+      Object.keys(intervals).forEach(k=>{
+        clearInterval(intervals[k]);
+        delete intervals[k];
+      });
+
+      // mark running flags off (doesn't change remaining)
+      const day = ensureDay(activeKey());
+      day.tasks.forEach(t=>{ if(t.type==="timer") t.running=false; });
+      day.reading.running = false;
+      day.devotion.running = false;
+      save();
+    }
+
+    function tickLabel(sec){
+      const m = Math.floor(sec/60);
+      const s = sec%60;
+      return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    }
+
+    function startTimer(kind, id){
+      // kind: "task"|"reading"|"devotion"
+      const key = activeKey();
+      const day = ensureDay(key);
+      const timerKey = `${kind}:${id || "x"}:${key}`;
+
+      if(intervals[timerKey]) { clearInterval(intervals[timerKey]); delete intervals[timerKey]; }
+
+      const getRef = ()=>{
+        if(kind==="reading") return day.reading;
+        if(kind==="devotion") return day.devotion;
+        if(kind==="task") return day.tasks.find(t=>t.id===id);
+      };
+
+      const ref = getRef();
+      if(!ref) return;
+
+      ref.running = true;
+      save();
+      renderAll();
+
+      intervals[timerKey] = setInterval(()=>{
+        const d2 = ensureDay(key);
+        const ref2 = (kind==="reading") ? d2.reading : (kind==="devotion") ? d2.devotion : d2.tasks.find(t=>t.id===id);
+        if(!ref2) return;
+
+        if(!ref2.running){
+          clearInterval(intervals[timerKey]);
+          delete intervals[timerKey];
+          return;
+        }
+
+        ref2.remainingSec = Math.max(0, ref2.remainingSec - 1);
+        if(ref2.remainingSec <= 0){
+          ref2.running = false;
+          ref2.done = true; // ✅ 倒數到 0 直接完成
+          try { navigator.vibrate && navigator.vibrate(30); } catch(e){}
+          toast("計時完成", kind==="task" ? ref2.title : (kind==="reading" ? "深度閱讀完成" : "靜默靈修完成"));
+          clearInterval(intervals[timerKey]);
+          delete intervals[timerKey];
+        }
+        save();
+        renderAll(false); // light render
+      }, 1000);
+    }
+
+    function toggleTaskTimer(id){
+      const day = ensureDay(activeKey());
+      const t = day.tasks.find(x=>x.id===id);
+      if(!t || t.type!=="timer") return;
+
+      // if done, tapping start toggles? keep done state separate; user wants freedom: allow restart by cancel/reset.
+      if(t.running){
+        t.running = false;
+        save();
+        renderAll();
+        toast("已暫停", t.title);
+        return;
+      }
+      // if remaining is 0 but not done (shouldn't happen), reset
+      if(t.remainingSec <= 0) t.remainingSec = t.minutes*60;
+      startTimer("task", id);
+      toast("開始計時", t.title);
+    }
+
+    function resetTaskTimer(id){
+      const day = ensureDay(activeKey());
+      const t = day.tasks.find(x=>x.id===id);
+      if(!t || t.type!=="timer") return;
+      t.running = false;
+      t.remainingSec = t.minutes*60;
+      save();
+      renderAll();
+      toast("已重置", t.title);
+    }
+
+    function cancelTaskTimer(id){
+      const day = ensureDay(activeKey());
+      const t = day.tasks.find(x=>x.id===id);
+      if(!t || t.type!=="timer") return;
+      t.running = false;
+      t.done = false;               // ✅ 取消：讓該項目重新計算
+      t.remainingSec = t.minutes*60;
+      save();
+      renderAll();
+      toast("已取消", "該項目已回到未完成，可重新計算。");
+    }
+
+    function completeTaskDirect(id){
+      const day = ensureDay(activeKey());
+      const t = day.tasks.find(x=>x.id===id);
+      if(!t) return;
+      t.running = false;
+      t.done = true;
+      save();
+      renderAll();
+      toast("已完成", t.title);
+    }
+
+    // Reading
+    function toggleReading(){
+      const day = ensureDay(activeKey());
+      if(day.reading.running){
+        day.reading.running = false;
+        save(); renderAll();
+        toast("已暫停", "深度閱讀");
+        return;
+      }
+      if(day.reading.remainingSec <= 0) day.reading.remainingSec = day.reading.minutes*60;
+      startTimer("reading");
+      toast("開始計時", "深度閱讀");
+    }
+    function resetReading(){
+      const day = ensureDay(activeKey());
+      day.reading.running = false;
+      day.reading.remainingSec = day.reading.minutes*60;
+      save(); renderAll();
+      toast("已重置", "深度閱讀");
+    }
+    function cancelReading(){
+      const day = ensureDay(activeKey());
+      day.reading.running = false;
+      day.reading.done = false;
+      day.reading.remainingSec = day.reading.minutes*60;
+      save(); renderAll();
+      toast("已取消", "深度閱讀回到未完成。");
+    }
+    function toggleReadingDone(){
+      const day = ensureDay(activeKey());
+      day.reading.running = false;
+      day.reading.done = !day.reading.done;
+      save(); renderAll();
+      toast(day.reading.done ? "直接完成" : "取消完成", "深度閱讀");
+    }
+
+    // Devotion
+    function toggleDevotion(){
+      const day = ensureDay(activeKey());
+      if(day.devotion.running){
+        day.devotion.running = false;
+        save(); renderAll();
+        toast("已暫停", "靜默靈修");
+        return;
+      }
+      if(day.devotion.remainingSec <= 0) day.devotion.remainingSec = day.devotion.minutes*60;
+      startTimer("devotion");
+      toast("開始計時", "靜默靈修");
+    }
+    function resetDevotion(){
+      const day = ensureDay(activeKey());
+      day.devotion.running = false;
+      day.devotion.remainingSec = day.devotion.minutes*60;
+      save(); renderAll();
+      toast("已重置", "靜默靈修");
+    }
+    function cancelDevotion(){
+      const day = ensureDay(activeKey());
+      day.devotion.running = false;
+      day.devotion.done = false;
+      day.devotion.remainingSec = day.devotion.minutes*60;
+      save(); renderAll();
+      toast("已取消", "靜默靈修回到未完成。");
+    }
+    function toggleDevotionDone(){
+      const day = ensureDay(activeKey());
+      day.devotion.running = false;
+      day.devotion.done = !day.devotion.done;
+      save(); renderAll();
+      toast(day.devotion.done ? "直接完成" : "取消完成", "靜默靈修");
+    }
+
+    /***********************
+     * 7) INPUTS (autosave)
+     ***********************/
+    function bindInputs(){
+      const growth = document.getElementById("growth-input");
+      const brand = document.getElementById("brand-input");
+      const scripture = document.getElementById("scripture-input");
+      const spirit = document.getElementById("spirit-input");
+
+      const on = (el, fn)=>{
+        if(!el) return;
+        el.addEventListener("input", ()=>{
+          fn(el.value);
+          save();
+          // lightweight refresh for completion text
+          renderCompletionOnly();
+        });
+        el.addEventListener("change", ()=>{
+          fn(el.value);
+          save();
+          renderAll();
+        });
+      };
+
+      on(growth, v=> ensureDay(activeKey()).mind.growth = v);
+      on(brand, v=> ensureDay(activeKey()).mind.brand = v);
+      on(scripture, v=> ensureDay(activeKey()).spirit.scripture = v);
+      on(spirit, v=> ensureDay(activeKey()).spirit.note = v);
+    }
+
+    /***********************
+     * 8) DURATION MODAL
+     ***********************/
+    let durationTarget = null; // "reading"|"devotion"|taskId
+    function openDuration(target){
+      durationTarget = target;
+      const title = document.getElementById("dur-title");
+      const inp = document.getElementById("dur-min");
+      const day = ensureDay(activeKey());
+
+      if(target === "reading"){
+        title.textContent = "深度閱讀";
+        inp.value = day.reading.minutes;
+      } else if(target === "devotion"){
+        title.textContent = "靜默靈修";
+        inp.value = day.devotion.minutes;
+      } else {
+        const t = day.tasks.find(x=>x.id===target);
+        title.textContent = t ? t.title : "任務";
+        inp.value = t ? t.minutes : 10;
+      }
+      openModal("modal-duration");
+    }
+
+    function quickMin(m){
+      document.getElementById("dur-min").value = m;
+    }
+
+    function applyDuration(){
+      const m = clamp(parseInt(document.getElementById("dur-min").value || "10", 10), 1, 180);
+      const day = ensureDay(activeKey());
+
+      if(durationTarget === "reading"){
+        day.reading.minutes = m;
+        day.reading.running = false;
+        day.reading.remainingSec = m*60;
+        day.reading.done = false; // changing duration resets completion
+      } else if(durationTarget === "devotion"){
+        day.devotion.minutes = m;
+        day.devotion.running = false;
+        day.devotion.remainingSec = m*60;
+        day.devotion.done = false;
+      } else {
+        const t = day.tasks.find(x=>x.id===durationTarget);
+        if(t && t.type==="timer"){
+          t.minutes = m;
+          t.running = false;
+          t.remainingSec = m*60;
+          t.done = false;
+        }
+      }
+      save();
+      closeModal("modal-duration");
+      renderAll();
+      toast("已套用", `倒數時間設定為 ${m} 分鐘（該項目已回到未完成，可重新計算）。`);
+    }
+
+    /***********************
+     * 9) CALENDAR + DETAIL
+     ***********************/
+    function changeMonth(offset){
+      const [y,m] = state.ui.calYM.split("-");
+      const d = new Date(parseInt(y,10), parseInt(m,10)-1, 1);
+      d.setMonth(d.getMonth()+offset);
+      state.ui.calYM = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+      save();
+      renderCalendar();
+    }
+
+    function selectDate(key){
+      state.ui.selectedDate = key;
+      ensureDay(key);
+      save();
+      renderCalendar();
+      renderDetail();
+    }
+
+    function setActiveFromDetail(){
+      state.ui.activeDate = state.ui.selectedDate;
+      save();
+      navTo("body");
+      toast("已切換日期", "你現在是在補填這一天。");
+    }
+
+    function settleSelectedDay(){
+      settleDay(state.ui.selectedDate);
+      renderAll();
+      toast("已結算", "日曆摘要已更新（含全部欄位）。");
+    }
+
+    /***********************
+     * 10) SETTLEMENT (XP)
+     *     - 可重算：delta 會倒扣/補回，防止無限累加
+     ***********************/
+    function settleDay(key){
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      const prev = day.settle || { settled:false, xpAwarded:0, percentAtSettle:0 };
+      const newAward = c.xp;
+      const delta = newAward - (prev.xpAwarded || 0);
+
+      // apply delta to global xp/level (can go down)
+      applyXpDelta(delta);
+
+      day.settle = {
+        settled: true,
+        xpAwarded: newAward,
+        percentAtSettle: c.percent
+      };
+      save();
+    }
+
+    function applyXpDelta(delta){
+      if(delta === 0) return;
+      const g = state.gamification;
+
+      let xp = g.xp + delta;
+      let lv = g.level;
+      let max = g.xpMax;
+
+      // handle level up
+      while(xp >= max){
+        xp -= max;
+        lv += 1;
+        max = Math.round(max * 1.18);
+      }
+
+      // handle level down (if negative)
+      while(xp < 0 && lv > 1){
+        lv -= 1;
+        // reverse the growth approximately by iterating down:
+        // to keep it stable, recompute max backwards:
+        // We'll approximate previous max by dividing:
+        max = Math.round(max / 1.18);
+        xp += max;
+      }
+      xp = Math.max(0, xp);
+
+      g.level = lv;
+      g.xp = xp;
+      g.xpMax = max;
+
+      try { navigator.vibrate && navigator.vibrate(delta>0 ? 22 : 14); } catch(e){}
+    }
+
+    /***********************
+     * 11) RENDER
+     ***********************/
+    function renderAll(full=true){
+      // views
+      ["hub","body","mind","calendar"].forEach(v=>{
+        const el = document.getElementById("view-"+v);
+        if(!el) return;
+        el.classList.toggle("hidden", state.ui.view !== v);
+      });
+
+      // nav highlight
+      ["hub","body","mind","calendar"].forEach(v=>{
+        const ico = document.getElementById("nav-ico-"+v);
+        const txt = document.getElementById("nav-txt-"+v);
+        const btn = ico?.parentElement;
+        const active = state.ui.view === v;
+        if(btn){
+          btn.classList.toggle("opacity-70", !active);
+        }
+        if(ico){
+          ico.className = "ms " + (active ? "fill text-[24px] text-violet2" : "text-[24px] text-slate-300");
+        }
+        if(txt){
+          txt.className = (active ? "text-[11px] font-extrabold text-white" : "text-[11px] font-semibold text-slate-400");
+        }
+      });
+
+      renderProfile();
+      renderHub();
+      renderBody();
+      renderMind();
+      renderCalendar();
+      renderDetail();
+
+      if(full) bindInputs();
+    }
+
+    function renderProfile(){
+      document.getElementById("profile-name").textContent = state.profile.name;
+      document.getElementById("profile-title").textContent = state.profile.title;
+      document.getElementById("profile-avatar").src = state.profile.avatar || DEFAULT_AVATAR;
+      document.getElementById("profile-level-mini").textContent = `LV ${state.gamification.level}`;
+      document.getElementById("hub-xp").textContent = state.gamification.xp;
+      document.getElementById("hub-xpmax").textContent = state.gamification.xpMax;
+
+      const pct = clamp(state.gamification.xpMax ? (state.gamification.xp/state.gamification.xpMax)*100 : 0, 0, 100);
+      document.getElementById("hub-xpbar").style.width = pct.toFixed(0) + "%";
+    }
+
+    function renderHub(){
+      const key = activeKey();
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      document.getElementById("hub-date").textContent = (key===todayKey()) ? "Today" : key;
+      document.getElementById("hub-completion").textContent = c.percent;
+      document.getElementById("hub-body-score").textContent = c.percent;
+      document.getElementById("hub-body-bar").style.width = `${c.percent}%`;
+
+      document.getElementById("hub-streak").textContent = computeStreak();
+
+      document.getElementById("hub-xp-est").textContent = c.xp;
+
+      const now = new Date();
+      const idx = Math.floor((now - new Date(now.getFullYear(),0,0))/86400000) % VERSES.length;
+      document.getElementById("daily-verse").textContent = "「" + VERSES[idx].t + "」";
+      document.getElementById("daily-verse-ref").textContent = VERSES[idx].r;
+    }
+
+    function renderBody(){
+      if(state.ui.view !== "body") return;
+      const key = activeKey();
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      document.getElementById("body-date").textContent = (key===todayKey()) ? "Today" : formatKey(key);
+      document.getElementById("body-completion").textContent = c.percent;
+
+      document.getElementById("water-goal").textContent = day.waterGoalMl;
+      document.getElementById("water-val").textContent = day.waterMl;
+      document.getElementById("water-bar").style.width = `${Math.round(c.waterRatio*100)}%`;
+
+      // bowel buttons state
+      const a = document.getElementById("bowel-a");
+      const b = document.getElementById("bowel-b");
+      const on = (btn, active)=>{
+        btn.classList.toggle("bg-white/10", active);
+        btn.classList.toggle("border-violet/30", active);
+        btn.classList.toggle("text-white", active);
+        btn.classList.toggle("text-slate-200", !active);
+      };
+      on(a, day.bowelStatus==="未完成");
+      on(b, day.bowelStatus==="正常");
+
+      // tasks
+      const list = document.getElementById("task-list");
+      list.innerHTML = day.tasks.map(t=>{
+        if(t.type==="check"){
+          return `
+          <div class="glass2 rounded-3xl p-4 border border-white/10 shadow-glass">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-lg font-extrabold ${t.done?'text-white line-through decoration-violet/40':'text-white'}">${t.title}</div>
+                <div class="mt-1 text-[12px] text-slate-400 font-medium">${t.sub}</div>
+              </div>
+              <button onclick="toggleCheckTask(${t.id})"
+                      class="glass2 border border-white/10 rounded-full w-12 h-12 flex items-center justify-center active:scale-95 transition-transform ${t.done?'bg-violet/20 border-violet/30':''}">
+                <span class="ms ${t.done?'fill text-violet2':'text-slate-300'} text-[22px]">done</span>
+              </button>
+            </div>
+          </div>`;
+        }
+
+        // timer card
+        const running = t.running;
+        const done = t.done;
+        const ring = running ? "pulse-ring" : "";
+        const mainBtnText = done ? "已完成" : (running ? "暫停" : "開始");
+        const mainBtnAction = done ? `cancelTaskTimer(${t.id})` : `toggleTaskTimer(${t.id})`;
+        const mainBtnStyle = done
+          ? "bg-white/5 text-slate-300 border-white/10"
+          : running
+            ? "bg-white text-ink border-white"
+            : "bg-gradient-to-r from-violet via-violet2 to-cyan text-white border-white/10";
+
+        return `
+        <div class="glass2 rounded-3xl p-4 border border-white/10 shadow-glass relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-44 h-44 ${t.id===1?'bg-rose/10':'bg-violet/10'} rounded-full blur-3xl"></div>
+
+          <div class="flex items-start justify-between">
+            <div class="min-w-0">
+              <div class="text-lg font-extrabold ${done?'text-white line-through decoration-violet/40':'text-white'} truncate">${t.title}</div>
+              <div class="mt-1 text-[12px] text-slate-400 font-medium">${t.sub}</div>
+            </div>
+            <button onclick="openDuration(${t.id})" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+              ${t.minutes} min
+            </button>
+          </div>
+
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-4xl font-light tracking-tighter tabular-nums text-white ${ring} px-2 py-1 rounded-2xl">
+              ${tickLabel(t.remainingSec)}
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="resetTaskTimer(${t.id})" class="glass2 border border-white/10 rounded-2xl px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+                重置
+              </button>
+
+              <button onclick="completeTaskDirect(${t.id})" class="glass2 border border-white/10 rounded-2xl px-3 py-2 text-[12px] font-extrabold text-white active:scale-95 transition-transform">
+                直接完成
+              </button>
+
+              <button onclick="${mainBtnAction}" class="rounded-2xl px-4 py-2 text-[12px] font-extrabold border active:scale-95 transition-transform ${mainBtnStyle}">
+                ${mainBtnText}
+              </button>
+            </div>
+          </div>
+
+          <div class="mt-3 text-[11px] text-slate-400 font-semibold">
+            ${done ? "（點「已完成」可取消重算）" : "（誤觸可點「取消」：已完成狀態用「已完成」鍵取消）"}
+          </div>
+
+          ${done ? "" : `
+            <button onclick="cancelTaskTimer(${t.id})" class="mt-3 w-full glass2 border border-white/10 rounded-2xl py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition-transform">
+              取消（回到未完成）
+            </button>
+          `}
+        </div>`;
+      }).join("");
+    }
+
+    function renderMind(){
+      if(state.ui.view !== "mind") return;
+
+      const key = activeKey();
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      document.getElementById("mind-date").textContent = (key===todayKey()) ? "Today" : formatKey(key);
+      document.getElementById("mind-completion").textContent = c.percent;
+
+      // inputs
+      const growth = document.getElementById("growth-input");
+      const brand = document.getElementById("brand-input");
+      const scripture = document.getElementById("scripture-input");
+      const spirit = document.getElementById("spirit-input");
+      if(growth) growth.value = day.mind.growth || "";
+      if(brand) brand.value = day.mind.brand || "";
+      if(scripture) scripture.value = day.spirit.scripture || "";
+      if(spirit) spirit.value = day.spirit.note || "";
+
+      // reading display + buttons
+      document.getElementById("reading-min").textContent = day.reading.minutes;
+      document.getElementById("reading-display").textContent = tickLabel(day.reading.remainingSec);
+      document.getElementById("reading-start").textContent = day.reading.done ? "已完成" : (day.reading.running ? "暫停" : "開始");
+      document.getElementById("reading-start").className =
+        "glass2 border border-white/10 rounded-2xl py-3 font-extrabold active:scale-95 transition-transform " +
+        (day.reading.done ? "text-slate-300 bg-white/5" : "text-white");
+
+      document.getElementById("reading-done-btn").textContent = day.reading.done ? "取消完成" : "直接完成";
+
+      // devotion
+      document.getElementById("devotion-min").textContent = day.devotion.minutes;
+      document.getElementById("devotion-display").textContent = tickLabel(day.devotion.remainingSec);
+      document.getElementById("devotion-start").textContent = day.devotion.done ? "已完成" : (day.devotion.running ? "暫停" : "開始");
+      document.getElementById("devotion-start").className =
+        "glass2 border border-white/10 rounded-2xl py-3 font-extrabold active:scale-95 transition-transform " +
+        (day.devotion.done ? "text-slate-300 bg-white/5" : "text-white");
+
+      document.getElementById("devotion-done-btn").textContent = day.devotion.done ? "取消完成" : "直接完成";
+
+      renderMindTabs();
+    }
+
+    function renderMindTabs(){
+      const tab = state.ui.mindTab || "mind";
+      const mind = document.getElementById("tab-mind");
+      const spirit = document.getElementById("tab-spirit");
+      const slider = document.getElementById("tab-slider");
+      const btnMind = document.getElementById("tab-btn-mind");
+      const btnSpirit = document.getElementById("tab-btn-spirit");
+
+      const isMind = tab === "mind";
+      mind.classList.toggle("hidden", !isMind);
+      spirit.classList.toggle("hidden", isMind);
+      slider.style.transform = isMind ? "translateX(0%)" : "translateX(100%)";
+      btnMind.className = "flex-1 relative z-10 py-2.5 text-sm text-center rounded-full " + (isMind ? "font-extrabold text-white" : "font-semibold text-slate-300");
+      btnSpirit.className = "flex-1 relative z-10 py-2.5 text-sm text-center rounded-full " + (!isMind ? "font-extrabold text-white" : "font-semibold text-slate-300");
+    }
+
+    function renderCalendar(){
+      if(state.ui.view !== "calendar") return;
+
+      const [yy, mm] = state.ui.calYM.split("-");
+      const year = parseInt(yy,10);
+      const month = parseInt(mm,10)-1;
+
+      const title = document.getElementById("cal-title");
+      title.textContent = `${year}年 ${month+1}月`;
+
+      const first = new Date(year, month, 1).getDay();
+      const daysIn = new Date(year, month+1, 0).getDate();
+
+      const grid = document.getElementById("cal-grid");
+      let html = "";
+
+      // blanks
+      for(let i=0;i<first;i++){
+        html += `<div class="aspect-square"></div>`;
+      }
+
+      const today = todayKey();
+      const selected = state.ui.selectedDate;
+
+      for(let d=1; d<=daysIn; d++){
+        const key = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        const day = ensureDay(key);
+        const c = computeCompletion(day);
+
+        const isToday = key===today;
+        const isSelected = key===selected;
+
+        let cls = "aspect-square rounded-2xl flex flex-col items-center justify-center cursor-pointer border transition-all";
+        if(isSelected){
+          cls += " border-white bg-white/10 text-white";
+        } else if(isToday){
+          cls += " border-violet/40 bg-violet/15 text-white";
+        } else if(c.perfect){
+          cls += " border-transparent bg-gradient-to-br from-violet/45 to-cyan/25 text-white shadow-glow";
+        } else {
+          cls += " border-white/5 bg-white/0 text-slate-400 hover:bg-white/5";
+        }
+
+        const dot = (day.spirit.scripture.trim() || day.spirit.note.trim()) ? `<span class="w-1.5 h-1.5 rounded-full bg-gold shadow-gold mt-1"></span>` : "";
+
+        html += `
+          <div onclick="selectDate('${key}')" class="${cls}">
+            <div class="text-sm font-extrabold">${d}</div>
+            ${dot}
+          </div>
+        `;
+      }
+
+      grid.innerHTML = html;
+
+      document.getElementById("cal-streak").textContent = computeStreak();
+
+      // reward
+      const perfectCount = allPerfectCount();
+      const prog = Math.min(perfectCount, 3);
+      document.getElementById("reward-count").textContent = prog;
+      document.getElementById("reward-bar").style.width = `${(prog/3)*100}%`;
+      const btn = document.getElementById("reward-btn");
+      if(prog>=3){
+        btn.disabled = false;
+        btn.className = "mt-4 w-full rounded-2xl py-3 text-sm font-extrabold bg-gradient-to-r from-gold via-gold2 to-gold text-ink shadow-gold active:scale-95 transition-transform";
+        btn.textContent = "點擊領取獎勵";
+        btn.onclick = ()=> toast("解鎖成功", "你已解鎖神祕獎勵（你可以自行定義：課程、休息日、禮物都可以）。");
+      } else {
+        btn.disabled = true;
+        btn.className = "mt-4 w-full rounded-2xl py-3 text-sm font-extrabold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed";
+        btn.textContent = "尚未解鎖";
+        btn.onclick = null;
+      }
+    }
+
+    function renderDetail(){
+      if(state.ui.view !== "calendar") return;
+
+      const key = state.ui.selectedDate || todayKey();
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      document.getElementById("detail-date").textContent = (key===todayKey()) ? "Today" : formatKey(key);
+      document.getElementById("detail-percent").textContent = c.percent;
+      document.getElementById("detail-perfect").textContent = c.perfect ? "是" : "否";
+      document.getElementById("detail-perfect").className = c.perfect ? "text-lime font-extrabold" : "text-slate-300 font-extrabold";
+
+      document.getElementById("detail-xp").textContent = c.xp;
+      document.getElementById("detail-settled").textContent = day.settle?.settled ? "是" : "否";
+      document.getElementById("detail-settled").className = day.settle?.settled ? "text-lime font-extrabold" : "text-slate-300 font-extrabold";
+
+      document.getElementById("detail-water").textContent = day.waterMl;
+      document.getElementById("detail-water-goal").textContent = day.waterGoalMl;
+      document.getElementById("detail-bowel").textContent = day.bowelStatus;
+
+      // tasks
+      const lines = day.tasks.map(t=>{
+        const done = t.done;
+        const label = done ? `<span class="text-lime font-extrabold">完成</span>` : `<span class="text-slate-500 font-extrabold">未完成</span>`;
+        return `<div class="flex items-center justify-between text-slate-200">
+          <span class="font-semibold">${escapeHtml(t.title)}</span>${label}
+        </div>`;
+      }).join("");
+      document.getElementById("detail-tasks").innerHTML = lines;
+
+      document.getElementById("detail-reading").textContent = day.reading.done ? "完成" : "未完成";
+      document.getElementById("detail-reading").className = day.reading.done ? "text-lime font-extrabold" : "text-slate-500 font-extrabold";
+
+      document.getElementById("detail-growth").textContent = day.mind.growth.trim() || "(無)";
+      document.getElementById("detail-brand").textContent = day.mind.brand.trim() || "(無)";
+
+      document.getElementById("detail-devotion").textContent = day.devotion.done ? "完成" : "未完成";
+      document.getElementById("detail-devotion").className = day.devotion.done ? "text-lime font-extrabold" : "text-slate-500 font-extrabold";
+
+      document.getElementById("detail-scripture").textContent = day.spirit.scripture.trim() || "(無)";
+      document.getElementById("detail-spirit").textContent = day.spirit.note.trim() || "(無)";
+    }
+
+    function renderCompletionOnly(){
+      // update completion % labels quickly
+      const key = activeKey();
+      const day = ensureDay(key);
+      const c = computeCompletion(day);
+
+      const ids = ["hub-completion","hub-body-score","body-completion","mind-completion"];
+      ids.forEach(id=>{
+        const el = document.getElementById(id);
+        if(el) el.textContent = c.percent;
+      });
+
+      const bar = document.getElementById("hub-body-bar");
+      if(bar) bar.style.width = `${c.percent}%`;
+      const est = document.getElementById("hub-xp-est");
+      if(est) est.textContent = c.xp;
+    }
+
+    /***********************
+     * 12) HUB SETTLE BUTTON
+     ***********************/
+    document.addEventListener("click", (e)=>{
+      // profile modal open
+      if(e.target && (e.target.id==="btn-profile" || e.target.closest("#btn-profile"))){
+        document.getElementById("inp-name").value = state.profile.name || "";
+        document.getElementById("inp-avatar").value = state.profile.avatar || "";
+        document.getElementById("inp-title").value = state.profile.title || "";
+        openModal("modal-profile");
+      }
+      if(e.target && (e.target.id==="btn-reset" || e.target.closest("#btn-reset"))){
+        confirmReset();
+      }
+      if(e.target && (e.target.id==="btn-settle" || e.target.closest("#btn-settle"))){
+        const k = activeKey();
+        settleDay(k);
+        renderAll();
+        const day = ensureDay(k);
+        toast("結算完成", `已寫入：${(k===todayKey())?'Today':k}（XP：+${day.settle.xpAwarded}）。`);
+      }
+    });
+
+    /***********************
+     * 13) INIT
+     ***********************/
+    // ensure today exists
+    ensureDay(todayKey());
+
+    // ensure selected exists
+    ensureDay(state.ui.selectedDate || todayKey());
+    ensureDay(state.ui.activeDate || todayKey());
+
+    // default view hub
+    if(!state.ui.view) state.ui.view = "hub";
+
+    // initial render
+    save();
+    renderAll();
+
+  </script>
+</body>
+</html>
