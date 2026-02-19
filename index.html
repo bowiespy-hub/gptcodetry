@@ -1,43 +1,46 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" class="dark">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>ATE — Aether Trinity Evolution</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <title>ATE - Aether Trinity Evolution</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet"/>
-  <!-- Icons (minimal use) -->
-  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200..700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300..700&display=swap" rel="stylesheet"/>
 
   <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
   <script>
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
-          fontFamily: {
-            display: ["Playfair Display","Manrope","Noto Sans TC","sans-serif"],
-            body: ["Manrope","Noto Sans TC","sans-serif"],
-          },
           colors: {
-            ink: "#050508",
-            obsidian: "#0A0A0F",
-            surface: "#0F1220",
-            surface2: "#141A2B",
-            line: "rgba(255,255,255,0.10)",
+            obsidian: "#07070B",
+            panel: "rgba(255,255,255,0.06)",
+            panel2: "rgba(255,255,255,0.035)",
+            stroke: "rgba(255,255,255,0.10)",
+            stroke2: "rgba(255,255,255,0.08)",
             gold: "#D4AF37",
-            gold2: "#F9E076",
-            violet: "#8B5CF6",
-            blue: "#4A5CD8",
-            cyan: "#06B6D4",
+            gold2:"#F5E6A6",
+            violet:"#8B5CF6",
+            blue:"#60A5FA",
+            rose:"#FB7185",
+            mint:"#34D399",
+            ink:"#0B0B10",
+          },
+          fontFamily: {
+            display: ["Manrope","Noto Sans TC","system-ui","sans-serif"],
+            body: ["Noto Sans TC","Manrope","system-ui","sans-serif"],
+            serif: ["Noto Serif TC","serif"]
           },
           boxShadow: {
-            glass: "0 18px 60px rgba(0,0,0,0.35)",
-            glow: "0 0 22px rgba(212,175,55,0.22)",
+            glass: "0 18px 60px rgba(0,0,0,0.55)",
+            glowGold: "0 0 22px rgba(212,175,55,0.25)",
+            glowViolet: "0 0 26px rgba(139,92,246,0.22)",
           }
         }
       }
@@ -45,1686 +48,1866 @@
   </script>
 
   <style>
-    :root { color-scheme: dark; }
+    :root{ color-scheme: dark; }
     body{
       min-height: 100dvh;
-      background:
-        radial-gradient(at 10% 0%, rgba(139,92,246,0.20) 0, transparent 55%),
-        radial-gradient(at 80% 10%, rgba(74,92,216,0.18) 0, transparent 50%),
-        radial-gradient(at 60% 90%, rgba(212,175,55,0.10) 0, transparent 55%),
-        #050508;
-      background-attachment: fixed;
-      overflow-x:hidden;
+      background: radial-gradient(1200px 520px at 20% -10%, rgba(139,92,246,0.22), transparent 60%),
+                  radial-gradient(900px 520px at 100% 10%, rgba(96,165,250,0.18), transparent 55%),
+                  radial-gradient(900px 520px at 70% 110%, rgba(212,175,55,0.14), transparent 55%),
+                  #07070B;
+      overflow-x: hidden;
       -webkit-tap-highlight-color: transparent;
-      font-family: Manrope, "Noto Sans TC", sans-serif;
     }
     .glass{
-      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255,255,255,0.10);
-      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
-    }
-    .glass2{
-      background: rgba(20,24,38,0.55);
+      background: rgba(255,255,255,0.06);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255,255,255,0.10);
     }
+    .glass2{
+      background: rgba(255,255,255,0.035);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
     .no-scrollbar::-webkit-scrollbar{ display:none; }
-    .no-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
+    .no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
 
-    .ms{
-      font-family: "Material Symbols Outlined";
-      font-variation-settings: "wght" 320, "opsz" 24;
-      line-height: 1;
+    .material-symbols-outlined{
+      font-variation-settings: "FILL" 0, "wght" 420, "GRAD" 0, "opsz" 24;
+    }
+    .ms-fill{
+      font-variation-settings: "FILL" 1, "wght" 520, "GRAD" 0, "opsz" 24;
     }
 
-    .view { display:none; }
-    .view.active { display:flex; }
-
-    /* small, game-like XP toast */
-    .toast {
+    /* Small XP toast */
+    .xp-toast{
       position: fixed;
-      top: 16px;
-      right: 14px;
-      z-index: 9999;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: calc(92px + env(safe-area-inset-bottom));
+      z-index: 60;
       pointer-events: none;
       opacity: 0;
-      transform: translateY(-6px);
       transition: opacity .18s ease, transform .18s ease;
     }
-    .toast.show {
+    .xp-toast.show{
       opacity: 1;
-      transform: translateY(0px);
-    }
-    .toast.hide {
-      opacity: 0;
-      transform: translateY(-10px);
+      transform: translateX(-50%) translateY(-6px);
     }
 
-    /* subtle “pop” for completion */
-    @keyframes pop {
-      0%{ transform: scale(0.98); }
-      45%{ transform: scale(1.02); }
-      100%{ transform: scale(1.00); }
-    }
-    .pop { animation: pop .22s ease; }
+    /* View handling */
+    .view { display:none; }
+    .view.active{ display:block; }
 
-    /* Confetti canvas */
-    #confetti {
-      position: fixed;
-      inset: 0;
-      z-index: 9998;
-      pointer-events: none;
-      display: none;
+    /* Safer height for scrollable content */
+    .app-shell{
+      max-width: 430px;
+      margin: 0 auto;
+      min-height: 100dvh;
+      padding-bottom: calc(96px + env(safe-area-inset-bottom));
+    }
+    .top-safe{
+      padding-top: calc(14px + env(safe-area-inset-top));
     }
 
-    /* make clickable areas safe on iOS */
-    button, [role="button"] { touch-action: manipulation; }
+    /* Subtle shimmer line */
+    .shimmer::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.08) 45%, transparent 70%);
+      transform: translateX(-120%);
+      animation: shimmer 3.2s ease-in-out infinite;
+      pointer-events:none;
+      opacity:.55;
+    }
+    @keyframes shimmer{
+      0%{ transform: translateX(-120%); }
+      45%{ transform: translateX(120%); }
+      100%{ transform: translateX(120%); }
+    }
   </style>
 </head>
 
-<body class="text-slate-100">
-  <canvas id="confetti"></canvas>
+<body class="text-slate-100 font-display">
+  <div class="app-shell relative">
 
-  <!-- TOAST -->
-  <div id="toast" class="toast">
-    <div class="glass2 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide border border-white/10">
-      <span id="toastText" class="text-gold">+5 XP</span>
+    <!-- ======= HEADER (shared) ======= -->
+    <div class="top-safe px-5 pt-4">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px] text-gold ms-fill">workspace_premium</span>
+          <span class="text-[11px] tracking-[0.22em] uppercase text-slate-400">ATE SYSTEM</span>
+        </div>
+
+        <button id="btn-reset" class="glass2 rounded-full px-3 py-1.5 text-[11px] font-semibold text-slate-200 active:scale-95 transition"
+          title="系統重置">
+          重置
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- APP SHELL -->
-  <div class="relative mx-auto w-full max-w-[440px] min-h-[100dvh] overflow-hidden">
-    <!-- top safe padding -->
-    <div class="h-4"></div>
+    <!-- ======= VIEWS ======= -->
 
-    <!-- ===== HUB ===== -->
-    <section id="view-hub" class="view active flex-col min-h-[100dvh]">
-      <header class="px-5 pt-6 pb-4">
-        <div class="glass rounded-3xl p-4">
-          <div class="flex items-center justify-between gap-3">
-            <!-- Profile -->
-            <div class="flex items-center gap-3 min-w-0">
-              <button id="profileBtn" class="relative shrink-0">
-                <div class="h-14 w-14 rounded-full overflow-hidden border border-white/15 bg-white/5">
-                  <img id="profileImg" alt="profile" class="h-full w-full object-cover" />
-                </div>
-                <div class="absolute -bottom-1 -right-1 glass2 border border-white/10 rounded-full px-2 py-0.5 text-[10px] font-bold text-gold">
-                  LV <span id="profileLevel">1</span>
-                </div>
-              </button>
+    <!-- HUB -->
+    <section id="view-hub" class="view active px-5 pt-4">
+      <!-- Profile Hero -->
+      <div class="relative glass rounded-3xl p-4 shadow-glass overflow-hidden">
+        <div class="absolute inset-0 opacity-[0.35]"
+             style="background:
+               radial-gradient(500px 240px at 18% 10%, rgba(212,175,55,0.18), transparent 60%),
+               radial-gradient(480px 240px at 90% 20%, rgba(139,92,246,0.18), transparent 55%),
+               radial-gradient(460px 240px at 60% 120%, rgba(96,165,250,0.14), transparent 55%);">
+        </div>
 
+        <div class="relative flex items-start gap-4">
+          <!-- Photo -->
+          <div class="shrink-0">
+            <div class="relative w-[74px] h-[74px] rounded-2xl overflow-hidden border border-white/10 bg-black/30">
+              <img id="profile-photo" alt="Profile" class="w-full h-full object-cover" src="" />
+              <div class="absolute inset-0 bg-gradient-to-t from-black/35 to-transparent"></div>
+            </div>
+
+            <!-- Upload -->
+            <label class="mt-2 inline-flex items-center gap-1.5 text-[11px] text-slate-300/90 cursor-pointer select-none">
+              <span class="material-symbols-outlined text-[16px] text-slate-300">upload</span>
+              換照片
+              <input id="photo-input" type="file" accept="image/*" class="hidden"/>
+            </label>
+          </div>
+
+          <!-- Meta -->
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-3">
               <div class="min-w-0">
-                <div class="flex items-center gap-2 min-w-0">
-                  <h1 id="profileName" class="font-display text-lg font-semibold tracking-wide text-white truncate">Your Name</h1>
+                <input id="profile-name"
+                       class="w-full bg-transparent border-none p-0 text-[20px] font-bold tracking-tight text-white placeholder:text-slate-500 focus:ring-0"
+                       placeholder="輸入你的名字" />
+                <div class="mt-1 flex items-center gap-2 text-[11px] text-slate-400">
+                  <span id="profile-level-badge" class="inline-flex items-center gap-1 rounded-full px-2 py-1 glass2 border border-white/10">
+                    <span class="material-symbols-outlined text-[14px] text-gold ms-fill">star</span>
+                    <span class="font-semibold text-slate-200">Lv.</span>
+                    <span id="profile-level" class="font-semibold text-slate-200">1</span>
+                  </span>
+                  <span class="opacity-70">•</span>
+                  <span class="font-semibold">今日 XP</span>
+                  <span id="profile-xp-today" class="text-gold font-bold">0</span>
+                  <span class="opacity-70">/</span>
+                  <span class="font-semibold">總 XP</span>
+                  <span id="profile-xp-total" class="text-gold font-bold">0</span>
                 </div>
-                <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
-                  <span class="tracking-widest uppercase">XP</span>
-                  <span class="text-slate-200 font-semibold"><span id="profileXP">0</span></span>
-                  <span class="text-slate-500">/</span>
-                  <span class="text-slate-400"><span id="profileXPNext">300</span></span>
-                </div>
+              </div>
+
+              <div class="text-right">
+                <div class="text-[11px] text-slate-400">今日完成率</div>
+                <div id="hub-completion" class="text-[20px] font-bold text-white leading-tight">0%</div>
               </div>
             </div>
 
-            <!-- Streak -->
-            <div class="glass2 rounded-2xl px-3 py-2 border border-white/10">
-              <div class="text-[10px] text-slate-400 tracking-widest uppercase text-right">Streak</div>
-              <div class="text-right text-base font-bold text-white">
-                <span id="streakDays">0</span><span class="text-slate-400 text-xs font-semibold ml-1">days</span>
+            <!-- XP progress -->
+            <div class="mt-3">
+              <div class="flex justify-between text-[11px] text-slate-400">
+                <span>距離下一級</span>
+                <span class="text-slate-300">
+                  <span id="xp-in-level">0</span> / <span id="xp-next">500</span>
+                </span>
+              </div>
+              <div class="mt-2 h-2.5 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+                <div id="xp-bar" class="h-full w-[0%] bg-gradient-to-r from-gold via-gold2 to-violet shadow-glowGold"></div>
               </div>
             </div>
-          </div>
 
-          <!-- XP bar -->
-          <div class="mt-4">
-            <div class="flex justify-between text-[11px] text-slate-400">
-              <span>Today XP</span>
-              <span class="text-gold font-semibold"><span id="todayXP">0</span> XP</span>
+            <!-- Daily verse (English) -->
+            <div class="mt-4 glass2 rounded-2xl p-3 border border-white/10">
+              <div class="flex items-center justify-between">
+                <div class="text-[11px] tracking-[0.18em] uppercase text-slate-400">Daily Verse</div>
+                <div id="hub-date" class="text-[11px] text-slate-400"></div>
+              </div>
+              <div id="daily-verse" class="mt-2 text-[14px] leading-relaxed text-slate-100 font-serif"></div>
+              <div id="daily-verse-ref" class="mt-2 text-[11px] text-gold font-semibold"></div>
             </div>
-            <div class="mt-2 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
-              <div id="todayXPBar" class="h-full w-[0%] bg-gradient-to-r from-gold to-gold2 shadow-glow rounded-full transition-all duration-300"></div>
-            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Daily Verse -->
-        <div class="mt-4 glass rounded-3xl p-4">
-          <div class="text-[10px] text-slate-400 tracking-[0.2em] uppercase">Daily Verse</div>
-          <div id="dailyVerseText" class="mt-2 font-display text-[15px] leading-relaxed text-white/95"></div>
-          <div id="dailyVerseRef" class="mt-2 text-[11px] text-gold font-semibold tracking-wide"></div>
-        </div>
-      </header>
-
-      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
-        <div class="flex items-center justify-between mb-3">
-          <h2 class="text-base font-semibold tracking-wide text-white">Evolution Overview</h2>
-          <div class="text-[11px] text-slate-400">
-            <span id="todayLabel"></span>
-          </div>
+      <!-- Overview Cards -->
+      <div class="mt-4">
+        <div class="flex items-center justify-between px-1">
+          <h2 class="text-[15px] font-bold text-white tracking-wide">今日進化總覽</h2>
+          <button id="btn-today" class="text-[11px] text-slate-300 glass2 px-3 py-1.5 rounded-full border border-white/10 active:scale-95 transition">
+            回到今天
+          </button>
         </div>
 
-        <!-- Overview cards -->
-        <div class="grid grid-cols-1 gap-3">
+        <div class="mt-3 grid grid-cols-1 gap-3">
           <!-- Body -->
-          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('body')">
-            <div class="flex items-center justify-between">
+          <button id="hub-go-body" class="text-left glass2 rounded-2xl p-4 border border-white/10 active:scale-[0.99] transition">
+            <div class="flex items-start justify-between">
               <div>
-                <div class="text-sm font-semibold text-white">Body</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Water • Muscle • Digest</div>
+                <div class="text-[12px] text-slate-400">Body（身）</div>
+                <div id="hub-body-pct" class="mt-1 text-[22px] font-bold text-white">0%</div>
               </div>
-              <div class="text-right">
-                <div class="text-xl font-bold text-white"><span id="hubBodyPct">0</span>%</div>
-                <div class="text-[10px] text-slate-400 tracking-widest uppercase">today</div>
+              <div class="w-10 h-10 rounded-xl bg-rose/10 border border-rose/25 flex items-center justify-center">
+                <span class="material-symbols-outlined text-rose text-[20px]">fitness_center</span>
               </div>
             </div>
-            <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
-              <div id="hubBodyBar" class="h-full w-[0%] bg-gradient-to-r from-blue to-cyan rounded-full transition-all duration-300"></div>
+            <div class="mt-3 h-2 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+              <div id="hub-body-bar" class="h-full w-[0%] bg-rose/80"></div>
             </div>
           </button>
 
-          <!-- Mind -->
-          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('mind')">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Mind</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Reading • Reflection • Notes</div>
+          <div class="grid grid-cols-2 gap-3">
+            <!-- Mind -->
+            <button id="hub-go-mind" class="text-left glass2 rounded-2xl p-4 border border-white/10 active:scale-[0.99] transition">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="text-[12px] text-slate-400">Mind（心）</div>
+                  <div id="hub-mind-pct" class="mt-1 text-[18px] font-bold text-white">0%</div>
+                </div>
+                <div class="w-10 h-10 rounded-xl bg-violet/10 border border-violet/25 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-violet text-[20px]">psychology</span>
+                </div>
               </div>
-              <div class="text-right">
-                <div class="text-xl font-bold text-white"><span id="hubMindPct">0</span>%</div>
-                <div class="text-[10px] text-slate-400 tracking-widest uppercase">today</div>
+              <div class="mt-3 h-2 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+                <div id="hub-mind-bar" class="h-full w-[0%] bg-violet/80"></div>
               </div>
-            </div>
-            <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
-              <div id="hubMindBar" class="h-full w-[0%] bg-gradient-to-r from-violet to-gold rounded-full transition-all duration-300"></div>
-            </div>
-          </button>
+            </button>
 
-          <!-- Calendar -->
-          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('calendar')">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">History</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Backfill & review any day</div>
+            <!-- Calendar -->
+            <button id="hub-go-calendar" class="text-left glass2 rounded-2xl p-4 border border-white/10 active:scale-[0.99] transition">
+              <div class="flex items-start justify-between">
+                <div>
+                  <div class="text-[12px] text-slate-400">日曆</div>
+                  <div class="mt-1 text-[18px] font-bold text-white">紀錄補填</div>
+                </div>
+                <div class="w-10 h-10 rounded-xl bg-gold/10 border border-gold/25 flex items-center justify-center">
+                  <span class="material-symbols-outlined text-gold text-[20px]">calendar_month</span>
+                </div>
               </div>
-              <div class="text-right">
-                <div class="text-xl font-bold text-white"><span id="perfectDays">0</span></div>
-                <div class="text-[10px] text-slate-400 tracking-widest uppercase">perfect</div>
-              </div>
-            </div>
-            <div class="mt-3 text-[11px] text-slate-400">
-              Tap a date → edit / backfill.
-            </div>
-          </button>
-        </div>
-
-        <!-- Weekly reward -->
-        <div class="mt-4 glass rounded-3xl p-4">
-          <div class="flex items-start justify-between gap-3">
-            <div>
-              <div class="text-[10px] text-slate-400 tracking-[0.2em] uppercase">Weekly Unlock</div>
-              <div class="mt-1 text-white font-semibold">Mystery Reward</div>
-              <div class="mt-1 text-[11px] text-slate-400">Get 3 perfect days to unlock.</div>
-            </div>
-            <div class="text-right">
-              <div class="text-[11px] text-slate-400">progress</div>
-              <div class="text-gold font-bold"><span id="weeklyProgress">0</span>/3</div>
-            </div>
+              <div class="mt-3 text-[11px] text-slate-400">點進去可切換日期、補漏填</div>
+            </button>
           </div>
-          <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
-            <div id="weeklyBar" class="h-full w-[0%] bg-gradient-to-r from-gold to-gold2 rounded-full transition-all duration-300"></div>
-          </div>
-          <button id="weeklyBtn" class="mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed" disabled>
-            Locked
-          </button>
         </div>
-      </main>
+      </div>
     </section>
 
-    <!-- ===== BODY ===== -->
-    <section id="view-body" class="view flex-col min-h-[100dvh]">
-      <header class="px-5 pt-5 pb-3">
-        <div class="flex items-center justify-between">
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
-            <span class="ms align-[-2px]">chevron_left</span> Hub
-          </button>
-          <div class="text-center">
-            <div class="font-display text-lg font-semibold">Body</div>
-            <div id="bodyDateLabel" class="text-[11px] text-slate-400 mt-0.5"></div>
+    <!-- BODY -->
+    <section id="view-body" class="view px-5 pt-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-[11px] tracking-[0.18em] uppercase text-slate-400">Body</div>
+          <div class="text-[22px] font-bold text-white">身體進化</div>
+        </div>
+        <div id="body-date" class="glass2 rounded-full px-3 py-1.5 text-[11px] border border-white/10 text-slate-200"></div>
+      </div>
+
+      <!-- Water -->
+      <div class="mt-4 glass rounded-3xl p-4 border border-white/10">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="text-[12px] text-slate-400">水分攝入</div>
+            <div class="mt-1 text-[18px] font-bold text-white">
+              <span id="water-val">0</span><span class="text-slate-400 text-[13px] font-semibold ml-1">ml</span>
+            </div>
+            <div class="mt-1 text-[11px] text-slate-400">目標：<span id="water-target">1900</span> ml</div>
           </div>
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="openDayPicker()">
-            <span class="ms align-[-2px]">calendar_month</span>
+          <div class="text-right">
+            <div class="text-[11px] text-slate-400">此項 XP</div>
+            <div id="water-xp" class="text-gold font-bold text-[16px]">0</div>
+          </div>
+        </div>
+
+        <div class="mt-3 h-3 rounded-full bg-white/5 border border-white/10 overflow-hidden">
+          <div id="water-bar" class="h-full w-[0%] bg-gradient-to-r from-blue via-violet to-gold"></div>
+        </div>
+
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <button data-water="-250" class="btn-water glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+            -250
+          </button>
+          <button data-water="250" class="btn-water glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+            +250
+          </button>
+          <button data-water="500" class="btn-water glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+            +500
           </button>
         </div>
-      </header>
+        <div class="mt-2 text-[11px] text-slate-400">（分數依比例增減，不會無限累加）</div>
+      </div>
 
-      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
-        <!-- Water -->
-        <div class="glass rounded-3xl p-4">
+      <!-- Tasks -->
+      <div class="mt-4">
+        <div class="flex items-center justify-between px-1">
+          <div class="text-[15px] font-bold text-white">今日任務</div>
+          <div class="text-[11px] text-slate-400">點一下完成／取消</div>
+        </div>
+        <div id="task-list" class="mt-3 space-y-2"></div>
+      </div>
+
+      <!-- Bowel -->
+      <div class="mt-3 glass2 rounded-2xl p-4 border border-white/10">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-[12px] text-slate-300 font-semibold">排便確認</div>
+            <div class="text-[11px] text-slate-400">此項可反覆開關，但分數會正確倒扣</div>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer select-none">
+            <input id="bowel-toggle" type="checkbox" class="sr-only peer"/>
+            <div class="w-14 h-8 bg-white/10 border border-white/10 rounded-full peer peer-checked:bg-mint/30 peer-checked:border-mint/40 transition"></div>
+            <div class="absolute left-1 top-1 w-6 h-6 rounded-full bg-white/40 peer-checked:translate-x-6 peer-checked:bg-white transition-transform"></div>
+          </label>
+        </div>
+        <div class="mt-2 text-[11px] text-slate-400">此項 XP：<span id="bowel-xp" class="text-gold font-bold">0</span></div>
+      </div>
+    </section>
+
+    <!-- MIND -->
+    <section id="view-mind" class="view px-5 pt-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-[11px] tracking-[0.18em] uppercase text-slate-400">Mind & Spirit</div>
+          <div class="text-[22px] font-bold text-white">心智與靈魂</div>
+        </div>
+        <div id="mind-date" class="glass2 rounded-full px-3 py-1.5 text-[11px] border border-white/10 text-slate-200"></div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="mt-4 glass2 rounded-full p-1 border border-white/10">
+        <div class="grid grid-cols-2 gap-1">
+          <button id="tab-btn-mind" class="tab-btn rounded-full py-2.5 text-[12px] font-bold text-white bg-white/10">心智</button>
+          <button id="tab-btn-spirit" class="tab-btn rounded-full py-2.5 text-[12px] font-semibold text-slate-400">靈魂</button>
+        </div>
+      </div>
+
+      <!-- Tab: Mind -->
+      <div id="tab-mind" class="mt-4 space-y-3">
+        <!-- Reading Timer -->
+        <div class="glass rounded-3xl p-4 border border-white/10">
           <div class="flex items-start justify-between">
             <div>
-              <div class="text-sm font-semibold text-white">Water</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Target: <span id="waterTargetLabel">1900</span> ml</div>
+              <div class="text-[12px] text-slate-400">深度閱讀</div>
+              <div id="read-display" class="mt-1 text-[32px] font-light tracking-tight tabular-nums">20:00</div>
+              <div class="text-[11px] text-slate-400">可計時 / 也可直接完成（可取消）</div>
             </div>
             <div class="text-right">
-              <div class="text-2xl font-bold text-white tabular-nums"><span id="waterVal">0</span></div>
-              <div class="text-[11px] text-slate-400">ml</div>
+              <div class="text-[11px] text-slate-400">此項 XP</div>
+              <div id="read-xp" class="text-gold font-bold text-[16px]">0</div>
             </div>
           </div>
-          <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
-            <div id="waterBar" class="h-full w-[0%] bg-gradient-to-r from-blue to-cyan rounded-full transition-all duration-300"></div>
-          </div>
 
-          <div class="mt-4 grid grid-cols-3 gap-2">
-            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(-250)">-250 <span class="text-[10px] text-slate-400">(<span id="xpWaterMinus">-5</span>)</span></button>
-            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(250)">+250 <span class="text-[10px] text-slate-400">(<span id="xpWaterPlus">+5</span>)</span></button>
-            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(500)">+500 <span class="text-[10px] text-slate-400">(<span id="xpWaterPlus2">+10</span>)</span></button>
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            <button id="read-start" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+              開始
+            </button>
+            <button id="read-reset" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+              重置
+            </button>
+            <button id="read-done" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">
+              完成/取消
+            </button>
           </div>
         </div>
 
-        <!-- Tasks -->
-        <div class="mt-4">
-          <div class="flex items-center justify-between mb-2">
-            <div class="text-sm font-semibold text-white">Tasks</div>
-            <div class="text-[11px] text-slate-400">Tap card = complete / undo</div>
-          </div>
-          <div id="bodyTasks" class="space-y-2"></div>
-        </div>
-
-        <!-- Digest -->
-        <div class="mt-4 glass rounded-3xl p-4">
+        <!-- Growth Reflection -->
+        <div class="glass2 rounded-3xl p-4 border border-white/10">
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-sm font-semibold text-white">Digest</div>
-              <div class="text-[11px] text-slate-400 mt-0.5">Daily check</div>
+              <div class="text-[12px] text-slate-300 font-semibold">今日復盤</div>
+              <div class="text-[11px] text-slate-400">輸入後自動保存（支援語音）</div>
+            </div>
+            <div class="text-right text-[11px] text-slate-400">此項 XP：<span id="growth-xp" class="text-gold font-bold">0</span></div>
+          </div>
+          <div class="mt-3 relative">
+            <textarea id="growth-note" class="w-full h-28 rounded-2xl bg-black/25 border border-white/10 text-slate-100 placeholder:text-slate-500 p-3 focus:ring-0 focus:outline-none text-[14px] leading-relaxed"
+              placeholder="寫下今天的洞察…（中/英/粵混講也可以錄）"></textarea>
+            <button id="growth-mic" class="hidden absolute right-3 bottom-3 glass2 border border-white/10 rounded-full px-3 py-1.5 text-[11px] text-slate-200 active:scale-95 transition">
+              <span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音
+            </button>
+          </div>
+        </div>
+
+        <!-- Brand Strategy -->
+        <div class="glass2 rounded-3xl p-4 border border-white/10">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[12px] text-slate-300 font-semibold">品牌筆記</div>
+              <div class="text-[11px] text-slate-400">輸入後自動保存（支援語音）</div>
+            </div>
+            <div class="text-right text-[11px] text-slate-400">此項 XP：<span id="brand-xp" class="text-gold font-bold">0</span></div>
+          </div>
+          <div class="mt-3 relative">
+            <textarea id="brand-note" class="w-full h-28 rounded-2xl bg-black/25 border border-white/10 text-slate-100 placeholder:text-slate-500 p-3 focus:ring-0 focus:outline-none text-[14px] leading-relaxed"
+              placeholder="紀錄策略想法…"></textarea>
+            <button id="brand-mic" class="hidden absolute right-3 bottom-3 glass2 border border-white/10 rounded-full px-3 py-1.5 text-[11px] text-slate-200 active:scale-95 transition">
+              <span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab: Spirit -->
+      <div id="tab-spirit" class="mt-4 space-y-3 hidden">
+        <!-- Silent Devotion Timer -->
+        <div class="glass rounded-3xl p-4 border border-white/10">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-[12px] text-slate-400">靜默靈修（無音樂）</div>
+              <div id="dev-display" class="mt-1 text-[32px] font-light tracking-tight tabular-nums">10:00</div>
+              <div class="text-[11px] text-slate-400">可自由倒數 / 也可直接完成（可取消）</div>
             </div>
             <div class="text-right">
-              <div class="text-[11px] text-slate-400 mb-1">(<span id="xpBowelLabel">+5</span>)</div>
-              <label class="relative inline-flex items-center cursor-pointer select-none">
-                <input id="bowelToggle" type="checkbox" class="sr-only peer" onchange="toggleBowel(this.checked)" />
-                <div class="w-14 h-8 bg-white/10 border border-white/10 rounded-full peer peer-checked:bg-gold/30 peer-checked:border-gold/40 transition-colors"></div>
-                <div class="absolute top-[4px] left-[4px] h-6 w-6 rounded-full bg-slate-200/50 peer-checked:bg-gold2 peer-checked:translate-x-6 transition-all"></div>
-              </label>
+              <div class="text-[11px] text-slate-400">此項 XP</div>
+              <div id="dev-xp" class="text-gold font-bold text-[16px]">0</div>
             </div>
+          </div>
+          <div class="mt-3 grid grid-cols-3 gap-2">
+            <button id="dev-start" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">開始</button>
+            <button id="dev-reset" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">重置</button>
+            <button id="dev-done" class="glass2 rounded-2xl py-2.5 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">完成/取消</button>
           </div>
         </div>
 
-        <!-- Summary -->
-        <div class="mt-4 glass rounded-3xl p-4">
-          <div class="text-sm font-semibold text-white">Today Summary</div>
-          <div id="bodySummary" class="mt-2 text-[12px] text-slate-300 leading-relaxed"></div>
-        </div>
-      </main>
-    </section>
-
-    <!-- ===== MIND ===== -->
-    <section id="view-mind" class="view flex-col min-h-[100dvh]">
-      <header class="px-5 pt-5 pb-3">
-        <div class="flex items-center justify-between">
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
-            <span class="ms align-[-2px]">chevron_left</span> Hub
-          </button>
-          <div class="text-center">
-            <div class="font-display text-lg font-semibold">Mind & Spirit</div>
-            <div id="mindDateLabel" class="text-[11px] text-slate-400 mt-0.5"></div>
-          </div>
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="openDayPicker()">
-            <span class="ms align-[-2px]">calendar_month</span>
-          </button>
-        </div>
-
-        <!-- Tabs -->
-        <div class="mt-3 glass2 rounded-2xl p-1 border border-white/10">
-          <div class="grid grid-cols-2 gap-1">
-            <button id="tabBtnMind" class="rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10" onclick="switchMindTab('mind')">Mind</button>
-            <button id="tabBtnSpirit" class="rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400" onclick="switchMindTab('spirit')">Spirit</button>
-          </div>
-        </div>
-      </header>
-
-      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
-        <!-- MIND TAB -->
-        <div id="mindTabMind" class="space-y-3">
-          <!-- Reading timer (20m) -->
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-start justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Deep Reading</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Optional timer • tap card to complete / undo</div>
-                <div class="mt-1 text-[11px] text-slate-400">(<span id="xpReadLabel">+20</span>)</div>
-              </div>
-              <div class="text-right">
-                <div id="readTime" class="text-2xl font-bold tabular-nums text-white">20:00</div>
-                <div class="text-[11px] text-slate-400">min</div>
-              </div>
-            </div>
-            <div class="mt-3 grid grid-cols-3 gap-2">
-              <button id="readStartBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleTimer('read')">Start</button>
-              <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="resetTimer('read')">Reset</button>
-              <button id="readDoneBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleDone('readDone')">Done</button>
-            </div>
-          </div>
-
-          <!-- Growth reflection -->
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Growth Reflection</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
-              </div>
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('growthNote')">
-                <span class="ms align-[-2px]">mic</span> Dictate
-              </button>
-            </div>
-            <textarea id="growthNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Write your key insight..."></textarea>
-          </div>
-
-          <!-- Brand strategy -->
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Brand Strategy Notes</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
-              </div>
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('brandNote')">
-                <span class="ms align-[-2px]">mic</span> Dictate
-              </button>
-            </div>
-            <textarea id="brandNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Capture your thinking..."></textarea>
-          </div>
-        </div>
-
-        <!-- SPIRIT TAB -->
-        <div id="mindTabSpirit" class="space-y-3 hidden">
-          <!-- Silent devotion timer (10m) -->
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-start justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Silent Devotion</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">10-min timer • no music</div>
-                <div class="mt-1 text-[11px] text-slate-400">(<span id="xpDevotionLabel">+20</span>)</div>
-              </div>
-              <div class="text-right">
-                <div id="devoteTime" class="text-2xl font-bold tabular-nums text-white">10:00</div>
-                <div class="text-[11px] text-slate-400">min</div>
-              </div>
-            </div>
-            <div class="mt-3 grid grid-cols-3 gap-2">
-              <button id="devoteStartBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleTimer('devotion')">Start</button>
-              <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="resetTimer('devotion')">Reset</button>
-              <button id="devoteDoneBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleDone('devotionDone')">Done</button>
-            </div>
-          </div>
-
-          <!-- Scripture + Notes -->
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Scripture</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
-              </div>
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('scripture')">
-                <span class="ms align-[-2px]">mic</span> Dictate
-              </button>
-            </div>
-            <input id="scripture" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 px-3 py-3 text-sm" placeholder="e.g., Psalm 23:1" />
-          </div>
-
-          <div class="glass rounded-3xl p-4">
-            <div class="flex items-center justify-between">
-              <div>
-                <div class="text-sm font-semibold text-white">Devotion Notes</div>
-                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
-              </div>
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('spiritNote')">
-                <span class="ms align-[-2px]">mic</span> Dictate
-              </button>
-            </div>
-            <textarea id="spiritNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Write what you received..."></textarea>
-          </div>
-        </div>
-
-        <!-- Summary -->
-        <div class="mt-4 glass rounded-3xl p-4">
-          <div class="text-sm font-semibold text-white">Today Summary</div>
-          <div id="mindSummary" class="mt-2 text-[12px] text-slate-300 leading-relaxed"></div>
-        </div>
-      </main>
-    </section>
-
-    <!-- ===== CALENDAR ===== -->
-    <section id="view-calendar" class="view flex-col min-h-[100dvh]">
-      <header class="px-5 pt-5 pb-3">
-        <div class="flex items-center justify-between">
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
-            <span class="ms align-[-2px]">chevron_left</span> Hub
-          </button>
-          <div class="text-center">
-            <div class="font-display text-lg font-semibold">History</div>
-            <div class="text-[11px] text-slate-400 mt-0.5">Tap a date to review / backfill</div>
-          </div>
-          <div class="w-[74px]"></div>
-        </div>
-      </header>
-
-      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
-        <div class="glass rounded-3xl p-4">
-          <div class="flex items-center justify-between">
-            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="changeMonth(-1)">
-              <span class="ms align-[-2px]">chevron_left</span>
-            </button>
-            <div id="calMonth" class="text-base font-semibold text-white"></div>
-            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="changeMonth(1)">
-              <span class="ms align-[-2px]">chevron_right</span>
-            </button>
-          </div>
-
-          <div class="mt-3 grid grid-cols-7 text-center text-[11px] text-slate-400">
-            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-          </div>
-          <div id="calGrid" class="mt-2 grid grid-cols-7 gap-1"></div>
-
-          <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
-            <div>Perfect: <span class="text-white font-semibold" id="calPerfect">0</span></div>
-            <div>Streak: <span class="text-white font-semibold" id="calStreak">0</span></div>
-          </div>
-        </div>
-
-        <!-- Detail -->
-        <div class="mt-4 glass rounded-3xl p-4">
+        <!-- Scripture -->
+        <div class="glass2 rounded-3xl p-4 border border-white/10">
           <div class="flex items-center justify-between">
             <div>
-              <div id="detailDate" class="text-sm font-semibold text-white">Select a day</div>
-              <div id="detailPct" class="text-[11px] text-slate-400 mt-0.5"></div>
+              <div class="text-[12px] text-slate-300 font-semibold">經文出處</div>
+              <div class="text-[11px] text-slate-400">輸入後自動保存</div>
             </div>
-            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm active:scale-[0.99]" onclick="editSelectedDay()">
-              Edit
+            <div class="text-right text-[11px] text-slate-400">此項 XP：<span id="scripture-xp" class="text-gold font-bold">0</span></div>
+          </div>
+          <input id="scripture" class="mt-3 w-full rounded-2xl bg-black/25 border border-white/10 text-slate-100 placeholder:text-slate-500 px-3 py-3 focus:ring-0 focus:outline-none text-[14px]"
+                 placeholder="例如：Psalm 23:1 / 詩篇 23:1"/>
+        </div>
+
+        <!-- Spirit Note -->
+        <div class="glass2 rounded-3xl p-4 border border-white/10">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="text-[12px] text-slate-300 font-semibold">領受筆記</div>
+              <div class="text-[11px] text-slate-400">輸入後自動保存（支援語音）</div>
+            </div>
+            <div class="text-right text-[11px] text-slate-400">此項 XP：<span id="spirit-xp" class="text-gold font-bold">0</span></div>
+          </div>
+          <div class="mt-3 relative">
+            <textarea id="spirit-note" class="w-full h-28 rounded-2xl bg-black/25 border border-white/10 text-slate-100 placeholder:text-slate-500 p-3 focus:ring-0 focus:outline-none text-[14px] leading-relaxed"
+              placeholder="記錄領受、祈禱…（中/英/粵混講也可以錄）"></textarea>
+            <button id="spirit-mic" class="hidden absolute right-3 bottom-3 glass2 border border-white/10 rounded-full px-3 py-1.5 text-[11px] text-slate-200 active:scale-95 transition">
+              <span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音
             </button>
           </div>
-
-          <div class="mt-3 text-[12px] text-slate-200">
-            <div class="text-[11px] text-slate-400 tracking-widest uppercase mb-2">Summary</div>
-            <div id="detailBullets" class="space-y-2"></div>
-          </div>
         </div>
-      </main>
+      </div>
     </section>
 
-    <!-- ===== Bottom Nav ===== -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 pb-[max(14px,env(safe-area-inset-bottom))] pt-2">
-      <div class="mx-auto w-[92%] max-w-[420px] glass2 rounded-[28px] border border-white/10 px-3 py-2">
-        <div class="grid grid-cols-4 gap-1">
-          <button class="navItem rounded-2xl py-2 text-center" data-view="hub" onclick="navTo('hub')">
-            <div class="text-[11px] font-semibold text-white">Hub</div>
+    <!-- CALENDAR -->
+    <section id="view-calendar" class="view px-5 pt-4">
+      <div class="flex items-center justify-between">
+        <div>
+          <div class="text-[11px] tracking-[0.18em] uppercase text-slate-400">Calendar</div>
+          <div class="text-[22px] font-bold text-white">進化日曆</div>
+        </div>
+        <div id="cal-selected" class="glass2 rounded-full px-3 py-1.5 text-[11px] border border-white/10 text-slate-200"></div>
+      </div>
+
+      <!-- Month Header -->
+      <div class="mt-4 glass rounded-3xl p-4 border border-white/10">
+        <div class="flex items-center justify-between">
+          <button id="cal-prev" class="glass2 rounded-2xl w-10 h-10 border border-white/10 active:scale-95 transition flex items-center justify-center">
+            <span class="material-symbols-outlined">chevron_left</span>
           </button>
-          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="body" onclick="navTo('body')">
-            <div class="text-[11px] font-semibold text-white">Body</div>
+          <div class="text-center">
+            <div id="cal-month" class="text-[16px] font-bold text-white tracking-wide"></div>
+            <div class="text-[11px] text-slate-400 mt-0.5">點日期可切換，方便補填</div>
+          </div>
+          <button id="cal-next" class="glass2 rounded-2xl w-10 h-10 border border-white/10 active:scale-95 transition flex items-center justify-center">
+            <span class="material-symbols-outlined">chevron_right</span>
           </button>
-          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="mind" onclick="navTo('mind')">
-            <div class="text-[11px] font-semibold text-white">Mind</div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-7 text-center text-[11px] text-slate-400">
+          <div>日</div><div>一</div><div>二</div><div>三</div><div>四</div><div>五</div><div>六</div>
+        </div>
+
+        <div id="cal-grid" class="mt-2 grid grid-cols-7 gap-1"></div>
+
+        <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2.5 h-2.5 rounded bg-white/10 border border-white/10"></span>一般
+            <span class="inline-block w-2.5 h-2.5 rounded bg-gold/25 border border-gold/40 ml-3"></span>70%+
+            <span class="inline-block w-2.5 h-2.5 rounded bg-violet/25 border border-violet/40 ml-3"></span>完美(100%)
+          </div>
+          <button id="cal-jump-today" class="glass2 px-3 py-1.5 rounded-full border border-white/10 active:scale-95 transition text-slate-200">今天</button>
+        </div>
+      </div>
+
+      <!-- Day Summary -->
+      <div class="mt-4 glass2 rounded-3xl p-4 border border-white/10">
+        <div class="flex items-start justify-between">
+          <div>
+            <div class="text-[12px] text-slate-400">當天摘要（分類列點）</div>
+            <div id="day-sum-title" class="mt-1 text-[16px] font-bold text-white"></div>
+          </div>
+          <div class="text-right">
+            <div class="text-[11px] text-slate-400">完成率</div>
+            <div id="day-sum-pct" class="text-[18px] font-bold text-white">0%</div>
+          </div>
+        </div>
+
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <button id="day-edit-body" class="glass2 rounded-2xl py-2 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">補填 身</button>
+          <button id="day-edit-mind" class="glass2 rounded-2xl py-2 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">補填 心</button>
+          <button id="day-edit-spirit" class="glass2 rounded-2xl py-2 border border-white/10 active:scale-95 transition text-[12px] font-semibold text-slate-200">補填 靈</button>
+        </div>
+
+        <div class="mt-4 space-y-3 text-[13px]">
+          <div class="glass2 rounded-2xl p-3 border border-white/10">
+            <div class="text-[12px] text-slate-300 font-semibold">Body</div>
+            <ul id="sum-body" class="mt-2 space-y-1 text-slate-200"></ul>
+          </div>
+          <div class="glass2 rounded-2xl p-3 border border-white/10">
+            <div class="text-[12px] text-slate-300 font-semibold">Mind</div>
+            <ul id="sum-mind" class="mt-2 space-y-1 text-slate-200"></ul>
+          </div>
+          <div class="glass2 rounded-2xl p-3 border border-white/10">
+            <div class="text-[12px] text-slate-300 font-semibold">Spirit</div>
+            <ul id="sum-spirit" class="mt-2 space-y-1 text-slate-200"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======= BOTTOM NAV ======= -->
+    <nav class="fixed left-0 right-0 bottom-0 z-50">
+      <div class="mx-auto max-w-[430px] px-4 pb-[calc(14px+env(safe-area-inset-bottom))] pt-3">
+        <div class="glass rounded-full border border-white/10 shadow-glass px-5 py-3 flex justify-between items-center">
+          <button class="nav-btn flex flex-col items-center justify-center w-16" data-view="hub">
+            <span class="material-symbols-outlined text-[22px] ms-fill text-gold" id="nav-ico-hub">grid_view</span>
+            <span class="text-[11px] font-bold text-white" id="nav-txt-hub">Hub</span>
           </button>
-          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="calendar" onclick="navTo('calendar')">
-            <div class="text-[11px] font-semibold text-white">History</div>
+          <button class="nav-btn flex flex-col items-center justify-center w-16 opacity-70" data-view="body">
+            <span class="material-symbols-outlined text-[22px] text-slate-300" id="nav-ico-body">fitness_center</span>
+            <span class="text-[11px] font-semibold text-slate-300" id="nav-txt-body">身</span>
+          </button>
+          <button class="nav-btn flex flex-col items-center justify-center w-16 opacity-70" data-view="mind">
+            <span class="material-symbols-outlined text-[22px] text-slate-300" id="nav-ico-mind">psychology</span>
+            <span class="text-[11px] font-semibold text-slate-300" id="nav-txt-mind">心/靈</span>
+          </button>
+          <button class="nav-btn flex flex-col items-center justify-center w-16 opacity-70" data-view="calendar">
+            <span class="material-symbols-outlined text-[22px] text-slate-300" id="nav-ico-calendar">calendar_month</span>
+            <span class="text-[11px] font-semibold text-slate-300" id="nav-txt-calendar">日曆</span>
           </button>
         </div>
       </div>
     </nav>
 
-    <!-- ===== Profile Modal ===== -->
-    <div id="profileModal" class="fixed inset-0 z-[9997] hidden">
-      <div class="absolute inset-0 bg-black/60" onclick="closeProfile()"></div>
-      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[420px] glass rounded-3xl p-4 border border-white/10">
-        <div class="flex items-center justify-between">
-          <div class="font-display text-lg font-semibold text-white">Profile</div>
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="closeProfile()">Close</button>
-        </div>
-
-        <div class="mt-4 flex items-center gap-3">
-          <div class="h-16 w-16 rounded-full overflow-hidden border border-white/15 bg-white/5 shrink-0">
-            <img id="profileImgPreview" class="h-full w-full object-cover" alt="preview"/>
-          </div>
-          <div class="flex-1 min-w-0">
-            <div class="text-[11px] text-slate-400 mb-1">Name</div>
-            <input id="nameInput" class="w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 px-3 py-3 text-sm" placeholder="Type your name" />
-            <div class="mt-2 flex items-center justify-between">
-              <div class="text-[11px] text-slate-400">Level <span class="text-gold font-semibold">LV <span id="modalLevel">1</span></span></div>
-              <div class="text-[11px] text-slate-400">Total XP <span class="text-white font-semibold" id="modalXP">0</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <div class="text-[11px] text-slate-400 mb-2">Photo (upload from phone)</div>
-          <input id="photoInput" type="file" accept="image/*" class="block w-full text-xs text-slate-300 file:mr-3 file:rounded-xl file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-slate-100 file:font-semibold" />
-          <div class="mt-2 text-[10px] text-slate-500">We compress image to avoid freezing & storage issues.</div>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-2">
-          <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="saveProfile()">
-            Save
-          </button>
-          <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold text-red-300 active:scale-[0.99]" onclick="confirmReset()">
-            Reset System
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== Day Picker Modal ===== -->
-    <div id="dayPicker" class="fixed inset-0 z-[9996] hidden">
-      <div class="absolute inset-0 bg-black/60" onclick="closeDayPicker()"></div>
-      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[420px] glass rounded-3xl p-4 border border-white/10">
-        <div class="flex items-center justify-between">
-          <div class="font-display text-lg font-semibold text-white">Select Date</div>
-          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="closeDayPicker()">Close</button>
-        </div>
-        <div class="mt-4">
-          <input id="datePickerInput" type="date" class="w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 focus:outline-none focus:ring-0 px-3 py-3 text-sm" />
-          <div class="mt-3 grid grid-cols-2 gap-2">
-            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="applyPickedDate()">Apply</button>
-            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="jumpToday()">Today</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 
-<script>
-/* =========================
-   ATE — Single-file Stable Build
-   Fixes:
-   - Profile name save (reliable localStorage writes)
-   - Photo upload compress + non-blocking render (prevents freeze)
-   - All actions use “delta XP” (undo deducts properly)
-   - Date switching always edits selected day (not stuck on today)
-   - Timers: start/pause/reset + done/undo
-   - Calendar present + backfill via Edit button
-========================= */
+  <!-- XP toast -->
+  <div id="xp-toast" class="xp-toast">
+    <div class="glass2 border border-white/10 rounded-full px-4 py-2 text-[12px] font-bold text-white shadow-glass">
+      <span id="xp-toast-text">+0 XP</span>
+    </div>
+  </div>
 
-const STORAGE_KEY = "ate_mobile_ultra_v1";
-const PROFILE_KEY = "ate_profile_v1";
+  <script>
+    /**********************
+     * CONFIG
+     **********************/
+    const STORAGE_KEY = "ate_mobile_v11_cn_fixed";
+    const WATER_TARGET = 1900;
 
-const WATER_TARGET = 1900;
-const WATER_STEP = 250;
+    // Task definition (Body)
+    const TASKS = [
+      { id: "squat15", type: "timer", title: "深蹲練習", subtitle: "15 分鐘", seconds: 15*60, xp: 15 },
+      { id: "muscle30", type: "timer", title: "每日肌肉訓練", subtitle: "30 分鐘", seconds: 30*60, xp: 30 },
+      { id: "yogurt", type: "check", title: "DIAAS 酸奶早餐", subtitle: "完成即可", xp: 10 },
+    ];
 
-/* XP RULES (transparent + shown) */
-const XP = {
-  waterPerStep: 5,           // per 250ml credited up to target
-  muscle30: 40,              // 30-min muscle training
-  squat15: 25,               // 15-min squat
-  breakfast: 10,             // yogurt breakfast
-  bowel: 5,                  // digest toggle
-  reading: 20,               // reading done
-  devotion: 20,              // devotion done
-};
-
-const TASKS_BODY = [
-  { id: "squat", type: "timer", title: "Squat Practice", sub: "15 min", dur: 15*60, xp: XP.squat15 },
-  { id: "muscle", type: "timer", title: "Muscle Training", sub: "30 min", dur: 30*60, xp: XP.muscle30 },
-  { id: "breakfast", type: "check", title: "Yogurt Breakfast", sub: "Quick win", xp: XP.breakfast },
-];
-
-// Daily Verse (EN)
-const VERSES = [
-  { t:"Be still, and know that I am God.", r:"Psalm 46:10" },
-  { t:"I can do all things through Christ who strengthens me.", r:"Philippians 4:13" },
-  { t:"The LORD is my shepherd; I shall not want.", r:"Psalm 23:1" },
-  { t:"Trust in the LORD with all your heart.", r:"Proverbs 3:5" },
-  { t:"My grace is sufficient for you.", r:"2 Corinthians 12:9" },
-  { t:"Let all that you do be done in love.", r:"1 Corinthians 16:14" },
-  { t:"The joy of the LORD is your strength.", r:"Nehemiah 8:10" },
-  { t:"Peace I leave with you; my peace I give you.", r:"John 14:27" },
-  { t:"Do not be anxious about anything.", r:"Philippians 4:6" },
-  { t:"Your word is a lamp to my feet and a light to my path.", r:"Psalm 119:105" },
-  { t:"The LORD is near to the brokenhearted.", r:"Psalm 34:18" },
-  { t:"Seek first the kingdom of God.", r:"Matthew 6:33" },
-  { t:"If anyone is in Christ, he is a new creation.", r:"2 Corinthians 5:17" },
-  { t:"Let your light shine before others.", r:"Matthew 5:16" },
-  { t:"He will renew your strength.", r:"Isaiah 40:31" },
-  { t:"God is our refuge and strength.", r:"Psalm 46:1" },
-  { t:"Blessed are the pure in heart.", r:"Matthew 5:8" },
-  { t:"The LORD will fight for you; you need only to be still.", r:"Exodus 14:14" },
-  { t:"In all your ways acknowledge Him.", r:"Proverbs 3:6" },
-  { t:"We love because He first loved us.", r:"1 John 4:19" },
-];
-
-let state = safeParse(localStorage.getItem(STORAGE_KEY)) || {};
-let profile = safeParse(localStorage.getItem(PROFILE_KEY)) || {
-  name: "Your Name",
-  photo: "",      // dataURL (compressed)
-  totalXP: 0,
-};
-
-let activeView = "hub";
-let selectedDateKey = todayKey();
-let mindTab = "mind";
-
-/* timers */
-let timers = {
-  squat:   { remaining: 15*60, running:false, handle:null, base:15*60 },
-  muscle:  { remaining: 30*60, running:false, handle:null, base:30*60 },
-  read:    { remaining: 20*60, running:false, handle:null, base:20*60 },
-  devotion:{ remaining: 10*60, running:false, handle:null, base:10*60 },
-};
-
-let calCursor = new Date();
-
-/* -------------------------
-   Utils
-------------------------- */
-function safeParse(x){ try{ return JSON.parse(x); } catch(e){ return null; } }
-function pad2(n){ return String(n).padStart(2,"0"); }
-function todayKey(){
-  const d = new Date();
-  return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
-}
-function ensureDay(key){
-  if(!state[key]){
-    state[key] = {
-      water: 0,
-      waterCreditedSteps: 0, // how many 250ml steps were credited for XP (capped to target)
-      bowel: false,
-      bodyTasks: { squat:false, muscle:false, breakfast:false },
-      readDone: false,
-      devotionDone: false,
-      growthNote: "",
-      brandNote: "",
-      scripture: "",
-      spiritNote: "",
-      dayXP: 0,
-      isPerfect: false,
-      lastUpdated: Date.now(),
+    // Mind & Spirit items scoring
+    const XP_RULES = {
+      waterMax: 40,     // proportional 0..40
+      bowel: 5,         // on/off
+      reading: 10,      // done/undone
+      growth: 5,        // has text
+      brand: 5,         // has text
+      devotion: 10,     // done/undone
+      scripture: 5,     // has text
+      spirit: 5,        // has text
+      bonus70: 20       // once per day when crossing >=70%
     };
-  }
-  return state[key];
-}
-function saveState(){
-  // perfect definition (you can tune): water target + all body tasks done + devotion or reading not required
-  const d = ensureDay(selectedDateKey);
-  const allBody = TASKS_BODY.every(t => d.bodyTasks[t.id]);
-  d.isPerfect = (d.water >= WATER_TARGET && allBody);
-  d.lastUpdated = Date.now();
 
-  try{
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }catch(e){
-    // If storage quota fails, we still keep in-memory to avoid crash.
-    toast("Storage full — saved in memory only", "warn");
-  }
-  render();
-}
-function saveProfileStorage(){
-  try{
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
-  }catch(e){
-    toast("Profile save failed (storage full)", "warn");
-  }
-}
+    // English daily verses (short, safe length)
+    const VERSES = [
+      { t:"Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", r:"Joshua 1:9" },
+      { t:"The Lord is my shepherd; I shall not want.", r:"Psalm 23:1" },
+      { t:"I can do all things through Christ who strengthens me.", r:"Philippians 4:13" },
+      { t:"Trust in the Lord with all your heart and lean not on your own understanding.", r:"Proverbs 3:5" },
+      { t:"My grace is sufficient for you, for my power is made perfect in weakness.", r:"2 Corinthians 12:9" },
+      { t:"Let all that you do be done in love.", r:"1 Corinthians 16:14" },
+      { t:"Do not be anxious about anything… and the peace of God… will guard your hearts and your minds.", r:"Philippians 4:6–7" },
+      { t:"For we walk by faith, not by sight.", r:"2 Corinthians 5:7" },
+    ];
 
-/* XP + delta system (no infinite stacking) */
-function applyXP(delta){
-  if(!delta) return;
-  const d = ensureDay(selectedDateKey);
+    /**********************
+     * STATE
+     **********************/
+    let state = loadState();
+    let selectedDateKey = state.ui?.selectedDateKey || todayKey();
+    let calView = new Date(); // month view
+    calView.setDate(1);
 
-  // clamp so dayXP and totalXP never below 0
-  d.dayXP = Math.max(0, d.dayXP + delta);
-  profile.totalXP = Math.max(0, profile.totalXP + delta);
+    // runtime timers (intervals only)
+    const runtime = {
+      taskIntervals: {},
+      readInterval: null,
+      devInterval: null,
+      speech: { active: false, target: null, recognizer: null }
+    };
 
-  // Level calc
-  saveProfileStorage();
-  saveState(); // will call render()
-  showXPDelta(delta);
-  checkHype();
-}
-
-/* show +/-, small */
-function showXPDelta(delta){
-  const sign = delta > 0 ? "+" : "";
-  toast(`${sign}${delta} XP`, delta > 0 ? "pos" : "neg");
-}
-function toast(msg, type="pos"){
-  const el = document.getElementById("toast");
-  const t = document.getElementById("toastText");
-  t.textContent = msg;
-  t.className = type==="neg" ? "text-red-300" : (type==="warn" ? "text-slate-200" : "text-gold");
-  el.classList.remove("hide");
-  el.classList.add("show");
-  clearTimeout(toast._t);
-  toast._t = setTimeout(()=>{ el.classList.remove("show"); el.classList.add("hide"); }, 700);
-}
-
-/* light confetti when crossing 70% */
-function checkHype(){
-  const pct = dayTotalPercent(selectedDateKey);
-  const d = ensureDay(selectedDateKey);
-  // fire once per day when first >=70
-  if(pct >= 70 && !d._hyped){
-    d._hyped = true;
-    saveState();
-    confettiBurst();
-    try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
-  }
-}
-
-/* confetti burst */
-function confettiBurst(){
-  const canvas = document.getElementById("confetti");
-  const ctx = canvas.getContext("2d");
-  const w = canvas.width = window.innerWidth;
-  const h = canvas.height = window.innerHeight;
-  canvas.style.display = "block";
-
-  const pieces = Array.from({length: 80}).map(()=>({
-    x: Math.random()*w,
-    y: -20 - Math.random()*200,
-    r: 2 + Math.random()*3,
-    vx: -1.2 + Math.random()*2.4,
-    vy: 2.5 + Math.random()*3.2,
-    a: 0.8 + Math.random()*0.2,
-    rot: Math.random()*Math.PI,
-    vr: -0.2 + Math.random()*0.4,
-  }));
-
-  let frames = 0;
-  function tick(){
-    frames++;
-    ctx.clearRect(0,0,w,h);
-    for(const p of pieces){
-      p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vy *= 0.995;
-      ctx.save();
-      ctx.globalAlpha = p.a;
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot);
-      // gold / violet / blue (kept subtle)
-      const c = (frames%3===0) ? "rgba(212,175,55,0.9)" : (frames%3===1 ? "rgba(139,92,246,0.85)" : "rgba(74,92,216,0.85)");
-      ctx.fillStyle = c;
-      ctx.fillRect(-p.r, -p.r, p.r*2.1, p.r*1.6);
-      ctx.restore();
+    /**********************
+     * UTIL
+     **********************/
+    function todayKey(){
+      const d = new Date();
+      return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
     }
-    if(frames < 55){
-      requestAnimationFrame(tick);
-    }else{
-      canvas.style.display = "none";
-      ctx.clearRect(0,0,w,h);
+    function ensureDay(key){
+      state.days ||= {};
+      if(!state.days[key]){
+        state.days[key] = {
+          water: 0,
+          bowel: false,
+          tasks: {}, // taskId -> { done:boolean, remaining:number, status:"idle|running|paused|done" }
+          mind: {
+            reading: { done:false, remaining: 20*60, status:"idle" },
+            growthNote: "",
+            brandNote: "",
+          },
+          spirit: {
+            devotion: { done:false, remaining: 10*60, status:"idle" },
+            scripture: "",
+            spiritNote: "",
+          },
+          bonus70Claimed: false
+        };
+        // init tasks
+        TASKS.forEach(t=>{
+          if(!state.days[key].tasks[t.id]){
+            state.days[key].tasks[t.id] = {
+              done:false,
+              remaining: t.type==="timer" ? t.seconds : 0,
+              status:"idle"
+            }
+          }
+        });
+      } else {
+        // backfill for new tasks
+        TASKS.forEach(t=>{
+          state.days[key].tasks ||= {};
+          if(!state.days[key].tasks[t.id]){
+            state.days[key].tasks[t.id] = { done:false, remaining: t.type==="timer"?t.seconds:0, status:"idle" };
+          }
+        });
+        // ensure nested
+        state.days[key].mind ||= { reading:{done:false, remaining:20*60, status:"idle"}, growthNote:"", brandNote:"" };
+        state.days[key].mind.reading ||= { done:false, remaining:20*60, status:"idle" };
+        state.days[key].spirit ||= { devotion:{done:false, remaining:10*60, status:"idle"}, scripture:"", spiritNote:"" };
+        state.days[key].spirit.devotion ||= { done:false, remaining:10*60, status:"idle" };
+      }
+      return state.days[key];
     }
-  }
-  requestAnimationFrame(tick);
-}
+    function loadState(){
+      try{
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if(raw){
+          const parsed = JSON.parse(raw);
+          // ensure structure
+          parsed.profile ||= { name:"", photoDataUrl:"", totalXp:0, level:1 };
+          parsed.days ||= {};
+          parsed.ui ||= {};
+          return parsed;
+        }
+      }catch(e){}
+      return { profile:{ name:"", photoDataUrl:"", totalXp:0, level:1 }, days:{}, ui:{} };
+    }
+    function saveState(){
+      state.ui ||= {};
+      state.ui.selectedDateKey = selectedDateKey;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+    function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+    function fmtMMSS(sec){
+      sec = Math.max(0, Math.floor(sec));
+      const m = Math.floor(sec/60), s = sec%60;
+      return `${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+    }
+    function hashStrToInt(s){
+      let h = 2166136261;
+      for(let i=0;i<s.length;i++){
+        h ^= s.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return (h>>>0);
+    }
+    function pickVerseForDate(key){
+      const idx = hashStrToInt(key) % VERSES.length;
+      return VERSES[idx];
+    }
+    function showXpToast(delta){
+      const el = document.getElementById("xp-toast");
+      const txt = document.getElementById("xp-toast-text");
+      const sign = delta>=0 ? "+" : "";
+      txt.textContent = `${sign}${delta} XP`;
+      el.classList.add("show");
+      clearTimeout(el._t);
+      el._t = setTimeout(()=>el.classList.remove("show"), 750);
+    }
 
-/* -------------------------
-   Scoring
-------------------------- */
-function levelInfo(totalXP){
-  // 300 xp per level (mobile-friendly)
-  const per = 300;
-  const level = Math.floor(totalXP / per) + 1;
-  const nextAt = level * per;
-  const into = totalXP - (level-1)*per;
-  const pct = Math.min(100, Math.round((into/per)*100));
-  return { level, nextAt, into, per, pct };
-}
+    /**********************
+     * SCORING (NO INFINITE ACCUMULATION)
+     * - All XP derived from current state (reversible).
+     **********************/
+    function calcDayXp(key){
+      const d = ensureDay(key);
+      let xp = 0;
 
-function bodyPercent(key){
-  const d = ensureDay(key);
-  const waterPct = Math.min(100, Math.round((d.water / WATER_TARGET)*100));
-  const tasksDone = TASKS_BODY.reduce((acc,t)=>acc + (d.bodyTasks[t.id] ? 1 : 0), 0);
-  const tasksPct = Math.round((tasksDone / TASKS_BODY.length)*100);
-  const bowelPct = d.bowel ? 100 : 0;
+      // Water proportional (0..waterMax)
+      const waterRatio = clamp(d.water / WATER_TARGET, 0, 1);
+      xp += Math.round(waterRatio * XP_RULES.waterMax);
 
-  // weights (sum 100): water 45, tasks 45, bowel 10
-  return Math.round(waterPct*0.45 + tasksPct*0.45 + bowelPct*0.10);
-}
+      // Tasks
+      TASKS.forEach(t=>{
+        const st = d.tasks[t.id];
+        if(st?.done) xp += t.xp;
+      });
 
-function mindPercent(key){
-  const d = ensureDay(key);
-  const readPct = d.readDone ? 100 : 0;
-  const devoPct = d.devotionDone ? 100 : 0;
-  const notesPct = ((d.growthNote?.trim()?1:0) + (d.brandNote?.trim()?1:0) + (d.scripture?.trim()?1:0) + (d.spiritNote?.trim()?1:0)) > 0 ? 100 : 0;
+      // Bowel
+      if(d.bowel) xp += XP_RULES.bowel;
 
-  // weights: reading 35, devotion 35, notes 30
-  return Math.round(readPct*0.35 + devoPct*0.35 + notesPct*0.30);
-}
+      // Mind
+      if(d.mind.reading?.done) xp += XP_RULES.reading;
+      if((d.mind.growthNote||"").trim().length>0) xp += XP_RULES.growth;
+      if((d.mind.brandNote||"").trim().length>0) xp += XP_RULES.brand;
 
-function dayTotalPercent(key){
-  // total: body 60, mind 40
-  return Math.round(bodyPercent(key)*0.60 + mindPercent(key)*0.40);
-}
+      // Spirit
+      if(d.spirit.devotion?.done) xp += XP_RULES.devotion;
+      if((d.spirit.scripture||"").trim().length>0) xp += XP_RULES.scripture;
+      if((d.spirit.spiritNote||"").trim().length>0) xp += XP_RULES.spirit;
 
-/* -------------------------
-   Navigation / Views
-------------------------- */
-function navTo(view){
-  activeView = view;
-  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
-  document.getElementById("view-"+view).classList.add("active");
+      // Bonus 70 (once/day)
+      if(d.bonus70Claimed) xp += XP_RULES.bonus70;
 
-  document.querySelectorAll(".navItem").forEach(btn=>{
-    const is = btn.dataset.view === view;
-    btn.classList.toggle("opacity-70", !is);
-    btn.classList.toggle("bg-white/10", is);
-    btn.classList.toggle("border", is);
-    btn.classList.toggle("border-white/10", is);
-  });
+      return xp;
+    }
 
-  render();
-}
+    function calcCompletion(key){
+      const d = ensureDay(key);
 
-function openProfile(){
-  document.getElementById("profileModal").classList.remove("hidden");
-  document.getElementById("nameInput").value = profile.name || "";
-  document.getElementById("profileImgPreview").src = profile.photo || defaultAvatar();
-  const li = levelInfo(profile.totalXP||0);
-  document.getElementById("modalLevel").textContent = li.level;
-  document.getElementById("modalXP").textContent = profile.totalXP||0;
-}
-function closeProfile(){
-  document.getElementById("profileModal").classList.add("hidden");
-}
+      // Weighted completion by items (same as XP components but normalized)
+      // Define 9 core items:
+      // Water, Task1, Task2, Task3, Bowel, Reading, Growth, Devotion, Scripture/SpiritNote(1 slot)
+      let done = 0, total = 9;
 
-function openDayPicker(){
-  document.getElementById("dayPicker").classList.remove("hidden");
-  document.getElementById("datePickerInput").value = selectedDateKey;
-}
-function closeDayPicker(){
-  document.getElementById("dayPicker").classList.add("hidden");
-}
-function applyPickedDate(){
-  const v = document.getElementById("datePickerInput").value;
-  if(v){
-    selectedDateKey = v;
-    ensureDay(selectedDateKey);
-    // Reset timers display to base when switching day (timers are session-based, completion is stored)
-    resetAllTimersToBase();
-    closeDayPicker();
-    render();
-  }
-}
-function jumpToday(){
-  selectedDateKey = todayKey();
-  ensureDay(selectedDateKey);
-  resetAllTimersToBase();
-  closeDayPicker();
-  render();
-}
+      // Water counts if >= target
+      if(d.water >= WATER_TARGET) done += 1;
 
-function resetAllTimersToBase(){
-  // stop all
-  Object.keys(timers).forEach(k=>{
-    if(timers[k].handle) clearInterval(timers[k].handle);
-    timers[k].handle = null;
-    timers[k].running = false;
-    timers[k].remaining = timers[k].base;
-  });
-}
+      // Tasks
+      done += (d.tasks[TASKS[0].id]?.done ? 1:0);
+      done += (d.tasks[TASKS[1].id]?.done ? 1:0);
+      done += (d.tasks[TASKS[2].id]?.done ? 1:0);
 
-/* -------------------------
-   Profile: Save + Photo Upload Fix
-------------------------- */
-function saveProfile(){
-  const name = (document.getElementById("nameInput").value || "").trim();
-  profile.name = name || "Your Name";
-  saveProfileStorage();
-  closeProfile();
-  render();
-  toast("Saved", "pos");
-}
+      // Bowel
+      done += (d.bowel ? 1:0);
 
-function confirmReset(){
-  if(confirm("【RESET】Clear all records and restart from 0?")){
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem(PROFILE_KEY);
-    location.reload();
-  }
-}
+      // Reading
+      done += (d.mind.reading?.done ? 1:0);
 
-/* compress image to avoid freeze + quota */
-async function fileToCompressedDataURL(file, maxSize=256, quality=0.82){
-  const imgData = await readFileAsDataURL(file);
-  const img = await loadImage(imgData);
+      // Growth note
+      done += ((d.mind.growthNote||"").trim().length>0 ? 1:0);
 
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+      // Devotion
+      done += (d.spirit.devotion?.done ? 1:0);
 
-  const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
-  const w = Math.max(1, Math.round(img.width * scale));
-  const h = Math.max(1, Math.round(img.height * scale));
-  canvas.width = w; canvas.height = h;
-  ctx.drawImage(img, 0, 0, w, h);
+      // Scripture/spirit note slot: if either exists counts
+      done += (((d.spirit.scripture||"").trim().length>0 || (d.spirit.spiritNote||"").trim().length>0) ? 1:0);
 
-  return canvas.toDataURL("image/jpeg", quality);
-}
-function readFileAsDataURL(file){
-  return new Promise((resolve, reject)=>{
-    const r = new FileReader();
-    r.onload = ()=> resolve(r.result);
-    r.onerror = reject;
-    r.readAsDataURL(file);
-  });
-}
-function loadImage(src){
-  return new Promise((resolve, reject)=>{
-    const img = new Image();
-    img.onload = ()=> resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
-}
+      const pct = Math.round((done/total)*100);
+      return { done, total, pct };
+    }
 
-/* -------------------------
-   Body Actions
-------------------------- */
-function waterDelta(delta){
-  const d = ensureDay(selectedDateKey);
-  const prev = d.water;
-  d.water = Math.max(0, prev + delta);
+    function recalcTotalsAndLevel(){
+      // total XP = sum all days' XP
+      let total = 0;
+      for(const k of Object.keys(state.days||{})){
+        total += calcDayXp(k);
+      }
+      state.profile.totalXp = total;
 
-  // XP credit: based on credited steps up to target
-  const maxSteps = Math.floor(WATER_TARGET / WATER_STEP);
-  const newSteps = Math.min(maxSteps, Math.floor(d.water / WATER_STEP));
-  const oldSteps = d.waterCreditedSteps || 0;
+      // Level: 500 XP per level
+      const lvl = Math.floor(total / 500) + 1;
+      state.profile.level = lvl;
+      saveState();
+    }
 
-  const stepDelta = newSteps - oldSteps;
-  d.waterCreditedSteps = newSteps;
+    function maybeClaimBonus70(key){
+      const d = ensureDay(key);
+      const { pct } = calcCompletion(key);
+      if(pct >= 70 && !d.bonus70Claimed){
+        d.bonus70Claimed = true;
+        // small excitement
+        showXpToast(XP_RULES.bonus70);
+      }
+      // if user later drops below 70, we keep bonus claimed as "reward once/day"
+    }
 
-  if(stepDelta !== 0){
-    applyXP(stepDelta * XP.waterPerStep);
-  }else{
-    saveState(); // still update UI
-  }
-}
+    /**********************
+     * NAV / VIEW
+     **********************/
+    function setActiveView(view){
+      document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));
+      document.getElementById(`view-${view}`).classList.add("active");
 
-function toggleBowel(checked){
-  const d = ensureDay(selectedDateKey);
-  const prev = !!d.bowel;
-  d.bowel = !!checked;
+      // nav highlight
+      ["hub","body","mind","calendar"].forEach(id=>{
+        const ico = document.getElementById(`nav-ico-${id}`);
+        const txt = document.getElementById(`nav-txt-${id}`);
+        const btn = document.querySelector(`.nav-btn[data-view="${id}"]`);
+        if(id===view){
+          btn.classList.remove("opacity-70");
+          ico.classList.add("ms-fill");
+          ico.classList.remove("text-slate-300");
+          ico.classList.add("text-gold");
+          txt.classList.add("text-white","font-bold");
+          txt.classList.remove("text-slate-300","font-semibold");
+        }else{
+          btn.classList.add("opacity-70");
+          ico.classList.remove("ms-fill");
+          ico.classList.add("text-slate-300");
+          ico.classList.remove("text-gold");
+          txt.classList.remove("text-white","font-bold");
+          txt.classList.add("text-slate-300","font-semibold");
+        }
+      });
 
-  if(d.bowel !== prev){
-    applyXP(d.bowel ? XP.bowel : -XP.bowel);
-  }else{
-    saveState();
-  }
-}
+      // refresh view-specific
+      updateUI();
+    }
 
-function toggleBodyTask(taskId){
-  const d = ensureDay(selectedDateKey);
-  const was = !!d.bodyTasks[taskId];
-  d.bodyTasks[taskId] = !was;
+    /**********************
+     * PROFILE (BUGFIX: name save & photo upload freeze)
+     **********************/
+    function initProfile(){
+      const nameInput = document.getElementById("profile-name");
+      const photo = document.getElementById("profile-photo");
+      const photoInput = document.getElementById("photo-input");
 
-  const task = TASKS_BODY.find(t=>t.id===taskId);
-  if(task){
-    applyXP(d.bodyTasks[taskId] ? task.xp : -task.xp);
-  }else{
-    saveState();
-  }
-}
+      nameInput.value = state.profile.name || "";
+      nameInput.addEventListener("input", ()=>{
+        state.profile.name = nameInput.value;
+        saveState(); // immediate save
+      });
 
-/* Done toggles in Mind/Spirit */
-function toggleDone(flag){
-  const d = ensureDay(selectedDateKey);
-
-  if(flag === "readDone"){
-    const was = !!d.readDone;
-    d.readDone = !was;
-    applyXP(d.readDone ? XP.reading : -XP.reading);
-    if(d.readDone) { timers.read.running=false; if(timers.read.handle) clearInterval(timers.read.handle); timers.read.handle=null; }
-    return;
-  }
-
-  if(flag === "devotionDone"){
-    const was = !!d.devotionDone;
-    d.devotionDone = !was;
-    applyXP(d.devotionDone ? XP.devotion : -XP.devotion);
-    if(d.devotionDone) { timers.devotion.running=false; if(timers.devotion.handle) clearInterval(timers.devotion.handle); timers.devotion.handle=null; }
-    return;
-  }
-}
-
-/* -------------------------
-   Timers (start/pause/reset)
-------------------------- */
-function toggleTimer(which){
-  // map
-  let key = which;
-  if(which === "devotion") key = "devotion";
-  if(which === "read") key = "read";
-
-  if(!timers[key]) return;
-
-  // If already done, ignore start
-  const d = ensureDay(selectedDateKey);
-  if(key==="read" && d.readDone){ toast("Already done (undo to re-run)", "warn"); return; }
-  if(key==="devotion" && d.devotionDone){ toast("Already done (undo to re-run)", "warn"); return; }
-  if((key==="squat" || key==="muscle") && d.bodyTasks[key]){ toast("Already done (undo to re-run)", "warn"); return; }
-
-  const t = timers[key];
-
-  if(t.running){
-    // pause
-    t.running = false;
-    if(t.handle) clearInterval(t.handle);
-    t.handle = null;
-    render();
-    return;
-  }
-
-  // start/resume
-  t.running = true;
-  if(t.handle) clearInterval(t.handle);
-  t.handle = setInterval(()=>{
-    t.remaining = Math.max(0, t.remaining - 1);
-    // update only relevant time text to keep smooth
-    updateTimerText(key);
-
-    if(t.remaining <= 0){
-      // auto complete
-      if(t.handle) clearInterval(t.handle);
-      t.handle = null;
-      t.running = false;
-
-      if(key==="read"){
-        if(!d.readDone){ d.readDone = true; applyXP(XP.reading); }
-      }else if(key==="devotion"){
-        if(!d.devotionDone){ d.devotionDone = true; applyXP(XP.devotion); }
-      }else if(key==="squat" || key==="muscle"){
-        if(!d.bodyTasks[key]){ d.bodyTasks[key] = true; const task = TASKS_BODY.find(x=>x.id===key); applyXP(task ? task.xp : 0); }
+      // load photo
+      if(state.profile.photoDataUrl){
+        photo.src = state.profile.photoDataUrl;
       }else{
-        saveState();
+        // elegant fallback
+        photo.src = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1">
+                <stop offset="0" stop-color="#D4AF37" stop-opacity="0.55"/>
+                <stop offset="0.5" stop-color="#8B5CF6" stop-opacity="0.45"/>
+                <stop offset="1" stop-color="#60A5FA" stop-opacity="0.45"/>
+              </linearGradient>
+            </defs>
+            <rect width="300" height="300" fill="#0B0B10"/>
+            <circle cx="95" cy="90" r="120" fill="url(#g)" opacity="0.55"/>
+            <circle cx="230" cy="220" r="140" fill="url(#g)" opacity="0.35"/>
+          </svg>
+        `);
       }
 
-      // reset timer to base for next use
-      t.remaining = t.base;
-      render();
+      photoInput.addEventListener("change", async (e)=>{
+        const file = e.target.files && e.target.files[0];
+        if(!file) return;
+
+        try{
+          // prevent "whole page stuck": async read + downscale
+          const dataUrl = await fileToDownscaledDataUrl(file, 360);
+          state.profile.photoDataUrl = dataUrl;
+          saveState();
+
+          // set src last (avoid large decode blocking)
+          requestAnimationFrame(()=>{
+            photo.src = dataUrl;
+          });
+
+          // reset input
+          photoInput.value = "";
+        }catch(err){
+          alert("照片處理失敗，請換一張較小的照片再試一次。");
+          photoInput.value = "";
+        }
+      });
     }
-  }, 1000);
 
-  render();
-}
+    function fileToDownscaledDataUrl(file, maxSize=360){
+      return new Promise((resolve,reject)=>{
+        const reader = new FileReader();
+        reader.onerror = ()=>reject(new Error("read error"));
+        reader.onload = ()=>{
+          const img = new Image();
+          img.onload = ()=>{
+            try{
+              const w = img.width, h = img.height;
+              const scale = Math.min(1, maxSize / Math.max(w,h));
+              const nw = Math.max(1, Math.round(w*scale));
+              const nh = Math.max(1, Math.round(h*scale));
+              const canvas = document.createElement("canvas");
+              canvas.width = nw;
+              canvas.height = nh;
+              const ctx = canvas.getContext("2d", { alpha:false });
+              ctx.imageSmoothingEnabled = true;
+              ctx.imageSmoothingQuality = "high";
+              ctx.drawImage(img, 0, 0, nw, nh);
 
-function resetTimer(which){
-  let key = which;
-  if(which === "devotion") key = "devotion";
-  if(which === "read") key = "read";
+              // jpeg compression to reduce localStorage size & lag
+              const out = canvas.toDataURL("image/jpeg", 0.82);
+              resolve(out);
+            }catch(e){ reject(e); }
+          };
+          img.onerror = ()=>reject(new Error("img decode error"));
+          img.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
 
-  if(!timers[key]) return;
-  const t = timers[key];
-
-  // stop + reset
-  if(t.handle) clearInterval(t.handle);
-  t.handle = null;
-  t.running = false;
-  t.remaining = t.base;
-
-  render();
-  toast("Reset", "warn");
-}
-
-function updateTimerText(key){
-  const t = timers[key];
-  const m = Math.floor(t.remaining/60);
-  const s = t.remaining%60;
-  const str = `${pad2(m)}:${pad2(s)}`;
-
-  if(key==="read"){
-    const el = document.getElementById("readTime");
-    if(el) el.textContent = str;
-  }else if(key==="devotion"){
-    const el = document.getElementById("devoteTime");
-    if(el) el.textContent = str;
-  }else if(key==="squat" || key==="muscle"){
-    const el = document.getElementById(`t_${key}`);
-    if(el) el.textContent = str;
-  }
-}
-
-/* -------------------------
-   Mind tab switch
-------------------------- */
-function switchMindTab(tab){
-  mindTab = tab;
-
-  const a = document.getElementById("mindTabMind");
-  const b = document.getElementById("mindTabSpirit");
-  const bm = document.getElementById("tabBtnMind");
-  const bs = document.getElementById("tabBtnSpirit");
-
-  if(tab==="mind"){
-    a.classList.remove("hidden");
-    b.classList.add("hidden");
-    bm.className = "rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10";
-    bs.className = "rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400";
-  }else{
-    a.classList.add("hidden");
-    b.classList.remove("hidden");
-    bs.className = "rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10";
-    bm.className = "rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400";
-  }
-}
-
-/* -------------------------
-   Notes: autosave + voice input
-------------------------- */
-function bindAutosave(){
-  const fields = ["growthNote","brandNote","scripture","spiritNote"];
-  fields.forEach(id=>{
-    const el = document.getElementById(id);
-    if(!el) return;
-    el.oninput = ()=>{
+    /**********************
+     * BODY ACTIONS
+     **********************/
+    function modifyWater(delta){
       const d = ensureDay(selectedDateKey);
-      d[id] = el.value || "";
-      // no XP for text itself (keep clean)
+      const beforeXp = calcDayXp(selectedDateKey);
+      d.water = clamp(d.water + delta, 0, 10000);
+      maybeClaimBonus70(selectedDateKey);
+      const afterXp = calcDayXp(selectedDateKey);
+      const diff = afterXp - beforeXp;
+      recalcTotalsAndLevel();
+      if(diff!==0) showXpToast(diff);
       saveState();
-    };
-  });
-}
-
-function voiceToText(fieldId){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){
-    toast("Voice input not supported on this browser", "warn");
-    return;
-  }
-  const rec = new SR();
-  // best-effort for mixed zh/en/yue: zh-HK tends to accept Cantonese + English terms better than zh-TW on many engines
-  rec.lang = "zh-HK";
-  rec.interimResults = true;
-  rec.continuous = false;
-
-  const target = document.getElementById(fieldId);
-  if(!target){ toast("Field not found", "warn"); return; }
-
-  let finalText = "";
-  rec.onresult = (e)=>{
-    let interim = "";
-    for(let i=e.resultIndex;i<e.results.length;i++){
-      const txt = e.results[i][0].transcript;
-      if(e.results[i].isFinal) finalText += txt;
-      else interim += txt;
-    }
-    // show as you speak
-    const base = (target.value || "");
-    target.value = base + (finalText || interim);
-    target.dispatchEvent(new Event("input"));
-  };
-  rec.onerror = ()=> toast("Voice input failed", "warn");
-  rec.onend = ()=> toast("Captured", "pos");
-
-  try{
-    rec.start();
-    toast("Listening…", "warn");
-  }catch(e){
-    toast("Voice input busy", "warn");
-  }
-}
-
-/* -------------------------
-   Calendar
-------------------------- */
-function changeMonth(offset){
-  calCursor.setMonth(calCursor.getMonth() + offset);
-  renderCalendar();
-}
-function renderCalendar(){
-  const y = calCursor.getFullYear();
-  const m = calCursor.getMonth();
-  const first = new Date(y,m,1).getDay();
-  const days = new Date(y,m+1,0).getDate();
-  const monthName = calCursor.toLocaleString("en-US",{month:"long"});
-  document.getElementById("calMonth").textContent = `${monthName} ${y}`;
-
-  const grid = document.getElementById("calGrid");
-  grid.innerHTML = "";
-
-  // empty cells
-  for(let i=0;i<first;i++){
-    const cell = document.createElement("div");
-    cell.className = "aspect-square";
-    grid.appendChild(cell);
-  }
-
-  const today = new Date();
-  const todayK = todayKey();
-  let perfectCount = 0;
-
-  for(let d=1; d<=days; d++){
-    const key = `${y}-${pad2(m+1)}-${pad2(d)}`;
-    const entry = state[key];
-    if(entry?.isPerfect) perfectCount++;
-
-    const isToday = key === todayK;
-    const isSelected = key === selectedDateKey;
-    const isPerfect = !!entry?.isPerfect;
-
-    const btn = document.createElement("button");
-    btn.className = "aspect-square rounded-xl border text-sm font-semibold transition-all active:scale-[0.99]";
-
-    if(isSelected){
-      btn.classList.add("bg-white/10","border-white/30","text-white");
-    }else if(isPerfect){
-      btn.classList.add("bg-gold/15","border-gold/30","text-white","shadow-glow");
-    }else if(isToday){
-      btn.classList.add("bg-violet/15","border-violet/30","text-white");
-    }else{
-      btn.classList.add("bg-white/0","border-white/0","text-slate-400","hover:bg-white/5");
+      updateUI();
     }
 
-    btn.textContent = String(d);
-    btn.onclick = ()=>{
-      selectedDateKey = key;
-      ensureDay(selectedDateKey);
-      resetAllTimersToBase();
-      render(); // also updates detail
-      // keep on calendar view
-    };
-
-    grid.appendChild(btn);
-  }
-
-  document.getElementById("calPerfect").textContent = perfectCount;
-
-  // streak calc (simple consecutive perfect up to today)
-  document.getElementById("calStreak").textContent = calcStreak();
-}
-
-function showCalendarDetail(){
-  const d = ensureDay(selectedDateKey);
-  const pct = dayTotalPercent(selectedDateKey);
-  const dt = new Date(selectedDateKey+"T00:00:00");
-  const label = dt.toLocaleDateString("en-US",{weekday:"short", month:"short", day:"numeric", year:"numeric"});
-  document.getElementById("detailDate").textContent = label;
-  document.getElementById("detailPct").textContent = `Total: ${pct}% • Day XP: ${d.dayXP||0} XP`;
-
-  const bullets = document.getElementById("detailBullets");
-  bullets.innerHTML = "";
-
-  const bodyB = document.createElement("div");
-  bodyB.className = "glass2 rounded-2xl p-3 border border-white/10";
-  bodyB.innerHTML = `
-    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Body</div>
-    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
-      <li>• Water: <span class="font-semibold text-white">${d.water} ml</span></li>
-      <li>• Squat: <span class="font-semibold ${d.bodyTasks.squat?'text-gold':'text-slate-400'}">${d.bodyTasks.squat?'Done':'Not yet'}</span></li>
-      <li>• Muscle: <span class="font-semibold ${d.bodyTasks.muscle?'text-gold':'text-slate-400'}">${d.bodyTasks.muscle?'Done':'Not yet'}</span></li>
-      <li>• Breakfast: <span class="font-semibold ${d.bodyTasks.breakfast?'text-gold':'text-slate-400'}">${d.bodyTasks.breakfast?'Done':'Not yet'}</span></li>
-      <li>• Digest: <span class="font-semibold ${d.bowel?'text-gold':'text-slate-400'}">${d.bowel?'Checked':'Not yet'}</span></li>
-    </ul>
-  `;
-  bullets.appendChild(bodyB);
-
-  const mindB = document.createElement("div");
-  mindB.className = "glass2 rounded-2xl p-3 border border-white/10";
-  mindB.innerHTML = `
-    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Mind</div>
-    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
-      <li>• Reading: <span class="font-semibold ${d.readDone?'text-gold':'text-slate-400'}">${d.readDone?'Done':'Not yet'}</span></li>
-      <li>• Growth: <span class="font-semibold ${d.growthNote?.trim()?'text-white':'text-slate-400'}">${d.growthNote?.trim() ? 'Saved' : 'Empty'}</span></li>
-      <li>• Brand: <span class="font-semibold ${d.brandNote?.trim()?'text-white':'text-slate-400'}">${d.brandNote?.trim() ? 'Saved' : 'Empty'}</span></li>
-    </ul>
-  `;
-  bullets.appendChild(mindB);
-
-  const spiritB = document.createElement("div");
-  spiritB.className = "glass2 rounded-2xl p-3 border border-white/10";
-  spiritB.innerHTML = `
-    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Spirit</div>
-    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
-      <li>• Devotion: <span class="font-semibold ${d.devotionDone?'text-gold':'text-slate-400'}">${d.devotionDone?'Done':'Not yet'}</span></li>
-      <li>• Scripture: <span class="font-semibold ${d.scripture?.trim()?'text-white':'text-slate-400'}">${d.scripture?.trim() ? d.scripture : 'Empty'}</span></li>
-      <li>• Notes: <span class="font-semibold ${d.spiritNote?.trim()?'text-white':'text-slate-400'}">${d.spiritNote?.trim() ? 'Saved' : 'Empty'}</span></li>
-    </ul>
-  `;
-  bullets.appendChild(spiritB);
-}
-
-function editSelectedDay(){
-  // open picker is optional, but edit means “go to Body to backfill that date”
-  navTo("body");
-}
-function calcStreak(){
-  // current streak of perfect days ending at today
-  let streak = 0;
-  let cursor = new Date(todayKey()+"T00:00:00");
-  for(let i=0;i<365;i++){
-    const k = `${cursor.getFullYear()}-${pad2(cursor.getMonth()+1)}-${pad2(cursor.getDate())}`;
-    if(state[k]?.isPerfect) streak++;
-    else break;
-    cursor.setDate(cursor.getDate()-1);
-  }
-  return streak;
-}
-
-/* -------------------------
-   Render
-------------------------- */
-function defaultAvatar(){
-  // simple gradient SVG data URL (no network)
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
-    <defs>
-      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-        <stop offset="0" stop-color="#8B5CF6"/>
-        <stop offset="0.5" stop-color="#4A5CD8"/>
-        <stop offset="1" stop-color="#D4AF37"/>
-      </linearGradient>
-    </defs>
-    <rect width="200" height="200" fill="url(#g)"/>
-  </svg>`;
-  return "data:image/svg+xml;base64," + btoa(svg);
-}
-
-function setDailyVerse(){
-  // deterministic by date
-  const key = selectedDateKey || todayKey();
-  let hash = 0;
-  for(let i=0;i<key.length;i++) hash = (hash*31 + key.charCodeAt(i)) >>> 0;
-  const v = VERSES[hash % VERSES.length];
-  document.getElementById("dailyVerseText").textContent = `“${v.t}”`;
-  document.getElementById("dailyVerseRef").textContent = v.r;
-}
-
-function render(){
-  // ensure selected day exists
-  const d = ensureDay(selectedDateKey);
-
-  // profile render
-  const li = levelInfo(profile.totalXP||0);
-  document.getElementById("profileLevel").textContent = li.level;
-  document.getElementById("profileXP").textContent = profile.totalXP||0;
-  document.getElementById("profileXPNext").textContent = li.nextAt;
-
-  document.getElementById("profileName").textContent = profile.name || "Your Name";
-  const img = profile.photo || defaultAvatar();
-  document.getElementById("profileImg").src = img;
-  const prev = document.getElementById("profileImgPreview");
-  if(prev) prev.src = img;
-
-  document.getElementById("todayLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
-
-  // streak
-  const streak = calcStreak();
-  document.getElementById("streakDays").textContent = streak;
-
-  // today xp
-  document.getElementById("todayXP").textContent = d.dayXP||0;
-  document.getElementById("todayXPBar").style.width = `${Math.min(100, Math.round(((d.dayXP||0)/120)*100))}%`; // “today xp” visual cap
-
-  // daily verse
-  setDailyVerse();
-
-  // perfect days count
-  const perfect = Object.values(state).filter(x=>x && x.isPerfect).length;
-  document.getElementById("perfectDays").textContent = perfect;
-
-  // weekly progress (perfect in last 7 days)
-  const weekly = countPerfectLast7();
-  document.getElementById("weeklyProgress").textContent = Math.min(weekly, 3);
-  document.getElementById("weeklyBar").style.width = `${Math.min(100, Math.round((Math.min(weekly,3)/3)*100))}%`;
-  const wb = document.getElementById("weeklyBtn");
-  if(weekly>=3){
-    wb.disabled = false;
-    wb.className = "mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-gradient-to-r from-gold to-gold2 text-black shadow-glow active:scale-[0.99]";
-    wb.textContent = "Unlock";
-    wb.onclick = ()=> toast("Unlocked ✨", "pos");
-  }else{
-    wb.disabled = true;
-    wb.className = "mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed";
-    wb.textContent = "Locked";
-    wb.onclick = null;
-  }
-
-  // hub overview
-  const bp = bodyPercent(selectedDateKey);
-  const mp = mindPercent(selectedDateKey);
-  document.getElementById("hubBodyPct").textContent = bp;
-  document.getElementById("hubMindPct").textContent = mp;
-  document.getElementById("hubBodyBar").style.width = `${bp}%`;
-  document.getElementById("hubMindBar").style.width = `${mp}%`;
-
-  // BODY view
-  document.getElementById("bodyDateLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
-  document.getElementById("waterTargetLabel").textContent = WATER_TARGET;
-
-  document.getElementById("waterVal").textContent = d.water;
-  document.getElementById("waterBar").style.width = `${Math.min(100, (d.water/WATER_TARGET)*100)}%`;
-
-  document.getElementById("xpWaterMinus").textContent = `-${XP.waterPerStep}`;
-  document.getElementById("xpWaterPlus").textContent = `+${XP.waterPerStep}`;
-  document.getElementById("xpWaterPlus2").textContent = `+${XP.waterPerStep*2}`;
-  document.getElementById("xpBowelLabel").textContent = `+${XP.bowel}`;
-
-  document.getElementById("bowelToggle").checked = !!d.bowel;
-
-  // render body tasks
-  renderBodyTasks();
-
-  // body summary
-  document.getElementById("bodySummary").innerHTML = summaryBullets(selectedDateKey).body;
-
-  // MIND view
-  document.getElementById("mindDateLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
-  document.getElementById("xpReadLabel").textContent = `+${XP.reading}`;
-  document.getElementById("xpDevotionLabel").textContent = `+${XP.devotion}`;
-
-  // notes
-  document.getElementById("growthNote").value = d.growthNote || "";
-  document.getElementById("brandNote").value = d.brandNote || "";
-  document.getElementById("scripture").value = d.scripture || "";
-  document.getElementById("spiritNote").value = d.spiritNote || "";
-
-  // done buttons labels
-  document.getElementById("readDoneBtn").textContent = d.readDone ? "Undo" : "Done";
-  document.getElementById("devoteDoneBtn").textContent = d.devotionDone ? "Undo" : "Done";
-
-  // timer text + start labels
-  updateTimerText("read");
-  updateTimerText("devotion");
-  document.getElementById("readStartBtn").textContent = timers.read.running ? "Pause" : "Start";
-  document.getElementById("devoteStartBtn").textContent = timers.devotion.running ? "Pause" : "Start";
-
-  document.getElementById("mindSummary").innerHTML = summaryBullets(selectedDateKey).mind;
-
-  // calendar
-  renderCalendar();
-  showCalendarDetail();
-
-  // bind autosave once per render (safe re-bind)
-  bindAutosave();
-}
-
-function countPerfectLast7(){
-  let count = 0;
-  const t = new Date(todayKey()+"T00:00:00");
-  for(let i=0;i<7;i++){
-    const k = `${t.getFullYear()}-${pad2(t.getMonth()+1)}-${pad2(t.getDate())}`;
-    if(state[k]?.isPerfect) count++;
-    t.setDate(t.getDate()-1);
-  }
-  return count;
-}
-
-function renderBodyTasks(){
-  const d = ensureDay(selectedDateKey);
-  const box = document.getElementById("bodyTasks");
-  box.innerHTML = "";
-
-  TASKS_BODY.forEach(task=>{
-    const done = !!d.bodyTasks[task.id];
-    const card = document.createElement("div");
-    card.className = "glass rounded-3xl p-4 transition-all";
-    card.onclick = ()=> toggleBodyTask(task.id);
-
-    // time display for timers
-    let right = "";
-    if(task.type === "timer"){
-      const t = timers[task.id];
-      const m = Math.floor(t.remaining/60);
-      const s = t.remaining%60;
-      right = `
-        <div class="text-right">
-          <div id="t_${task.id}" class="text-2xl font-bold tabular-nums ${done?'text-gold':'text-white'}">${pad2(m)}:${pad2(s)}</div>
-          <div class="text-[11px] text-slate-400">${task.sub}</div>
-        </div>
-      `;
-    }else{
-      right = `
-        <div class="text-right">
-          <div class="text-[11px] text-slate-400">${task.sub}</div>
-        </div>
-      `;
+    function toggleBowel(){
+      const d = ensureDay(selectedDateKey);
+      const beforeXp = calcDayXp(selectedDateKey);
+      d.bowel = !d.bowel;
+      maybeClaimBonus70(selectedDateKey);
+      const afterXp = calcDayXp(selectedDateKey);
+      const diff = afterXp - beforeXp;
+      recalcTotalsAndLevel();
+      if(diff!==0) showXpToast(diff);
+      saveState();
+      updateUI();
     }
 
-    const xpText = done ? `-${task.xp} if undo` : `+${task.xp}`;
-    const badge = done
-      ? `<div class="text-[11px] font-semibold text-gold">Done</div>`
-      : `<div class="text-[11px] font-semibold text-slate-300">${xpText}</div>`;
+    function setTaskDone(taskId, done){
+      const d = ensureDay(selectedDateKey);
+      const beforeXp = calcDayXp(selectedDateKey);
 
-    card.innerHTML = `
-      <div class="flex items-start justify-between gap-3">
-        <div class="min-w-0">
-          <div class="text-sm font-semibold text-white">${task.title}</div>
-          <div class="mt-1">${badge}</div>
-          <div class="mt-2 flex items-center gap-2">
-            ${task.type==="timer" ? `
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); toggleTimer('${task.id}')">
-                ${timers[task.id].running ? "Pause" : "Start"}
-              </button>
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); resetTimer('${task.id}')">
-                Reset
-              </button>
-            ` : `
-              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); toggleBodyTask('${task.id}')">
-                ${done ? "Undo" : "Done"}
-              </button>
-            `}
-            <div class="text-[11px] text-slate-500">tap card to ${done?'undo':'complete'}</div>
+      const def = TASKS.find(t=>t.id===taskId);
+      const st = d.tasks[taskId];
+
+      if(done){
+        st.done = true;
+        st.status = "done";
+        if(def.type==="timer") st.remaining = 0;
+        stopTaskInterval(taskId);
+      }else{
+        st.done = false;
+        st.status = "idle";
+        if(def.type==="timer") st.remaining = def.seconds;
+        stopTaskInterval(taskId);
+      }
+
+      maybeClaimBonus70(selectedDateKey);
+      const afterXp = calcDayXp(selectedDateKey);
+      const diff = afterXp - beforeXp;
+      recalcTotalsAndLevel();
+      if(diff!==0) showXpToast(diff);
+      saveState();
+      updateUI();
+    }
+
+    function stopTaskInterval(taskId){
+      if(runtime.taskIntervals[taskId]){
+        clearInterval(runtime.taskIntervals[taskId]);
+        runtime.taskIntervals[taskId] = null;
+      }
+    }
+
+    function toggleTaskTimer(taskId){
+      const d = ensureDay(selectedDateKey);
+      const def = TASKS.find(t=>t.id===taskId);
+      const st = d.tasks[taskId];
+      if(!def || def.type!=="timer") return;
+      if(st.done) return;
+
+      // start / pause
+      if(st.status==="running"){
+        st.status = "paused";
+        stopTaskInterval(taskId);
+        saveState();
+        updateUI();
+        return;
+      }
+
+      // resume/start
+      st.status = "running";
+      stopTaskInterval(taskId);
+      runtime.taskIntervals[taskId] = setInterval(()=>{
+        // guard for date switch
+        const dd = ensureDay(selectedDateKey);
+        const sst = dd.tasks[taskId];
+        if(!sst || sst.done){ stopTaskInterval(taskId); return; }
+        if(sst.status!=="running"){ stopTaskInterval(taskId); return; }
+
+        sst.remaining = Math.max(0, (sst.remaining||0) - 1);
+        // direct DOM update for smooth
+        const el = document.getElementById(`task-time-${taskId}`);
+        if(el) el.textContent = fmtMMSS(sst.remaining);
+
+        if(sst.remaining<=0){
+          stopTaskInterval(taskId);
+          setTaskDone(taskId, true);
+        }else{
+          saveState();
+        }
+      }, 1000);
+
+      saveState();
+      updateUI();
+    }
+
+    function resetTaskTimer(taskId){
+      const d = ensureDay(selectedDateKey);
+      const def = TASKS.find(t=>t.id===taskId);
+      const st = d.tasks[taskId];
+      if(!def || def.type!=="timer") return;
+
+      // reset doesn't change XP unless it cancels done (handled elsewhere)
+      st.status = "idle";
+      st.remaining = def.seconds;
+      stopTaskInterval(taskId);
+      saveState();
+      updateUI();
+    }
+
+    /**********************
+     * MIND: Reading
+     **********************/
+    function stopReadInterval(){
+      if(runtime.readInterval){ clearInterval(runtime.readInterval); runtime.readInterval=null; }
+    }
+    function toggleReadingTimer(){
+      const d = ensureDay(selectedDateKey);
+      const r = d.mind.reading;
+      if(r.done) return;
+
+      if(r.status==="running"){
+        r.status="paused";
+        stopReadInterval();
+        saveState(); updateUI(); return;
+      }
+
+      r.status="running";
+      stopReadInterval();
+      runtime.readInterval = setInterval(()=>{
+        const dd = ensureDay(selectedDateKey);
+        const rr = dd.mind.reading;
+        if(!rr || rr.done){ stopReadInterval(); return; }
+        if(rr.status!=="running"){ stopReadInterval(); return; }
+
+        rr.remaining = Math.max(0, (rr.remaining||0) - 1);
+        const el = document.getElementById("read-display");
+        if(el) el.textContent = fmtMMSS(rr.remaining);
+
+        if(rr.remaining<=0){
+          stopReadInterval();
+          rr.status="done";
+          rr.done=true;
+          // XP update
+          const before = calcDayXp(selectedDateKey);
+          maybeClaimBonus70(selectedDateKey);
+          const after = calcDayXp(selectedDateKey);
+          const diff = after - before;
+          recalcTotalsAndLevel();
+          if(diff!==0) showXpToast(diff);
+          saveState();
+          updateUI();
+        }else{
+          saveState();
+        }
+      }, 1000);
+
+      saveState(); updateUI();
+    }
+    function resetReading(){
+      const d = ensureDay(selectedDateKey);
+      d.mind.reading.status="idle";
+      d.mind.reading.remaining = 20*60;
+      stopReadInterval();
+      saveState(); updateUI();
+    }
+    function toggleReadingDone(){
+      const d = ensureDay(selectedDateKey);
+      const before = calcDayXp(selectedDateKey);
+
+      const r = d.mind.reading;
+      if(r.done){
+        // cancel
+        r.done=false;
+        r.status="idle";
+        r.remaining = 20*60;
+      }else{
+        // complete
+        r.done=true;
+        r.status="done";
+        r.remaining = 0;
+        stopReadInterval();
+      }
+
+      maybeClaimBonus70(selectedDateKey);
+      const after = calcDayXp(selectedDateKey);
+      const diff = after - before;
+      recalcTotalsAndLevel();
+      if(diff!==0) showXpToast(diff);
+      saveState(); updateUI();
+    }
+
+    /**********************
+     * SPIRIT: Devotion (silent)
+     **********************/
+    function stopDevInterval(){
+      if(runtime.devInterval){ clearInterval(runtime.devInterval); runtime.devInterval=null; }
+    }
+    function toggleDevTimer(){
+      const d = ensureDay(selectedDateKey);
+      const dv = d.spirit.devotion;
+      if(dv.done) return;
+
+      if(dv.status==="running"){
+        dv.status="paused";
+        stopDevInterval();
+        saveState(); updateUI(); return;
+      }
+
+      dv.status="running";
+      stopDevInterval();
+      runtime.devInterval = setInterval(()=>{
+        const dd = ensureDay(selectedDateKey);
+        const vv = dd.spirit.devotion;
+        if(!vv || vv.done){ stopDevInterval(); return; }
+        if(vv.status!=="running"){ stopDevInterval(); return; }
+
+        vv.remaining = Math.max(0, (vv.remaining||0) - 1);
+        const el = document.getElementById("dev-display");
+        if(el) el.textContent = fmtMMSS(vv.remaining);
+
+        if(vv.remaining<=0){
+          stopDevInterval();
+          vv.status="done";
+          vv.done=true;
+
+          const before = calcDayXp(selectedDateKey);
+          maybeClaimBonus70(selectedDateKey);
+          const after = calcDayXp(selectedDateKey);
+          const diff = after - before;
+          recalcTotalsAndLevel();
+          if(diff!==0) showXpToast(diff);
+          saveState();
+          updateUI();
+        }else{
+          saveState();
+        }
+      }, 1000);
+
+      saveState(); updateUI();
+    }
+    function resetDevotion(){
+      const d = ensureDay(selectedDateKey);
+      d.spirit.devotion.status="idle";
+      d.spirit.devotion.remaining = 10*60;
+      stopDevInterval();
+      saveState(); updateUI();
+    }
+    function toggleDevDone(){
+      const d = ensureDay(selectedDateKey);
+      const before = calcDayXp(selectedDateKey);
+
+      const dv = d.spirit.devotion;
+      if(dv.done){
+        dv.done=false;
+        dv.status="idle";
+        dv.remaining = 10*60;
+      }else{
+        dv.done=true;
+        dv.status="done";
+        dv.remaining = 0;
+        stopDevInterval();
+      }
+
+      maybeClaimBonus70(selectedDateKey);
+      const after = calcDayXp(selectedDateKey);
+      const diff = after - before;
+      recalcTotalsAndLevel();
+      if(diff!==0) showXpToast(diff);
+      saveState(); updateUI();
+    }
+
+    /**********************
+     * NOTES SAVE
+     **********************/
+    function bindAutosave(){
+      const growth = document.getElementById("growth-note");
+      const brand = document.getElementById("brand-note");
+      const scripture = document.getElementById("scripture");
+      const spirit = document.getElementById("spirit-note");
+
+      function attach(el, path){
+        el.addEventListener("input", ()=>{
+          const before = calcDayXp(selectedDateKey);
+          const d = ensureDay(selectedDateKey);
+
+          // set value
+          const [a,b] = path;
+          d[a][b] = el.value;
+
+          maybeClaimBonus70(selectedDateKey);
+          const after = calcDayXp(selectedDateKey);
+          const diff = after - before;
+          recalcTotalsAndLevel();
+          if(diff!==0) showXpToast(diff);
+
+          saveState();
+          updateUI(); // keep XP labels current
+        });
+      }
+
+      attach(growth, ["mind","growthNote"]);
+      attach(brand, ["mind","brandNote"]);
+      scripture.addEventListener("input", ()=>{
+        const before = calcDayXp(selectedDateKey);
+        const d = ensureDay(selectedDateKey);
+        d.spirit.scripture = scripture.value;
+
+        maybeClaimBonus70(selectedDateKey);
+        const after = calcDayXp(selectedDateKey);
+        const diff = after - before;
+        recalcTotalsAndLevel();
+        if(diff!==0) showXpToast(diff);
+
+        saveState();
+        updateUI();
+      });
+      attach(spirit, ["spirit","spiritNote"]);
+    }
+
+    /**********************
+     * VOICE TO TEXT (optional)
+     **********************/
+    function initSpeech(){
+      const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if(!SR) return;
+
+      function mkRecognizer(){
+        const rec = new SR();
+        rec.continuous = true;
+        rec.interimResults = true;
+
+        // Mixed-language best-effort: prefer zh-HK (covers Cantonese + Chinese), but users can speak English inside.
+        rec.lang = "zh-HK";
+
+        rec.onresult = (event)=>{
+          if(!runtime.speech.target) return;
+          let finalText = "";
+          for(let i=event.resultIndex;i<event.results.length;i++){
+            const r = event.results[i];
+            if(r.isFinal) finalText += r[0].transcript;
+          }
+          if(finalText){
+            const el = runtime.speech.target;
+            el.value = (el.value ? (el.value + (el.value.endsWith("\n")?"":"\n")) : "") + finalText.trim();
+            el.dispatchEvent(new Event("input", { bubbles:true }));
+          }
+        };
+        rec.onerror = ()=>{ stopSpeech(); };
+        rec.onend = ()=>{ runtime.speech.active=false; };
+        return rec;
+      }
+
+      function startSpeech(targetEl){
+        stopSpeech();
+        runtime.speech.target = targetEl;
+        runtime.speech.recognizer = mkRecognizer();
+        runtime.speech.active = true;
+        try{ runtime.speech.recognizer.start(); }catch(e){}
+      }
+      function stopSpeech(){
+        if(runtime.speech.recognizer){
+          try{ runtime.speech.recognizer.stop(); }catch(e){}
+        }
+        runtime.speech.active=false;
+        runtime.speech.target=null;
+        runtime.speech.recognizer=null;
+      }
+      window._startSpeech = startSpeech;
+      window._stopSpeech = stopSpeech;
+
+      // show mic buttons
+      const growthMic = document.getElementById("growth-mic");
+      const brandMic = document.getElementById("brand-mic");
+      const spiritMic = document.getElementById("spirit-mic");
+      [growthMic,brandMic,spiritMic].forEach(b=>b.classList.remove("hidden"));
+
+      growthMic.addEventListener("click", ()=>{
+        const t = document.getElementById("growth-note");
+        if(runtime.speech.active){ stopSpeech(); } else { startSpeech(t); }
+        growthMic.innerHTML = runtime.speech.active ? '<span class="material-symbols-outlined text-[16px] align-[-3px]">stop_circle</span> 停止' : '<span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音';
+      });
+      brandMic.addEventListener("click", ()=>{
+        const t = document.getElementById("brand-note");
+        if(runtime.speech.active){ stopSpeech(); } else { startSpeech(t); }
+        brandMic.innerHTML = runtime.speech.active ? '<span class="material-symbols-outlined text-[16px] align-[-3px]">stop_circle</span> 停止' : '<span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音';
+      });
+      spiritMic.addEventListener("click", ()=>{
+        const t = document.getElementById("spirit-note");
+        if(runtime.speech.active){ stopSpeech(); } else { startSpeech(t); }
+        spiritMic.innerHTML = runtime.speech.active ? '<span class="material-symbols-outlined text-[16px] align-[-3px]">stop_circle</span> 停止' : '<span class="material-symbols-outlined text-[16px] align-[-3px]">mic</span> 語音';
+      });
+    }
+
+    /**********************
+     * CALENDAR
+     **********************/
+    function monthTitle(d){
+      const y = d.getFullYear();
+      const m = d.getMonth()+1;
+      return `${y} 年 ${m} 月`;
+    }
+    function renderCalendar(){
+      const grid = document.getElementById("cal-grid");
+      const monthEl = document.getElementById("cal-month");
+      monthEl.textContent = monthTitle(calView);
+
+      const year = calView.getFullYear();
+      const month = calView.getMonth();
+
+      const first = new Date(year, month, 1);
+      const startDay = first.getDay();
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+
+      let html = "";
+
+      // leading blanks
+      for(let i=0;i<startDay;i++){
+        html += `<div class="aspect-square"></div>`;
+      }
+
+      for(let day=1; day<=daysInMonth; day++){
+        const key = `${year}-${String(month+1).padStart(2,"0")}-${String(day).padStart(2,"0")}`;
+        ensureDay(key);
+
+        const { pct } = calcCompletion(key);
+        const isSelected = key === selectedDateKey;
+        const isToday = key === todayKey();
+
+        let cls = "aspect-square rounded-xl border text-[12px] flex items-center justify-center cursor-pointer select-none transition active:scale-95 ";
+        let dot = "";
+
+        if(pct>=100){
+          cls += "bg-violet/20 border-violet/40 text-white shadow-[0_0_14px_rgba(139,92,246,0.20)] ";
+        }else if(pct>=70){
+          cls += "bg-gold/15 border-gold/40 text-white shadow-[0_0_14px_rgba(212,175,55,0.14)] ";
+        }else{
+          cls += "bg-white/5 border-white/10 text-slate-300 hover:bg-white/10 ";
+        }
+
+        if(isToday) cls += " ring-1 ring-white/30 ";
+        if(isSelected) cls += " outline outline-2 outline-white/40 ";
+
+        if(pct>=70) dot = `<span class="absolute bottom-1.5 w-1.5 h-1.5 rounded-full ${pct>=100?'bg-violet':'bg-gold'}"></span>`;
+
+        html += `
+          <div class="relative ${cls}" data-date="${key}">
+            <span class="font-semibold">${day}</span>
+            ${dot}
           </div>
-        </div>
-        ${right}
-      </div>
-    `;
+        `;
+      }
 
-    if(done) card.classList.add("border","border-gold/25","shadow-glow","pop");
-    box.appendChild(card);
-  });
-}
+      grid.innerHTML = html;
 
-function summaryBullets(key){
-  const d = ensureDay(key);
-  const bp = bodyPercent(key);
-  const mp = mindPercent(key);
-  const tp = dayTotalPercent(key);
+      // click
+      grid.querySelectorAll("[data-date]").forEach(cell=>{
+        cell.addEventListener("click", ()=>{
+          selectDate(cell.getAttribute("data-date"));
+        });
+      });
 
-  const body = `
-    <div class="space-y-1">
-      <div>• <span class="text-slate-400">Body:</span> <span class="text-white font-semibold">${bp}%</span></div>
-      <div class="pl-3 text-slate-400 text-[11px]">
-        Water ${d.water}ml • Squat ${d.bodyTasks.squat?'Done':'—'} • Muscle ${d.bodyTasks.muscle?'Done':'—'} • Breakfast ${d.bodyTasks.breakfast?'Done':'—'} • Digest ${d.bowel?'Yes':'—'}
-      </div>
-      <div class="mt-2">• <span class="text-slate-400">Total:</span> <span class="text-white font-semibold">${tp}%</span></div>
-    </div>
-  `;
+      // selected label
+      document.getElementById("cal-selected").textContent = selectedDateKey;
+    }
 
-  const mind = `
-    <div class="space-y-1">
-      <div>• <span class="text-slate-400">Mind:</span> <span class="text-white font-semibold">${mp}%</span></div>
-      <div class="pl-3 text-slate-400 text-[11px]">
-        Reading ${d.readDone?'Done':'—'} • Devotion ${d.devotionDone?'Done':'—'} • Notes ${(d.growthNote||d.brandNote||d.scripture||d.spiritNote) ? 'Saved' : '—'}
-      </div>
-      <div class="mt-2">• <span class="text-slate-400">Day XP:</span> <span class="text-gold font-semibold">${d.dayXP||0} XP</span></div>
-    </div>
-  `;
+    function selectDate(key){
+      selectedDateKey = key;
+      ensureDay(key);
 
-  return { body, mind };
-}
+      // stop intervals to avoid cross-date confusion
+      Object.keys(runtime.taskIntervals).forEach(stopTaskInterval);
+      stopReadInterval();
+      stopDevInterval();
 
-/* -------------------------
-   Event wiring
-------------------------- */
-document.getElementById("profileBtn").addEventListener("click", openProfile);
+      saveState();
+      updateUI();
+      renderCalendar();
+    }
 
-document.getElementById("photoInput").addEventListener("change", async (e)=>{
-  const file = e.target.files && e.target.files[0];
-  if(!file) return;
+    /**********************
+     * RENDER TASKS (show +/- XP in each item)
+     **********************/
+    function renderTasks(){
+      const list = document.getElementById("task-list");
+      const d = ensureDay(selectedDateKey);
+      let html = "";
 
-  // prevent UI freeze: show small toast + yield to UI
-  toast("Processing photo…", "warn");
-  await new Promise(r=>setTimeout(r, 0));
+      TASKS.forEach(def=>{
+        const st = d.tasks[def.id];
+        const xpText = `+${def.xp} XP`;
+        const done = !!st.done;
 
-  try{
-    const dataUrl = await fileToCompressedDataURL(file, 320, 0.85);
-    profile.photo = dataUrl;
-    saveProfileStorage();
+        if(def.type==="check"){
+          html += `
+            <div class="glass2 rounded-2xl p-4 border border-white/10 flex items-center justify-between gap-3 ${done?'ring-1 ring-gold/30':''}" data-task="${def.id}">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <div class="text-[14px] font-bold text-white truncate ${done?'line-through decoration-gold/50':''}">${def.title}</div>
+                  <span class="text-[11px] font-bold text-gold">${xpText}</span>
+                </div>
+                <div class="text-[11px] text-slate-400 mt-1">${def.subtitle}</div>
+              </div>
+              <button class="task-toggle glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition">
+                ${done ? "取消" : "完成"}
+              </button>
+            </div>
+          `;
+        }else{
+          const time = fmtMMSS(st.remaining ?? def.seconds);
+          const running = st.status==="running";
+          const btnMain = done ? "已完成" : (running ? "暫停" : (st.status==="paused" ? "繼續" : "開始"));
 
-    // update preview immediately without re-render loop
-    document.getElementById("profileImgPreview").src = dataUrl;
-    document.getElementById("profileImg").src = dataUrl;
+          html += `
+            <div class="glass2 rounded-2xl p-4 border border-white/10 ${done?'ring-1 ring-violet/30':''}" data-task="${def.id}">
+              <div class="flex items-start justify-between gap-3">
+                <div class="min-w-0">
+                  <div class="flex items-center gap-2">
+                    <div class="text-[14px] font-bold text-white truncate ${done?'line-through decoration-violet/50':''}">${def.title}</div>
+                    <span class="text-[11px] font-bold text-gold">${xpText}</span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 mt-1">${def.subtitle}</div>
+                </div>
+                <div class="text-right">
+                  <div id="task-time-${def.id}" class="text-[18px] font-mono tabular-nums text-white/90">${time}</div>
+                  <div class="text-[11px] text-slate-400">${done ? "點卡片可取消" : ""}</div>
+                </div>
+              </div>
 
-    toast("Photo updated", "pos");
-  }catch(err){
-    toast("Photo failed", "warn");
-  }
-});
+              <div class="mt-3 grid grid-cols-3 gap-2">
+                <button class="task-main glass2 border border-white/10 rounded-2xl py-2 text-[12px] font-bold text-slate-200 active:scale-95 transition">
+                  ${btnMain}
+                </button>
+                <button class="task-reset glass2 border border-white/10 rounded-2xl py-2 text-[12px] font-semibold text-slate-200 active:scale-95 transition">
+                  重置
+                </button>
+                <button class="task-done glass2 border border-white/10 rounded-2xl py-2 text-[12px] font-semibold text-slate-200 active:scale-95 transition">
+                  完成/取消
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      });
 
-/* init */
-(function init(){
-  // ensure today exists
-  ensureDay(todayKey());
-  // set selected default to today initially
-  if(!selectedDateKey) selectedDateKey = todayKey();
+      list.innerHTML = html;
 
-  // fill missing profile photo
-  if(!profile.photo) profile.photo = defaultAvatar();
+      // bind events
+      list.querySelectorAll("[data-task]").forEach(card=>{
+        const id = card.getAttribute("data-task");
+        const def = TASKS.find(t=>t.id===id);
+        const d = ensureDay(selectedDateKey);
+        const st = d.tasks[id];
 
-  // set datepicker min/max optional
-  document.getElementById("datePickerInput").value = selectedDateKey;
+        if(def.type==="check"){
+          const btn = card.querySelector(".task-toggle");
+          card.addEventListener("click", (e)=>{
+            if(e.target.closest("button")) return;
+            setTaskDone(id, !st.done);
+          });
+          btn.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            setTaskDone(id, !st.done);
+          });
+        }else{
+          const main = card.querySelector(".task-main");
+          const reset = card.querySelector(".task-reset");
+          const done = card.querySelector(".task-done");
 
-  // keep mind tab stable
-  switchMindTab("mind");
+          // tapping card when done -> cancel
+          card.addEventListener("click", (e)=>{
+            if(e.target.closest("button")) return;
+            if(st.done) setTaskDone(id, false);
+          });
 
-  render();
-  navTo("hub");
-})();
+          main.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            if(st.done){
+              setTaskDone(id, false);
+              return;
+            }
+            toggleTaskTimer(id);
+          });
 
-window.addEventListener("resize", ()=>{
-  // prevent layout weirdness on iOS after rotation
-  render();
-});
+          reset.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            if(st.done){
+              // reset + cancel
+              setTaskDone(id, false);
+              return;
+            }
+            resetTaskTimer(id);
+          });
 
-/* expose to inline onclick */
-window.navTo = navTo;
-window.openDayPicker = openDayPicker;
-window.closeDayPicker = closeDayPicker;
-window.applyPickedDate = applyPickedDate;
-window.jumpToday = jumpToday;
+          done.addEventListener("click", (e)=>{
+            e.stopPropagation();
+            if(st.done){
+              setTaskDone(id, false);
+            }else{
+              setTaskDone(id, true);
+            }
+          });
+        }
+      });
+    }
 
-window.waterDelta = waterDelta;
-window.toggleBowel = toggleBowel;
-window.toggleBodyTask = toggleBodyTask;
-window.toggleDone = toggleDone;
+    /**********************
+     * SUMMARY (bullet + categories)
+     **********************/
+    function renderDaySummary(){
+      const d = ensureDay(selectedDateKey);
+      const { pct } = calcCompletion(selectedDateKey);
 
-window.toggleTimer = toggleTimer;
-window.resetTimer = resetTimer;
+      document.getElementById("day-sum-title").textContent = `${selectedDateKey} 摘要`;
+      document.getElementById("day-sum-pct").textContent = `${pct}%`;
 
-window.switchMindTab = switchMindTab;
+      // lists
+      const ulBody = document.getElementById("sum-body");
+      const ulMind = document.getElementById("sum-mind");
+      const ulSpirit = document.getElementById("sum-spirit");
 
-window.changeMonth = changeMonth;
-window.editSelectedDay = editSelectedDay;
+      function li(label, ok, extra=""){
+        const c = ok ? "text-gold" : "text-slate-500";
+        const mark = ok ? "●" : "○";
+        const ex = extra ? ` <span class="text-slate-400 text-[12px]">(${extra})</span>` : "";
+        return `<li class="flex items-start justify-between gap-3">
+                  <div class="min-w-0">
+                    <span class="${c} font-bold mr-2">${mark}</span>
+                    <span class="text-slate-200">${label}</span>${ex}
+                  </div>
+                  <span class="text-[12px] ${c} font-bold">${ok ? "完成" : "未完成"}</span>
+                </li>`;
+      }
 
-window.openProfile = openProfile;
-window.closeProfile = closeProfile;
-window.saveProfile = saveProfile;
-window.confirmReset = confirmReset;
+      // Body
+      const waterOk = d.water >= WATER_TARGET;
+      const t1 = d.tasks[TASKS[0].id]?.done;
+      const t2 = d.tasks[TASKS[1].id]?.done;
+      const t3 = d.tasks[TASKS[2].id]?.done;
 
-window.voiceToText = voiceToText;
+      ulBody.innerHTML =
+        li("水分達標", waterOk, `${d.water} / ${WATER_TARGET} ml`) +
+        li(TASKS[0].title, !!t1, TASKS[0].subtitle) +
+        li(TASKS[1].title, !!t2, TASKS[1].subtitle) +
+        li(TASKS[2].title, !!t3, TASKS[2].subtitle) +
+        li("排便確認", !!d.bowel, `+${XP_RULES.bowel} XP`);
 
-/* helper */
-function countDaysBetween(a,b){
-  const A = new Date(a+"T00:00:00");
-  const B = new Date(b+"T00:00:00");
-  return Math.round((B-A)/86400000);
-}
-</script>
+      // Mind
+      ulMind.innerHTML =
+        li("深度閱讀", !!d.mind.reading?.done, `+${XP_RULES.reading} XP`) +
+        li("今日復盤", (d.mind.growthNote||"").trim().length>0, `+${XP_RULES.growth} XP`) +
+        li("品牌筆記", (d.mind.brandNote||"").trim().length>0, `+${XP_RULES.brand} XP`);
+
+      // Spirit
+      ulSpirit.innerHTML =
+        li("靜默靈修", !!d.spirit.devotion?.done, `+${XP_RULES.devotion} XP`) +
+        li("經文出處", (d.spirit.scripture||"").trim().length>0, `+${XP_RULES.scripture} XP`) +
+        li("領受筆記", (d.spirit.spiritNote||"").trim().length>0, `+${XP_RULES.spirit} XP`);
+    }
+
+    /**********************
+     * UI UPDATE
+     **********************/
+    function updateUI(){
+      ensureDay(selectedDateKey);
+
+      // Hub date + verse
+      document.getElementById("hub-date").textContent = selectedDateKey;
+      const v = pickVerseForDate(selectedDateKey);
+      document.getElementById("daily-verse").textContent = `“${v.t}”`;
+      document.getElementById("daily-verse-ref").textContent = v.r;
+
+      // Profile XP + level
+      recalcTotalsAndLevel();
+      const dayXp = calcDayXp(selectedDateKey);
+      document.getElementById("profile-xp-today").textContent = dayXp;
+      document.getElementById("profile-xp-total").textContent = state.profile.totalXp;
+      document.getElementById("profile-level").textContent = state.profile.level;
+
+      // Level progress bar
+      const inLevel = state.profile.totalXp % 500;
+      document.getElementById("xp-in-level").textContent = inLevel;
+      document.getElementById("xp-next").textContent = 500;
+      document.getElementById("xp-bar").style.width = `${Math.round((inLevel/500)*100)}%`;
+
+      // Hub completion
+      const comp = calcCompletion(selectedDateKey);
+      document.getElementById("hub-completion").textContent = `${comp.pct}%`;
+
+      // per section completion (quick)
+      const d = ensureDay(selectedDateKey);
+
+      // Body pct: water + 3 tasks + bowel = 5 items
+      let bodyDone = 0;
+      if(d.water>=WATER_TARGET) bodyDone++;
+      TASKS.forEach(t=>{ if(d.tasks[t.id]?.done) bodyDone++; });
+      if(d.bowel) bodyDone++;
+      const bodyPct = Math.round((bodyDone/5)*100);
+
+      document.getElementById("hub-body-pct").textContent = `${bodyPct}%`;
+      document.getElementById("hub-body-bar").style.width = `${bodyPct}%`;
+
+      // Mind pct: reading + growth + brand = 3
+      let mindDone = 0;
+      if(d.mind.reading?.done) mindDone++;
+      if((d.mind.growthNote||"").trim().length>0) mindDone++;
+      if((d.mind.brandNote||"").trim().length>0) mindDone++;
+      const mindPct = Math.round((mindDone/3)*100);
+      document.getElementById("hub-mind-pct").textContent = `${mindPct}%`;
+      document.getElementById("hub-mind-bar").style.width = `${mindPct}%`;
+
+      // Body view
+      document.getElementById("body-date").textContent = selectedDateKey;
+      document.getElementById("mind-date").textContent = selectedDateKey;
+
+      document.getElementById("water-val").textContent = d.water;
+      document.getElementById("water-target").textContent = WATER_TARGET;
+      const wPct = Math.min(100, Math.round((d.water/WATER_TARGET)*100));
+      document.getElementById("water-bar").style.width = `${wPct}%`;
+      document.getElementById("water-xp").textContent = Math.round(clamp(d.water/WATER_TARGET,0,1) * XP_RULES.waterMax);
+
+      const bowelToggle = document.getElementById("bowel-toggle");
+      bowelToggle.checked = !!d.bowel;
+      document.getElementById("bowel-xp").textContent = d.bowel ? XP_RULES.bowel : 0;
+
+      // Render tasks
+      renderTasks();
+
+      // Mind inputs
+      const r = d.mind.reading;
+      document.getElementById("read-display").textContent = fmtMMSS(r.remaining ?? 20*60);
+      document.getElementById("read-xp").textContent = r.done ? XP_RULES.reading : 0;
+      document.getElementById("growth-note").value = d.mind.growthNote || "";
+      document.getElementById("brand-note").value = d.mind.brandNote || "";
+      document.getElementById("growth-xp").textContent = (d.mind.growthNote||"").trim().length>0 ? XP_RULES.growth : 0;
+      document.getElementById("brand-xp").textContent = (d.mind.brandNote||"").trim().length>0 ? XP_RULES.brand : 0;
+
+      // Spirit
+      const dv = d.spirit.devotion;
+      document.getElementById("dev-display").textContent = fmtMMSS(dv.remaining ?? 10*60);
+      document.getElementById("dev-xp").textContent = dv.done ? XP_RULES.devotion : 0;
+      document.getElementById("scripture").value = d.spirit.scripture || "";
+      document.getElementById("spirit-note").value = d.spirit.spiritNote || "";
+      document.getElementById("scripture-xp").textContent = (d.spirit.scripture||"").trim().length>0 ? XP_RULES.scripture : 0;
+      document.getElementById("spirit-xp").textContent = (d.spirit.spiritNote||"").trim().length>0 ? XP_RULES.spirit : 0;
+
+      // Calendar summary
+      document.getElementById("cal-selected").textContent = selectedDateKey;
+      renderDaySummary();
+
+      // If calendar view open, keep grid updated
+      if(document.getElementById("view-calendar").classList.contains("active")){
+        renderCalendar();
+      }
+    }
+
+    /**********************
+     * TABS (Mind/Spirit)
+     **********************/
+    function setMindTab(tab){
+      const btnMind = document.getElementById("tab-btn-mind");
+      const btnSpirit = document.getElementById("tab-btn-spirit");
+      const mind = document.getElementById("tab-mind");
+      const spirit = document.getElementById("tab-spirit");
+
+      if(tab==="mind"){
+        mind.classList.remove("hidden");
+        spirit.classList.add("hidden");
+        btnMind.classList.add("bg-white/10","text-white","font-bold");
+        btnMind.classList.remove("text-slate-400","font-semibold");
+        btnSpirit.classList.remove("bg-white/10","text-white","font-bold");
+        btnSpirit.classList.add("text-slate-400","font-semibold");
+      }else{
+        mind.classList.add("hidden");
+        spirit.classList.remove("hidden");
+        btnSpirit.classList.add("bg-white/10","text-white","font-bold");
+        btnSpirit.classList.remove("text-slate-400","font-semibold");
+        btnMind.classList.remove("bg-white/10","text-white","font-bold");
+        btnMind.classList.add("text-slate-400","font-semibold");
+      }
+    }
+
+    /**********************
+     * RESET
+     **********************/
+    function confirmReset(){
+      if(confirm("【系統重置】確定要清除所有紀錄並從 0 開始嗎？")){
+        // stop timers
+        Object.keys(runtime.taskIntervals).forEach(stopTaskInterval);
+        stopReadInterval();
+        stopDevInterval();
+        try{
+          localStorage.removeItem(STORAGE_KEY);
+        }catch(e){}
+        location.reload();
+      }
+    }
+
+    /**********************
+     * INIT BINDINGS
+     **********************/
+    function bindUI(){
+      // nav
+      document.querySelectorAll(".nav-btn").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const v = btn.getAttribute("data-view");
+          setActiveView(v);
+        });
+      });
+
+      // hub quick links
+      document.getElementById("hub-go-body").addEventListener("click", ()=>setActiveView("body"));
+      document.getElementById("hub-go-mind").addEventListener("click", ()=>setActiveView("mind"));
+      document.getElementById("hub-go-calendar").addEventListener("click", ()=>setActiveView("calendar"));
+
+      // reset
+      document.getElementById("btn-reset").addEventListener("click", confirmReset);
+
+      // go today
+      document.getElementById("btn-today").addEventListener("click", ()=>{
+        selectDate(todayKey());
+        setActiveView("hub");
+      });
+
+      // water buttons
+      document.querySelectorAll(".btn-water").forEach(b=>{
+        b.addEventListener("click", ()=>{
+          const delta = parseInt(b.getAttribute("data-water"),10);
+          modifyWater(delta);
+        });
+      });
+
+      // bowel toggle
+      document.getElementById("bowel-toggle").addEventListener("change", ()=>{
+        toggleBowel();
+      });
+
+      // reading controls
+      document.getElementById("read-start").addEventListener("click", ()=>{
+        const d = ensureDay(selectedDateKey);
+        const r = d.mind.reading;
+        if(r.done) toggleReadingDone(); else toggleReadingTimer();
+      });
+      document.getElementById("read-reset").addEventListener("click", resetReading);
+      document.getElementById("read-done").addEventListener("click", toggleReadingDone);
+
+      // devotion controls
+      document.getElementById("dev-start").addEventListener("click", ()=>{
+        const d = ensureDay(selectedDateKey);
+        const v = d.spirit.devotion;
+        if(v.done) toggleDevDone(); else toggleDevTimer();
+      });
+      document.getElementById("dev-reset").addEventListener("click", resetDevotion);
+      document.getElementById("dev-done").addEventListener("click", toggleDevDone);
+
+      // tabs
+      document.getElementById("tab-btn-mind").addEventListener("click", ()=>setMindTab("mind"));
+      document.getElementById("tab-btn-spirit").addEventListener("click", ()=>setMindTab("spirit"));
+
+      // calendar nav
+      document.getElementById("cal-prev").addEventListener("click", ()=>{
+        calView.setMonth(calView.getMonth()-1);
+        renderCalendar();
+      });
+      document.getElementById("cal-next").addEventListener("click", ()=>{
+        calView.setMonth(calView.getMonth()+1);
+        renderCalendar();
+      });
+      document.getElementById("cal-jump-today").addEventListener("click", ()=>{
+        // jump to current month and today
+        const t = new Date();
+        calView = new Date(t.getFullYear(), t.getMonth(), 1);
+        selectDate(todayKey());
+        renderCalendar();
+      });
+
+      // calendar "補填" shortcuts
+      document.getElementById("day-edit-body").addEventListener("click", ()=>setActiveView("body"));
+      document.getElementById("day-edit-mind").addEventListener("click", ()=>{ setActiveView("mind"); setMindTab("mind"); });
+      document.getElementById("day-edit-spirit").addEventListener("click", ()=>{ setActiveView("mind"); setMindTab("spirit"); });
+
+      bindAutosave();
+      initSpeech();
+    }
+
+    /**********************
+     * START
+     **********************/
+    (function boot(){
+      ensureDay(selectedDateKey);
+
+      // set initial calendar view to selected date month
+      const [y,m] = selectedDateKey.split("-").map(n=>parseInt(n,10));
+      if(y && m){
+        calView = new Date(y, m-1, 1);
+      }
+
+      initProfile();
+      bindUI();
+      maybeClaimBonus70(selectedDateKey);
+      recalcTotalsAndLevel();
+
+      // initial render
+      renderCalendar();
+      updateUI();
+
+      // default tab
+      setMindTab("mind");
+      // show selected date on hub
+      document.getElementById("hub-date").textContent = selectedDateKey;
+    })();
+  </script>
 </body>
 </html>
