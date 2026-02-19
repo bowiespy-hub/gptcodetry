@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>ATE - Aether Trinity Evolution (Mobile Ultra)</title>
+  <title>ATE Mobile (V4)</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -55,7 +55,7 @@
     .ms.fill{font-variation-settings:'FILL' 1,'wght' 520,'GRAD' 0,'opsz' 24;}
 
     .glass{
-      background:rgba(16,25,46,0.62);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      background:rgba(16,25,46,0.58);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
       border:1px solid rgba(255,255,255,0.10);
     }
     .glass2{
@@ -68,66 +68,71 @@
     .fade-in{animation:fadeIn .18s ease-out;}
     @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 
-    /* compact chips */
+    /* compact chip */
     .chip{
       display:inline-flex;align-items:center;gap:.35rem;
-      padding:.20rem .50rem;border-radius:999px;
+      padding:.18rem .52rem;border-radius:999px;
       border:1px solid rgba(255,255,255,0.10);
       background:rgba(255,255,255,0.04);
-      font-size:10px;font-weight:800;color:rgba(226,232,240,0.92);
+      font-size:10px;font-weight:900;color:rgba(226,232,240,0.92);
       letter-spacing:.08em;text-transform:uppercase;user-select:none;white-space:nowrap;
     }
     .chip .ms{font-size:14px;}
 
-    /* game-like floating score pop */
+    /* score pop (smaller) */
     .pop{
-      position:fixed;left:50%;top:40%;
+      position:fixed;left:50%;top:43%;
       transform:translate(-50%,-50%);
       z-index:9999;pointer-events:none;
-      animation:popMove .85s ease-out forwards;
+      animation:popMove .78s ease-out forwards;
       filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
     }
     @keyframes popMove{
-      0%{opacity:0;transform:translate(-50%,-50%) scale(.85);}
-      15%{opacity:1;transform:translate(-50%,-58%) scale(1.05);}
-      100%{opacity:0;transform:translate(-50%,-95%) scale(1.0);}
+      0%{opacity:0;transform:translate(-50%,-50%) scale(.9);}
+      18%{opacity:1;transform:translate(-50%,-58%) scale(1.02);}
+      100%{opacity:0;transform:translate(-50%,-92%) scale(1.0);}
     }
     .popBadge{
-      padding:.35rem .6rem;border-radius:999px;
+      padding:.26rem .52rem;border-radius:999px;
       border:1px solid rgba(255,255,255,0.12);
-      background:rgba(15,20,36,0.76);
-      font-weight:900;letter-spacing:.08em;
-      font-size:14px;
+      background:rgba(15,20,36,0.78);
+      font-weight:950;letter-spacing:.08em;
+      font-size:13px;
     }
 
-    /* micro toast (optional) */
     .toast{
-      position:fixed;left:50%;bottom:6.3rem;
+      position:fixed;left:50%;bottom:6.2rem;
       transform:translateX(-50%);
       z-index:9998;
-      animation:toastIn .20s ease-out, toastOut .22s ease-in 1.6s forwards;
+      animation:toastIn .18s ease-out, toastOut .22s ease-in 1.35s forwards;
       pointer-events:none;
     }
     @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
     @keyframes toastOut{to{opacity:0;transform:translateX(-50%) translateY(8px);}}
 
-    /* subtle ring for active timer */
-    .ringPulse{ animation:ringPulse 1.5s infinite; }
-    @keyframes ringPulse{
-      0%{box-shadow:0 0 0 0 rgba(139,92,246,0.28);}
-      70%{box-shadow:0 0 0 12px rgba(139,92,246,0);}
-      100%{box-shadow:0 0 0 0 rgba(139,92,246,0);}
-    }
-
-    /* bottom safe area */
     .pb-safe{ padding-bottom: calc(6.0rem + env(safe-area-inset-bottom)); }
     .nav-safe{ padding-bottom: calc(1.0rem + env(safe-area-inset-bottom)); }
 
-    /* ambient */
     .noise{
       opacity:0.045;
       background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 240 240%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
     }
+
+    /* tiny list item */
+    .item{
+      border:1px solid rgba(255,255,255,0.10);
+      background:rgba(255,255,255,0.03);
+      border-radius:16px;
+    }
+
+    /* action sheet */
+    .sheet{
+      position:fixed;left:0;right:0;bottom:0;
+      z-index:120;
+      transform:translateY(110%);
+      transition:transform .22s ease-out;
+    }
+    .sheet.show{ transform:translateY(0); }
   </style>
 </head>
 
@@ -139,62 +144,85 @@
     <div class="absolute inset-0 noise"></div>
   </div>
 
-  <!-- App -->
   <div class="relative z-10 mx-auto w-full max-w-md min-h-[100dvh] flex flex-col pb-safe">
+
+    <!-- TOP DATE BAR (works across all views) -->
+    <header class="pt-8 px-4 pb-2">
+      <div class="glass rounded-2xl px-3 py-2 shadow-glass">
+        <div class="flex items-center justify-between gap-2">
+          <button class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform"
+                  onclick="shiftDay(-1)" title="前一天">
+            <span class="ms text-[18px]">chevron_left</span>
+          </button>
+
+          <div class="min-w-0 flex-1 text-center">
+            <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Active Date</div>
+            <button class="mt-0.5 inline-flex items-center justify-center gap-2 active:scale-[0.99] transition-transform"
+                    onclick="openDatePicker()">
+              <span id="top-date" class="text-sm font-black text-white">—</span>
+              <span id="top-date-tag" class="chip"><span class="ms fill text-gold">today</span>Today</span>
+            </button>
+            <input id="date-picker" type="date" class="hidden"/>
+          </div>
+
+          <button class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform"
+                  onclick="shiftDay(1)" title="後一天">
+            <span class="ms text-[18px]">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    </header>
 
     <!-- HUB -->
     <section id="view-hub" class="flex flex-col flex-1 fade-in">
-      <header class="pt-10 px-4 pb-3">
-        <!-- ✅ FIX: Mobile compact profile layout (no squeeze) -->
-        <div class="glass rounded-2xl p-4 shadow-glass">
+      <header class="px-4 pb-3">
+        <!-- Profile / XP -->
+        <div class="glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-center gap-3">
-            <button id="btn-profile" class="shrink-0" title="個人設定">
-              <div class="h-12 w-12 rounded-full overflow-hidden border border-white/15 bg-surface">
+            <!-- ✅ avatar tap = upload -->
+            <button id="btn-avatar-upload" class="shrink-0" title="上傳頭像">
+              <div class="h-11 w-11 rounded-full overflow-hidden border border-white/15 bg-surface">
                 <img id="profile-avatar" alt="avatar" class="h-full w-full object-cover"/>
               </div>
             </button>
+            <input id="avatar-file" type="file" accept="image/*" class="hidden"/>
 
             <div class="min-w-0 flex-1">
               <div class="flex items-center gap-2 min-w-0">
-                <div id="profile-name" class="text-base font-extrabold text-white truncate">覺醒女神</div>
-                <span class="chip"><span class="ms fill text-gold">workspace_premium</span><span id="profile-level-mini">LV 1</span></span>
+                <div id="profile-name" class="text-[15px] font-extrabold text-white truncate">—</div>
+                <span class="chip"><span class="ms fill text-gold">workspace_premium</span><span id="profile-level">LV 1</span></span>
               </div>
-              <div id="profile-title" class="mt-0.5 text-[11px] text-slate-400 font-semibold truncate">Aether Trinity Evolution</div>
+              <div id="profile-title" class="mt-0.5 text-[11px] text-slate-400 font-semibold truncate">—</div>
 
               <div class="mt-2 flex flex-wrap gap-2">
-                <span class="chip"><span class="ms fill text-violet2">percent</span><span id="profile-completion">0%</span></span>
-                <span class="chip"><span class="ms fill text-gold">bolt</span><span id="profile-xp-est">+0</span></span>
-                <span class="chip"><span class="ms fill text-rose">local_fire_department</span><span id="profile-streak">0</span></span>
+                <!-- ✅ overall completion -->
+                <span class="chip"><span class="ms fill text-violet2">percent</span><span id="hub-overall">0%</span></span>
+                <!-- ✅ instant XP (today) -->
+                <span class="chip"><span class="ms fill text-gold">bolt</span><span id="hub-xp-today">+0</span></span>
+                <!-- ✅ total XP -->
+                <span class="chip"><span class="ms fill text-cyan">all_inclusive</span><span id="hub-xp-total">0</span></span>
               </div>
             </div>
 
-            <div class="shrink-0 flex flex-col items-end gap-2">
-              <button id="btn-reset" class="glass2 rounded-full px-3 py-2 active:scale-95 transition-transform" title="重置">
-                <span class="ms text-[18px]">restart_alt</span>
-              </button>
-              <div id="profile-settled" class="text-[10px] text-slate-400 font-semibold">未結算</div>
-            </div>
+            <button id="btn-profile" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="設定">
+              <span class="ms text-[18px]">tune</span>
+            </button>
           </div>
 
-          <!-- XP -->
+          <!-- Level progress -->
           <div class="mt-3">
             <div class="flex items-center justify-between text-[11px] text-slate-300 font-semibold">
-              <span class="tracking-widest uppercase text-slate-400">XP</span>
-              <span class="text-violet2 font-extrabold"><span id="hub-xp">0</span> / <span id="hub-xpmax">100</span></span>
+              <span class="tracking-widest uppercase text-slate-400">LEVEL PROGRESS</span>
+              <span class="text-violet2 font-extrabold"><span id="xp-in-level">0</span> / <span id="xp-next">100</span></span>
             </div>
             <div class="mt-1.5 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-              <div id="hub-xpbar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
-            </div>
-
-            <div class="mt-2 flex items-center justify-between text-[11px] text-slate-300 font-semibold">
-              <span class="tracking-widest uppercase text-slate-400">Today</span>
-              <span class="text-white font-extrabold"><span id="hub-completion">0</span>%</span>
+              <div id="xp-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
             </div>
           </div>
         </div>
 
-        <!-- Verse EN -->
-        <div class="mt-3 glass2 rounded-2xl px-4 py-3 border border-white/10 shadow-glass">
+        <!-- Daily Verse (EN) -->
+        <div class="mt-3 glass2 rounded-2xl px-3 py-3 border border-white/10 shadow-glass">
           <div class="flex items-center justify-between">
             <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Daily Verse</div>
             <div class="text-[10px] text-gold font-extrabold tracking-widest">EN</div>
@@ -205,363 +233,328 @@
       </header>
 
       <main class="px-4 pb-5 flex-1 space-y-3">
-        <div class="flex items-center justify-between">
-          <div class="text-sm font-extrabold text-white">今日進化</div>
-          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
-            <span id="hub-date">Today</span>
-          </div>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <button onclick="navTo('body')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
-            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Body</div>
-            <div class="mt-1 text-base font-extrabold text-white">身體</div>
+        <!-- compact tiles -->
+        <div class="grid grid-cols-3 gap-2">
+          <button onclick="navTo('body')" class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
+            <div class="flex items-center justify-between">
+              <div class="text-[11px] font-black text-white">身體</div>
+              <span class="ms text-[18px] text-rose">fitness_center</span>
+            </div>
             <div class="mt-2 h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
               <div id="hub-body-bar" class="h-full w-[0%] bg-gradient-to-r from-rose via-violet2 to-cyan rounded-full transition-all duration-500"></div>
             </div>
-            <div class="mt-1.5 text-[11px] text-slate-300 font-semibold">完成 <span class="text-white font-extrabold"><span id="hub-body-score">0</span>%</span></div>
+            <div class="mt-1 text-[11px] text-slate-300 font-semibold"><span id="hub-body">0</span>%</div>
           </button>
 
-          <button onclick="navTo('mind')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
-            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Mind</div>
-            <div class="mt-1 text-base font-extrabold text-white">心智 / 靈修</div>
-            <div class="mt-2 text-[11px] text-slate-400 font-semibold">閱讀 / 反思 / 經文</div>
-          </button>
-
-          <button onclick="navTo('calendar')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform col-span-2">
+          <button onclick="navTo('mind')" class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
             <div class="flex items-center justify-between">
-              <div>
-                <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Evolution</div>
-                <div class="mt-1 text-base font-extrabold text-white">日曆</div>
-              </div>
-              <span class="ms text-[18px] text-slate-300">calendar_month</span>
+              <div class="text-[11px] font-black text-white">心智</div>
+              <span class="ms text-[18px] text-violet2">auto_stories</span>
             </div>
-            <div class="mt-2 text-[11px] text-slate-400 font-semibold">查看每日紀錄 / streak</div>
+            <div class="mt-2 h-2 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+              <div id="hub-mind-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
+            </div>
+            <div class="mt-1 text-[11px] text-slate-300 font-semibold"><span id="hub-mind">0</span>%</div>
+          </button>
+
+          <button onclick="navTo('calendar')" class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
+            <div class="flex items-center justify-between">
+              <div class="text-[11px] font-black text-white">日曆</div>
+              <span class="ms text-[18px] text-cyan">calendar_month</span>
+            </div>
+            <div class="mt-2 text-[11px] text-slate-400 font-semibold">回顧/分類</div>
           </button>
         </div>
 
-        <button id="btn-settle" class="w-full glass2 rounded-2xl px-4 py-3 border border-violet/25 shadow-glow active:scale-[0.99] transition-transform">
+        <!-- overall breakdown -->
+        <section class="glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-center justify-between">
-            <div>
-              <div class="text-sm font-extrabold text-white">結算今天</div>
-              <div class="text-[11px] text-slate-400 font-semibold">70% 以上會額外加成</div>
-            </div>
-            <div class="text-right">
-              <div class="text-[10px] text-slate-300 font-extrabold tracking-widest">EST</div>
-              <div class="text-base font-extrabold text-gold">+<span id="hub-xp-est">0</span></div>
-            </div>
+            <div class="text-sm font-extrabold text-white">今日進度（總）</div>
+            <div class="chip"><span class="ms fill text-gold">stars</span><span id="hub-bonus-tag">BONUS OFF</span></div>
           </div>
-        </button>
+          <div class="mt-2 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+            <div id="hub-overall-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
+          </div>
+          <div class="mt-2 text-[11px] text-slate-400 font-semibold leading-relaxed">
+            這裡是「總完成率」；身體/心智各自也有自己的完成率（你剛剛的 57% 問題就是因為總完成率把其它區塊算進去了）。
+          </div>
+        </section>
       </main>
     </section>
 
     <!-- BODY -->
     <section id="view-body" class="hidden flex-col flex-1 fade-in">
-      <header class="pt-10 px-4 pb-3">
+      <header class="px-4 pb-2">
         <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
             <span class="ms text-[18px]">chevron_left</span>
           </button>
           <div class="text-center">
-            <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Body Evolution</div>
-            <div class="mt-1 text-lg font-extrabold text-white">身體進化</div>
+            <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Body</div>
+            <div class="mt-0.5 text-[15px] font-extrabold text-white">身體進化</div>
           </div>
-          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
-            <span class="ms text-[18px]">today</span>
-          </button>
+          <div class="w-10"></div>
         </div>
 
-        <div class="mt-3 flex items-center justify-between">
-          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
-            <span id="body-date">Today</span>
-          </div>
-          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
-            完成 <span class="ml-1 text-white font-extrabold"><span id="body-completion">0</span>%</span>
-          </div>
+        <div class="mt-2 flex items-center justify-between">
+          <span class="chip"><span class="ms fill text-rose">fitness_center</span><span>BODY</span></span>
+          <span class="chip"><span class="ms fill text-violet2">percent</span><span id="body-completion">0%</span></span>
         </div>
       </header>
 
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-3">
+      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-2">
+
         <!-- Water (compact) -->
-        <section class="glass rounded-2xl p-4 shadow-glass">
+        <section class="glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-start justify-between">
             <div>
-              <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Hydration</div>
-              <div class="mt-1 text-base font-extrabold text-white">水分</div>
-              <div class="mt-1 text-[11px] text-slate-400 font-semibold">目標 <span id="water-goal">1900</span>ml</div>
-              <div class="mt-1 text-[10px] text-slate-400 font-semibold" id="water-points-hint">0/25</div>
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-cyan text-[18px]">water_drop</span>
+                <div class="text-[13px] font-black text-white">水分</div>
+              </div>
+              <div class="mt-1 text-[11px] text-slate-400 font-semibold">目標 <span id="water-goal">1900</span>ml · 最高 +25</div>
             </div>
             <div class="text-right">
-              <div class="text-2xl font-extrabold text-white"><span id="water-val">0</span></div>
-              <div class="text-[11px] text-slate-400 font-semibold">ml</div>
+              <div class="text-xl font-extrabold text-white"><span id="water-val">0</span><span class="text-[11px] text-slate-400 font-semibold ml-1">ml</span></div>
+              <div class="text-[11px] font-black text-lime"><span id="water-pts">0</span> XP</div>
             </div>
           </div>
 
-          <div class="mt-3 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
+          <div class="mt-2 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
             <div id="water-bar" class="h-full w-[0%] bg-gradient-to-r from-cyan via-violet2 to-gold rounded-full transition-all duration-500"></div>
           </div>
 
-          <div class="mt-3 grid grid-cols-3 gap-2">
+          <div class="mt-2 grid grid-cols-4 gap-2">
             <button onclick="modifyWater(-250)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">-250</button>
             <button onclick="modifyWater(250)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-extrabold text-white active:scale-95 transition-transform">+250</button>
-            <button onclick="modifyWater(500)" class="rounded-xl py-2 text-[12px] font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">+500</button>
+            <button onclick="modifyWater(500)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-extrabold text-white active:scale-95 transition-transform">+500</button>
+            <button onclick="modifyWater(1000)" class="rounded-xl py-2 text-[12px] font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">+1L</button>
           </div>
         </section>
 
-        <!-- Tasks -->
-        <section class="space-y-2">
-          <div class="flex items-center justify-between px-1">
-            <div class="text-sm font-extrabold text-white">任務</div>
-            <div class="text-[10px] text-slate-400 font-extrabold tracking-widest">TAP SAFE</div>
-          </div>
-          <div id="task-list" class="space-y-2"></div>
-        </section>
+        <!-- Tasks (tap to done/undo, play icon for timer, ... for options) -->
+        <div class="flex items-center justify-between mt-1">
+          <div class="text-[13px] font-extrabold text-white">任務</div>
+          <div class="text-[10px] text-slate-400 font-extrabold tracking-widest">TAP</div>
+        </div>
+        <div id="task-list" class="space-y-2"></div>
 
         <!-- Bowel -->
-        <section class="glass rounded-2xl p-4 shadow-glass">
+        <section class="glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-center justify-between">
-            <div>
-              <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Health</div>
-              <div class="mt-1 text-base font-extrabold text-white">排便</div>
-              <div class="mt-1 text-[10px] text-slate-400 font-semibold">正常才 +10</div>
-            </div>
             <div class="flex items-center gap-2">
-              <button onclick="setBowel('未完成')" id="bowel-a" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">未完成</button>
-              <button onclick="setBowel('正常')" id="bowel-b" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">正常</button>
+              <span class="ms fill text-lime text-[18px]">health_and_safety</span>
+              <div>
+                <div class="text-[13px] font-black text-white">排便</div>
+                <div class="text-[10px] text-slate-400 font-semibold">正常才 +10</div>
+              </div>
             </div>
+            <button id="bowel-toggle" onclick="toggleBowel()" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+              未完成
+            </button>
           </div>
         </section>
+
       </main>
     </section>
 
     <!-- MIND -->
     <section id="view-mind" class="hidden flex-col flex-1 fade-in">
-      <header class="pt-10 px-4 pb-3">
+      <header class="px-4 pb-2">
         <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
             <span class="ms text-[18px]">chevron_left</span>
           </button>
           <div class="text-center">
-            <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Mind & Spirit</div>
-            <div class="mt-1 text-lg font-extrabold text-white">心智與靈修</div>
+            <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Mind</div>
+            <div class="mt-0.5 text-[15px] font-extrabold text-white">心智 / 靈修</div>
           </div>
-          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
-            <span class="ms text-[18px]">today</span>
-          </button>
+          <div class="w-10"></div>
         </div>
 
-        <div class="mt-3 flex items-center justify-between">
-          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
-            <span id="mind-date">Today</span>
-          </div>
-          <div class="glass2 px-3 py-1.5 rounded-full border border-white/10 text-[11px] text-slate-200 font-semibold">
-            完成 <span class="ml-1 text-white font-extrabold"><span id="mind-completion">0</span>%</span>
-          </div>
+        <div class="mt-2 flex items-center justify-between">
+          <span class="chip"><span class="ms fill text-violet2">auto_stories</span><span>MIND</span></span>
+          <span class="chip"><span class="ms fill text-violet2">percent</span><span id="mind-completion">0%</span></span>
         </div>
-      </header>
 
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar">
         <!-- Tabs -->
-        <div class="glass2 rounded-full p-1 border border-white/10 flex relative">
+        <div class="mt-2 glass2 rounded-full p-1 border border-white/10 flex relative">
           <div id="tab-slider" class="absolute left-1 top-1 bottom-1 w-[calc(50%-4px)] bg-gradient-to-r from-violet to-violet2 rounded-full shadow-glow transition-transform duration-300"></div>
           <button id="tab-btn-mind" onclick="switchTab('mind')" class="flex-1 relative z-10 py-2 text-[13px] font-black text-white text-center rounded-full">心智</button>
           <button id="tab-btn-spirit" onclick="switchTab('spirit')" class="flex-1 relative z-10 py-2 text-[13px] font-extrabold text-slate-300 text-center rounded-full">靈修</button>
         </div>
+      </header>
 
-        <div id="tab-mind" class="mt-3 space-y-3">
-          <!-- Reading timer (fixed start/pause logic) -->
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-start justify-between">
-              <div>
-                <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Focus</div>
-                <div class="mt-1 text-base font-extrabold text-white">深度閱讀</div>
-                <div class="mt-1 text-[10px] text-slate-400 font-semibold">完成 +10；取消 -10</div>
+      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-2">
+        <!-- Mind tab -->
+        <div id="tab-mind" class="space-y-2">
+          <!-- Reading timer (compact: check + play + more) -->
+          <section class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="ms fill text-violet2 text-[18px]">menu_book</span>
+                  <div class="text-[13px] font-black text-white">深度閱讀</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">+10</div>
+                </div>
+                <div class="mt-1 text-3xl font-light tracking-tighter tabular-nums text-white" id="reading-display">20:00</div>
               </div>
-              <button onclick="toggleDone('reading')" id="reading-done-btn"
-                      class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
-                完成
-              </button>
-            </div>
 
-            <div class="mt-3 flex items-center justify-between">
-              <button onclick="openDuration('reading')" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                <span id="reading-min">20</span> min
-              </button>
-              <button onclick="resetTimer('reading')" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                重置
-              </button>
-            </div>
-
-            <div class="mt-3 flex items-center justify-center">
-              <div id="reading-display" class="text-5xl font-light tracking-tighter tabular-nums text-white">20:00</div>
-            </div>
-
-            <div class="mt-3 grid grid-cols-2 gap-2">
-              <button id="reading-start" onclick="toggleTimer('reading')"
-                      class="rounded-xl py-2.5 text-[12px] font-black text-white bg-gradient-to-r from-violet via-violet2 to-cyan border border-white/10 active:scale-95 transition-transform">
-                開始
-              </button>
-              <button onclick="cancelTimer('reading')" class="glass2 border border-white/10 rounded-xl py-2.5 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                取消
-              </button>
+              <div class="shrink-0 flex items-center gap-2">
+                <button onclick="toggleDone('reading')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="完成/取消">
+                  <span id="reading-done-ico" class="ms text-[20px] text-slate-300">done</span>
+                </button>
+                <button onclick="toggleTimer('reading')" class="rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform border border-white/10 bg-gradient-to-r from-violet via-violet2 to-cyan" title="開始/暫停">
+                  <span id="reading-play-ico" class="ms fill text-[20px] text-white">play_arrow</span>
+                </button>
+                <button onclick="openTimerSheet('reading')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="更多">
+                  <span class="ms text-[20px] text-slate-300">more_horiz</span>
+                </button>
+              </div>
             </div>
           </section>
 
-          <section class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass">
-            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Reflection</div>
-            <div class="mt-1 text-base font-extrabold text-white">今日反思</div>
-            <div class="mt-1 text-[10px] text-slate-400 font-semibold">寫了就 +10</div>
-            <input id="growth-input" class="mt-3 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"
-                   placeholder="一句話也可以…" />
+          <!-- Reflection with voice -->
+          <section class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-gold text-[18px]">rate_review</span>
+                <div class="text-[13px] font-black text-white">今日復盤</div>
+                <div class="text-[10px] text-slate-400 font-semibold">填了 +10</div>
+              </div>
+              <button onclick="startDictation('growth-input')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="語音輸入">
+                <span class="ms fill text-[20px] text-cyan">mic</span>
+              </button>
+            </div>
+            <input id="growth-input" class="mt-2 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet/40"
+                   placeholder="一句話也可以（可中/英/粵混講）"/>
+            <div class="mt-2 flex items-center justify-between">
+              <div class="text-[10px] text-slate-500 font-semibold" id="stt-hint">※ 若瀏覽器不支援語音，請用鍵盤麥克風</div>
+              <button onclick="openLangSheet()" class="chip"><span class="ms fill text-violet2">language</span><span id="stt-lang">AUTO</span></button>
+            </div>
           </section>
 
-          <section class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass">
-            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Notes</div>
-            <div class="mt-1 text-base font-extrabold text-white">品牌策略筆記</div>
-            <div class="mt-1 text-[10px] text-slate-400 font-semibold">寫了就 +10</div>
-            <textarea id="brand-input" class="mt-3 w-full h-28 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
-                      placeholder="記一個重點就好"></textarea>
+          <!-- Notes with voice -->
+          <section class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-violet2 text-[18px]">note_alt</span>
+                <div class="text-[13px] font-black text-white">策略筆記</div>
+                <div class="text-[10px] text-slate-400 font-semibold">填了 +10</div>
+              </div>
+              <button onclick="startDictation('brand-input')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="語音輸入">
+                <span class="ms fill text-[20px] text-cyan">mic</span>
+              </button>
+            </div>
+            <textarea id="brand-input" class="mt-2 w-full h-24 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
+                      placeholder="記一個重點就好（可中/英/粵混講）"></textarea>
           </section>
         </div>
 
-        <div id="tab-spirit" class="hidden mt-3 space-y-3">
+        <!-- Spirit tab -->
+        <div id="tab-spirit" class="hidden space-y-2">
           <!-- Devotion timer -->
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-start justify-between">
-              <div>
-                <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Silence</div>
-                <div class="mt-1 text-base font-extrabold text-white">靜默靈修</div>
-                <div class="mt-1 text-[10px] text-slate-400 font-semibold">完成 +10；取消 -10</div>
+          <section class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between gap-2">
+              <div class="min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="ms fill text-cyan text-[18px]">self_improvement</span>
+                  <div class="text-[13px] font-black text-white">靜默靈修</div>
+                  <div class="text-[10px] text-slate-400 font-semibold">+10</div>
+                </div>
+                <div class="mt-1 text-3xl font-light tracking-tighter tabular-nums text-white" id="devotion-display">10:00</div>
               </div>
-              <button onclick="toggleDone('devotion')" id="devotion-done-btn"
-                      class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
-                完成
-              </button>
-            </div>
 
-            <div class="mt-3 flex items-center justify-between">
-              <button onclick="openDuration('devotion')" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                <span id="devotion-min">10</span> min
-              </button>
-              <button onclick="resetTimer('devotion')" class="glass2 border border-white/10 rounded-full px-3 py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                重置
-              </button>
-            </div>
-
-            <div class="mt-3 flex items-center justify-center">
-              <div id="devotion-display" class="text-5xl font-light tracking-tighter tabular-nums text-white">10:00</div>
-            </div>
-
-            <div class="mt-3 grid grid-cols-2 gap-2">
-              <button id="devotion-start" onclick="toggleTimer('devotion')"
-                      class="rounded-xl py-2.5 text-[12px] font-black text-white bg-gradient-to-r from-violet via-violet2 to-cyan border border-white/10 active:scale-95 transition-transform">
-                開始
-              </button>
-              <button onclick="cancelTimer('devotion')" class="glass2 border border-white/10 rounded-xl py-2.5 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                取消
-              </button>
+              <div class="shrink-0 flex items-center gap-2">
+                <button onclick="toggleDone('devotion')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="完成/取消">
+                  <span id="devotion-done-ico" class="ms text-[20px] text-slate-300">done</span>
+                </button>
+                <button onclick="toggleTimer('devotion')" class="rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform border border-white/10 bg-gradient-to-r from-violet via-violet2 to-cyan" title="開始/暫停">
+                  <span id="devotion-play-ico" class="ms fill text-[20px] text-white">play_arrow</span>
+                </button>
+                <button onclick="openTimerSheet('devotion')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="更多">
+                  <span class="ms text-[20px] text-slate-300">more_horiz</span>
+                </button>
+              </div>
             </div>
           </section>
 
-          <section class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass">
-            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Scripture</div>
-            <div class="mt-1 text-base font-extrabold text-white">經文與領受</div>
-            <div class="mt-1 text-[10px] text-slate-400 font-semibold">填了就 +10</div>
+          <!-- Scripture -->
+          <section class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center gap-2">
+              <span class="ms fill text-gold text-[18px]">menu_book</span>
+              <div class="text-[13px] font-black text-white">經文與領受</div>
+              <div class="text-[10px] text-slate-400 font-semibold">填了 +10</div>
+            </div>
 
-            <input id="scripture-input" class="mt-3 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"
-                   placeholder="Psalm 23:1" />
-            <textarea id="spirit-input" class="mt-3 w-full h-28 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
+            <input id="scripture-input" class="mt-2 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet/40"
+                   placeholder="Psalm 23:1"/>
+            <textarea id="spirit-input" class="mt-2 w-full h-20 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
                       placeholder="一句領受也可以"></textarea>
           </section>
         </div>
       </main>
     </section>
 
-    <!-- CALENDAR ✅ FULL (monthly view + day details) -->
+    <!-- CALENDAR -->
     <section id="view-calendar" class="hidden flex-col flex-1 fade-in">
-      <header class="pt-10 px-4 pb-3">
+      <header class="px-4 pb-2">
         <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+          <button onclick="navTo('hub')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
             <span class="ms text-[18px]">chevron_left</span>
           </button>
           <div class="text-center">
             <div class="text-[10px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Evolution</div>
-            <div class="mt-1 text-lg font-extrabold text-white">日曆</div>
+            <div class="mt-0.5 text-[15px] font-extrabold text-white">日曆回顧</div>
           </div>
-          <button onclick="goToday()" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
-            <span class="ms text-[18px]">today</span>
-          </button>
+          <div class="w-10"></div>
         </div>
 
-        <div class="mt-3 glass rounded-2xl p-3 shadow-glass">
+        <div class="mt-2 glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-center justify-between">
-            <button onclick="calShift(-1)" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <button onclick="calShift(-1)" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
               <span class="ms text-[18px]">chevron_left</span>
             </button>
-            <div class="text-sm font-extrabold text-white tracking-wider">
-              <span id="cal-title">2026-02</span>
-            </div>
-            <button onclick="calShift(1)" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+            <div class="text-sm font-extrabold text-white tracking-wider"><span id="cal-title">—</span></div>
+            <button onclick="calShift(1)" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
               <span class="ms text-[18px]">chevron_right</span>
             </button>
           </div>
 
           <div class="mt-3 grid grid-cols-7 gap-1 text-center">
-            <div class="text-[10px] text-slate-400 font-extrabold">日</div>
-            <div class="text-[10px] text-slate-400 font-extrabold">一</div>
-            <div class="text-[10px] text-slate-400 font-extrabold">二</div>
-            <div class="text-[10px] text-slate-400 font-extrabold">三</div>
-            <div class="text-[10px] text-slate-400 font-extrabold">四</div>
-            <div class="text-[10px] text-slate-400 font-extrabold">五</div>
+            <div class="text-[10px] text-slate-400 font-extrabold">日</div><div class="text-[10px] text-slate-400 font-extrabold">一</div><div class="text-[10px] text-slate-400 font-extrabold">二</div>
+            <div class="text-[10px] text-slate-400 font-extrabold">三</div><div class="text-[10px] text-slate-400 font-extrabold">四</div><div class="text-[10px] text-slate-400 font-extrabold">五</div>
             <div class="text-[10px] text-slate-400 font-extrabold">六</div>
           </div>
-
           <div id="cal-grid" class="mt-2 grid grid-cols-7 gap-1"></div>
 
           <div class="mt-3 flex items-center justify-between text-[10px] text-slate-400 font-extrabold">
-            <div class="flex items-center gap-2">
-              <span class="inline-block w-2 h-2 rounded-full bg-gold shadow-gold"></span> 70%+
-            </div>
-            <div class="flex items-center gap-2">
-              <span class="inline-block w-2 h-2 rounded-full bg-violet2 shadow-glow"></span> 已結算
-            </div>
+            <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-gold shadow-gold"></span> 70%+ Bonus</div>
+            <div class="flex items-center gap-2"><span class="inline-block w-2 h-2 rounded-full bg-cyan"></span> Today</div>
           </div>
         </div>
       </header>
 
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-3">
-        <section class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass">
+      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-2">
+        <section class="glass rounded-2xl p-3 shadow-glass">
           <div class="flex items-center justify-between">
             <div>
               <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Selected</div>
-              <div class="mt-1 text-base font-extrabold text-white" id="cal-selected">—</div>
-              <div class="mt-1 text-[10px] text-slate-400 font-semibold">點日期即可切換到該天</div>
+              <div class="mt-0.5 text-[14px] font-extrabold text-white" id="cal-selected">—</div>
+              <div class="mt-1 text-[11px] text-slate-400 font-semibold">點日期 → 切換查看內容</div>
             </div>
             <button onclick="useSelectedDate()" class="rounded-xl px-4 py-2 text-[12px] font-black text-white bg-gradient-to-r from-violet via-violet2 to-cyan border border-white/10 active:scale-95 transition-transform">
-              前往
+              切換
             </button>
-          </div>
-
-          <div class="mt-3 grid grid-cols-3 gap-2 text-center">
-            <div class="glass2 rounded-xl border border-white/10 py-2">
-              <div class="text-[10px] text-slate-400 font-extrabold tracking-widest">COMP</div>
-              <div class="text-lg font-extrabold text-white"><span id="cal-comp">0</span>%</div>
-            </div>
-            <div class="glass2 rounded-xl border border-white/10 py-2">
-              <div class="text-[10px] text-slate-400 font-extrabold tracking-widest">XP</div>
-              <div class="text-lg font-extrabold text-gold">+<span id="cal-xp">0</span></div>
-            </div>
-            <div class="glass2 rounded-xl border border-white/10 py-2">
-              <div class="text-[10px] text-slate-400 font-extrabold tracking-widest">SET</div>
-              <div class="text-lg font-extrabold text-white"><span id="cal-settled">NO</span></div>
-            </div>
           </div>
         </section>
 
-        <section class="glass rounded-2xl p-4 shadow-glass">
-          <div class="text-sm font-extrabold text-white">當天摘要</div>
-          <div class="mt-2 text-[11px] text-slate-400 font-semibold leading-relaxed" id="cal-summary">
-            —
+        <!-- ✅ Categorized bullet summary -->
+        <section class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass">
+          <div class="text-[13px] font-extrabold text-white">當天摘要（分類）</div>
+
+          <div class="mt-3 space-y-3" id="cal-summary">
+            <!-- injected -->
           </div>
         </section>
       </main>
@@ -590,13 +583,13 @@
     </nav>
   </div>
 
-  <!-- Modals -->
-  <div id="modal-profile" class="hidden fixed inset-0 z-[80]">
-    <div class="absolute inset-0 bg-black/55"></div>
+  <!-- Profile Modal -->
+  <div id="modal-profile" class="hidden fixed inset-0 z-[200]">
+    <div class="absolute inset-0 bg-black/55" onclick="closeModal('modal-profile')"></div>
     <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md glass rounded-2xl p-4 border border-white/10 shadow-glass">
       <div class="flex items-center justify-between">
         <div class="text-base font-black text-white">個人設定</div>
-        <button onclick="closeModal('modal-profile')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
+        <button onclick="closeModal('modal-profile')" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
           <span class="ms text-[18px]">close</span>
         </button>
       </div>
@@ -607,10 +600,6 @@
           <input id="inp-name" class="mt-1.5 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
         </div>
         <div>
-          <label class="text-[10px] text-slate-400 font-extrabold">頭像 URL</label>
-          <input id="inp-avatar" class="mt-1.5 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40" placeholder="https://..."/>
-        </div>
-        <div>
           <label class="text-[10px] text-slate-400 font-extrabold">標題</label>
           <input id="inp-title" class="mt-1.5 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
         </div>
@@ -619,55 +608,116 @@
           <button onclick="saveProfile()" class="rounded-xl py-3 font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">保存</button>
           <button onclick="confirmReset()" class="glass2 border border-white/10 rounded-xl py-3 font-black text-white active:scale-95 transition-transform">系統重置</button>
         </div>
+
+        <div class="mt-2 text-[11px] text-slate-400 font-semibold leading-relaxed">
+          XP 會「每次點擊即時更新」，等級會自動依總 XP 升級（不需要結算）。
+        </div>
       </div>
     </div>
   </div>
 
-  <div id="modal-duration" class="hidden fixed inset-0 z-[90]">
-    <div class="absolute inset-0 bg-black/55"></div>
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md glass rounded-2xl p-4 border border-white/10 shadow-glass">
-      <div class="flex items-center justify-between">
-        <div class="text-base font-black text-white">設定倒數</div>
-        <button onclick="closeModal('modal-duration')" class="glass2 border border-white/10 rounded-full px-3 py-2 active:scale-95 transition-transform">
-          <span class="ms text-[18px]">close</span>
-        </button>
-      </div>
-
-      <div class="mt-3">
-        <div class="text-[12px] text-slate-200 font-black" id="dur-title">—</div>
-
-        <div class="mt-2 glass2 rounded-xl border border-white/10 p-3">
-          <label class="text-[10px] text-slate-400 font-extrabold">分鐘（1–180）</label>
-          <input id="dur-min" type="number" min="1" max="180"
-                 class="mt-1.5 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
-          <div class="mt-2 grid grid-cols-4 gap-2">
-            <button onclick="quickMin(5)" class="glass2 border border-white/10 rounded-lg py-2 text-[12px] font-black text-white active:scale-95 transition-transform">5</button>
-            <button onclick="quickMin(10)" class="glass2 border border-white/10 rounded-lg py-2 text-[12px] font-black text-white active:scale-95 transition-transform">10</button>
-            <button onclick="quickMin(20)" class="glass2 border border-white/10 rounded-lg py-2 text-[12px] font-black text-white active:scale-95 transition-transform">20</button>
-            <button onclick="quickMin(30)" class="glass2 border border-white/10 rounded-lg py-2 text-[12px] font-black text-white active:scale-95 transition-transform">30</button>
+  <!-- Timer Action Sheet -->
+  <div id="sheet-backdrop" class="hidden fixed inset-0 z-[250] bg-black/55" onclick="closeSheet()"></div>
+  <div id="timer-sheet" class="sheet z-[260]">
+    <div class="mx-auto max-w-md w-full px-3 pb-4">
+      <div class="glass rounded-2xl border border-white/10 shadow-glass p-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Timer</div>
+            <div id="sheet-title" class="mt-0.5 text-[14px] font-extrabold text-white">—</div>
           </div>
+          <button onclick="closeSheet()" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
+            <span class="ms text-[18px]">close</span>
+          </button>
         </div>
 
-        <button onclick="applyDuration()" class="mt-3 w-full rounded-xl py-3 font-black text-white bg-gradient-to-r from-violet via-violet2 to-cyan border border-white/10 shadow-glow active:scale-95 transition-transform">
-          套用
-        </button>
+        <div class="mt-3 grid grid-cols-3 gap-2">
+          <button onclick="sheetReset()" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+            重置
+          </button>
+          <button onclick="sheetSetMin(10)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+            10m
+          </button>
+          <button onclick="sheetSetMin(20)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+            20m
+          </button>
+        </div>
+
+        <div class="mt-2 grid grid-cols-3 gap-2">
+          <button onclick="sheetSetMin(30)" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+            30m
+          </button>
+          <button onclick="sheetPromptCustom()" class="rounded-xl py-2 text-[12px] font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">
+            自訂
+          </button>
+          <button onclick="sheetCancelDone()" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
+            取消完成
+          </button>
+        </div>
+
+        <div class="mt-2 text-[11px] text-slate-400 font-semibold">
+          提示：完成/取消會影響 XP（即時）
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STT Language Sheet -->
+  <div id="lang-backdrop" class="hidden fixed inset-0 z-[300] bg-black/55" onclick="closeLangSheet()"></div>
+  <div id="lang-sheet" class="sheet z-[310]">
+    <div class="mx-auto max-w-md w-full px-3 pb-4">
+      <div class="glass rounded-2xl border border-white/10 shadow-glass p-3">
+        <div class="flex items-center justify-between">
+          <div>
+            <div class="text-[10px] tracking-widest uppercase text-slate-400 font-extrabold">Speech</div>
+            <div class="mt-0.5 text-[14px] font-extrabold text-white">語音語言</div>
+          </div>
+          <button onclick="closeLangSheet()" class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform">
+            <span class="ms text-[18px]">close</span>
+          </button>
+        </div>
+
+        <div class="mt-3 grid grid-cols-2 gap-2">
+          <button onclick="setSTTLang('AUTO')" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">AUTO（混語最佳努力）</button>
+          <button onclick="setSTTLang('EN')" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">EN</button>
+          <button onclick="setSTTLang('ZH')" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">中文</button>
+          <button onclick="setSTTLang('YUE')" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">粵語</button>
+        </div>
+
+        <div class="mt-2 text-[11px] text-slate-400 font-semibold leading-relaxed">
+          小提醒：Web Speech API 本身是一個「單一語言設定」；AUTO 會用最常見的英語引擎去捕捉混語（實務上混講更容易被吃到），如果辨識不準再切換中文/粵語重錄一段。
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    /***************
-     * Safe helpers
-     ***************/
+    /**********************
+     * Helpers
+     **********************/
     const $ = (id)=> document.getElementById(id);
     const setText = (id, v)=> { const el=$(id); if(el) el.textContent = v; };
     const setWidth = (id, pct)=> { const el=$(id); if(el) el.style.width = pct; };
+    function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
+    function escapeHtml(s){ return String(s).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;" }[m])); }
+    function tickLabel(sec){
+      const s = Math.max(0, Math.floor(sec));
+      const m = Math.floor(s/60);
+      const r = s%60;
+      return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
+    }
+    function formatKey(key){
+      const [y,m,d]=key.split("-");
+      return `${y}/${m}/${d}`;
+    }
+    function toISODateInput(key){ return key; } // YYYY-MM-DD already
+    function fromISODateInput(v){ return v; }
 
-    /***************
-     * Config
-     ***************/
-    const STORAGE_KEY = "ate_mobile_ultra_v3";
-    const DEFAULT_AVATAR = "https://lh3.googleusercontent.com/aida-public/AB6AXuCAYOzNGEzdDG66QmmNGCUlkdnwk7zJo0-6al0p4StVVrRy7UvwIFfnSbzk1yro93SGmClDJXzHkeK0f3pOKlJ7_0wH9VzNbQ3ATQRP2P4Msi2j3L88v-cPqgWfProkys6HXeVgnOq9poVFtfNyxvn9pqj2xho4IOb0kutPRkMrNn2qgl6IG3CfgZJFN6h_2N_KyQQzgP3uX0T6tGAkUnEDgaVjHUIXMZVxocw3H1i2okCF0BovjWGbicSrh5A42xuvBTiOpnUCuI0";
+    /**********************
+     * Storage + Model
+     **********************/
+    const STORAGE_KEY = "ate_mobile_v4";
+    const DEFAULT_AVATAR = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect width='200' height='200' fill='%2310192E'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' fill='%23A78BFA' font-family='Arial' font-size='64'%3EATE%3C/text%3E%3C/svg%3E";
 
     const VERSES_EN = [
       { t: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", r: "Joshua 1:9" },
@@ -680,10 +730,10 @@
       { t: "Let us not grow weary in doing good; in due season we will reap, if we do not give up.", r: "Galatians 6:9" },
     ];
 
-    // ✅ FIX: points sign logic (done = +, cancel = -)
-    const POINTS = {
+    // Points (XP) = points (simple + transparent)
+    const P = {
       waterMax: 25,
-      taskTimerEach: 10,
+      taskTimer: 10,
       taskCheck: 10,
       bowel: 10,
       reading: 10,
@@ -691,34 +741,29 @@
       growth: 10,
       brand: 10,
       scripture: 10,
+      bonus70: 20,
     };
 
-    function clamp(n,a,b){ return Math.max(a, Math.min(b,n)); }
     function todayKey(){
       const d=new Date();
       return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
     }
-    function formatKey(key){
-      const [y,m,d]=key.split("-");
-      return `${y}年${m}月${d}日`;
-    }
-    function tickLabel(sec){
-      const s = Math.max(0, Math.floor(sec));
-      const m = Math.floor(s/60);
-      const r = s%60;
-      return `${String(m).padStart(2,'0')}:${String(r).padStart(2,'0')}`;
-    }
 
     function freshState(){
+      const t = todayKey();
       return {
-        profile:{ name:"覺醒女神", title:"Aether Trinity Evolution", avatar: DEFAULT_AVATAR },
-        gamification:{ level:1, xp:0, xpMax:100 },
+        profile:{
+          name:"覺醒女神",
+          title:"Aether Trinity Evolution",
+          avatar: DEFAULT_AVATAR,
+        },
         ui:{
           view:"hub",
-          activeDate: todayKey(),
-          mindTab:"mind",
-          selectedDate: todayKey(),
+          activeDate: t,
+          selectedDate: t,
           calYm: (()=>{ const d=new Date(); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`; })(),
+          mindTab:"mind",
+          sttLang:"AUTO"
         },
         days:{}
       };
@@ -729,17 +774,16 @@
         date: dateKey,
         waterGoalMl: 1900,
         waterMl: 0,
-        bowelStatus: "未完成",
+        bowelOk: false,
         tasks: [
-          { id: 1, type: "timer", title: "深蹲練習", sub: "核心肌群", minutes: 15, remainingSec: 15*60, running: false, done: false },
-          { id: 2, type: "timer", title: "每日肌肉訓練", sub: "30 分鐘", minutes: 30, remainingSec: 30*60, running: false, done: false },
-          { id: 3, type: "check", title: "健康早餐", sub: "建議 08:30 AM", done: false },
+          { id: 1, type: "timer", icon:"directions_run", title: "深蹲練習", sub: "核心肌群", minutes: 15, remainingSec: 15*60, running: false, done: false },
+          { id: 2, type: "timer", icon:"fitness_center", title: "每日肌肉訓練", sub: "30 分鐘", minutes: 30, remainingSec: 30*60, running: false, done: false },
+          { id: 3, type: "check", icon:"breakfast_dining", title: "健康早餐", sub: "建議 08:30 AM", done: false },
         ],
         reading: { minutes: 20, remainingSec: 20*60, running: false, done: false },
         devotion:{ minutes: 10, remainingSec: 10*60, running: false, done: false },
         mind:{ growth:"", brand:"" },
         spirit:{ scripture:"", note:"" },
-        settle:{ settled:false, xpAwarded:0, percentAtSettle:0 }
       };
     }
 
@@ -751,9 +795,9 @@
         if(t.type==="timer"){
           const m = Number(t.minutes || 10);
           const rem = Number.isFinite(t.remainingSec) ? t.remainingSec : m*60;
-          return { ...t, id: t.id ?? (i+1), minutes:m, remainingSec: rem, running: !!t.running, done: !!t.done };
+          return { ...t, id: t.id ?? (i+1), minutes:m, remainingSec: rem, running: !!t.running, done: !!t.done, icon: t.icon || "timer" };
         }
-        return { ...t, id: t.id ?? (i+1), done: !!t.done };
+        return { ...t, id: t.id ?? (i+1), done: !!t.done, icon: t.icon || "check_circle" };
       });
       d.reading = d.reading || base.reading;
       d.devotion = d.devotion || base.devotion;
@@ -761,7 +805,7 @@
       d.devotion = { minutes:Number(d.devotion.minutes||10), remainingSec:Number.isFinite(d.devotion.remainingSec)?d.devotion.remainingSec:d.devotion.minutes*60, running:!!d.devotion.running, done:!!d.devotion.done };
       d.mind = d.mind || { growth:"", brand:"" };
       d.spirit = d.spirit || { scripture:"", note:"" };
-      d.settle = d.settle || { settled:false, xpAwarded:0, percentAtSettle:0 };
+      d.bowelOk = !!d.bowelOk;
       return d;
     }
 
@@ -770,6 +814,10 @@
       if(raw){
         const s = JSON.parse(raw);
         Object.keys(s.days||{}).forEach(k=> s.days[k]=normalizeDay(s.days[k],k));
+        // migrate missing
+        if(!s.profile) s.profile = freshState().profile;
+        if(!s.ui) s.ui = freshState().ui;
+        if(!s.ui.sttLang) s.ui.sttLang = "AUTO";
         return s;
       }
       const s = freshState();
@@ -786,173 +834,199 @@
       return state.days[key];
     }
 
-    /***************
+    /**********************
      * Game feedback
-     ***************/
+     **********************/
     function popScore(delta){
+      if(!delta) return;
       const el = document.createElement("div");
       el.className = "pop";
       const good = delta >= 0;
       el.innerHTML = `<div class="popBadge" style="color:${good?'#A3E635':'#FB7185'}">${good?'+':''}${delta}</div>`;
       document.body.appendChild(el);
-      setTimeout(()=> el.remove(), 900);
-      try{ navigator.vibrate && navigator.vibrate(10); }catch(e){}
+      setTimeout(()=> el.remove(), 850);
+      try{ navigator.vibrate && navigator.vibrate(8); }catch(e){}
     }
-
     function toastMini(text){
       const el = document.createElement("div");
       el.className = "toast";
-      el.innerHTML = `<div class="glass2 border border-white/10 shadow-glass rounded-full px-4 py-2 text-[12px] font-extrabold text-white">${text}</div>`;
+      el.innerHTML = `<div class="glass2 border border-white/10 shadow-glass rounded-full px-4 py-2 text-[12px] font-extrabold text-white">${escapeHtml(text)}</div>`;
       document.body.appendChild(el);
-      setTimeout(()=> el.remove(), 2000);
+      setTimeout(()=> el.remove(), 1700);
     }
 
-    /***************
-     * Completion + XP
-     ***************/
-    function pointsBreakdown(day){
-      const waterRatio = clamp(day.waterGoalMl ? day.waterMl / day.waterGoalMl : 0, 0, 1);
-      const waterPts = Math.round(POINTS.waterMax * waterRatio);
-
-      let taskPts = 0;
-      let taskTotal = 0;
-      day.tasks.forEach(t=>{
-        const each = (t.type==="timer") ? POINTS.taskTimerEach : POINTS.taskCheck;
-        taskTotal += each;
-        if(t.done) taskPts += each;
-      });
-
-      const bowelPts = (day.bowelStatus === "正常") ? POINTS.bowel : 0;
-      const readingPts = day.reading.done ? POINTS.reading : 0;
-      const devotionPts = day.devotion.done ? POINTS.devotion : 0;
-      const growthPts = day.mind.growth.trim() ? POINTS.growth : 0;
-      const brandPts  = day.mind.brand.trim()  ? POINTS.brand  : 0;
-      const scripturePts = (day.spirit.scripture.trim() || day.spirit.note.trim()) ? POINTS.scripture : 0;
-
-      const totalPts = POINTS.waterMax + taskTotal + POINTS.bowel + POINTS.reading + POINTS.devotion + POINTS.growth + POINTS.brand + POINTS.scripture;
-      const gotPts = waterPts + taskPts + bowelPts + readingPts + devotionPts + growthPts + brandPts + scripturePts;
-
-      return { waterRatio, waterPts, taskPts, totalPts, gotPts };
+    /**********************
+     * Scoring & Completion (FIXED)
+     * - overall completion includes Body + Mind + Spirit
+     * - body completion shows only body-related points
+     **********************/
+    function waterPoints(day){
+      const ratio = clamp(day.waterGoalMl ? day.waterMl / day.waterGoalMl : 0, 0, 1);
+      return { ratio, pts: Math.round(P.waterMax * ratio) };
     }
 
-    function computeCompletion(day){
-      const p = pointsBreakdown(day);
-      const ratio = p.totalPts ? (p.gotPts / p.totalPts) : 0;
-      const percent = Math.round(ratio * 100);
-      const perfect = ratio >= 0.70;
+    function bodyScore(day){
+      const w = waterPoints(day);
+      const taskTotal = day.tasks.reduce((sum,t)=> sum + (t.type==="timer"?P.taskTimer:P.taskCheck), 0);
+      const taskPts = day.tasks.reduce((sum,t)=> sum + (t.done ? (t.type==="timer"?P.taskTimer:P.taskCheck) : 0), 0);
+      const bowelPts = day.bowelOk ? P.bowel : 0;
 
-      let xp = 30 + Math.round(170 * ratio);
-      if(perfect) xp += 20;
-      xp = clamp(xp, 0, 220);
-      return { ratio, percent, perfect, xp, points: p };
+      const total = P.waterMax + taskTotal + P.bowel;
+      const got = w.pts + taskPts + bowelPts;
+      const percent = total ? Math.round((got/total)*100) : 0;
+
+      return { total, got, percent, water:w, taskTotal, taskPts, bowelPts };
     }
 
-    function computeStreak(){
-      let streak = 0;
-      let k = todayKey();
-      while(true){
-        const day = ensureDay(k);
-        const c = computeCompletion(day);
-        if(!c.perfect) break;
-        streak++;
-        const d = new Date(k+"T00:00:00");
-        d.setDate(d.getDate()-1);
-        k = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    function mindScore(day){
+      // Mind tab: reading + growth + brand
+      const total = P.reading + P.growth + P.brand;
+      const got = (day.reading.done?P.reading:0) + (day.mind.growth.trim()?P.growth:0) + (day.mind.brand.trim()?P.brand:0);
+      const percent = total ? Math.round((got/total)*100) : 0;
+      return { total, got, percent };
+    }
+
+    function spiritScore(day){
+      // Spirit tab: devotion + scripture(note/ref)
+      const total = P.devotion + P.scripture;
+      const got = (day.devotion.done?P.devotion:0) + ((day.spirit.scripture.trim() || day.spirit.note.trim()) ? P.scripture : 0);
+      const percent = total ? Math.round((got/total)*100) : 0;
+      return { total, got, percent };
+    }
+
+    function overallScore(day){
+      const b = bodyScore(day);
+      const m = mindScore(day);
+      const s = spiritScore(day);
+
+      const total = b.total + m.total + s.total;
+      const got = b.got + m.got + s.got;
+      const percent = total ? Math.round((got/total)*100) : 0;
+      const bonusOn = percent >= 70;
+      const dayXp = got + (bonusOn ? P.bonus70 : 0);
+      return { total, got, percent, bonusOn, dayXp, b, m, s };
+    }
+
+    /**********************
+     * XP + Level (FIXED)
+     * - XP is "each day accumulated" + live update because we recompute from state
+     * - totalXP = sum(dayXp) across all days (no settle button needed)
+     **********************/
+    function totalXpAllDays(){
+      let sum = 0;
+      for(const k of Object.keys(state.days||{})){
+        const d = ensureDay(k);
+        sum += overallScore(d).dayXp;
       }
-      return streak;
+      return sum;
     }
 
-    /***************
-     * Navigation
-     ***************/
+    function levelModel(totalXp){
+      // Simple progressive curve
+      // level 1 requires 100, then grows ~12% + 35
+      let level = 1;
+      let need = 100;
+      let xp = totalXp;
+
+      while(xp >= need){
+        xp -= need;
+        level += 1;
+        need = Math.round(need * 1.12 + 35);
+        if(level > 999) break;
+      }
+      return { level, inLevel: xp, next: need };
+    }
+
+    /**********************
+     * Navigation + Date (FIXED: switching truly changes day data)
+     **********************/
     function navTo(view){
       state.ui.view = view;
       save();
       renderAll();
     }
-    function switchTab(tab){
-      state.ui.mindTab = tab;
-      save();
-      renderMindTabs();
-    }
-    function goToday(){
-      state.ui.activeDate = todayKey();
-      state.ui.selectedDate = todayKey();
-      const d = new Date();
-      state.ui.calYm = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`;
+
+    function setActiveDate(key){
+      state.ui.activeDate = key;
+      state.ui.selectedDate = key;
+      // sync calendar month
+      state.ui.calYm = key.slice(0,7);
       save();
       renderAll();
-      toastMini("已回到今天");
     }
 
-    /***************
-     * Profile modal
-     ***************/
-    function openModal(id){
-      const el=$(id); if(!el) return;
-      el.classList.remove("hidden");
-      document.body.style.overflow="hidden";
-    }
-    function closeModal(id){
-      const el=$(id); if(!el) return;
-      el.classList.add("hidden");
-      document.body.style.overflow="";
-    }
-    function saveProfile(){
-      const name = ($("inp-name")?.value || "").trim() || "覺醒女神";
-      const avatar = ($("inp-avatar")?.value || "").trim() || DEFAULT_AVATAR;
-      const title = ($("inp-title")?.value || "").trim() || "Aether Trinity Evolution";
-      state.profile.name = name;
-      state.profile.avatar = avatar;
-      state.profile.title = title;
-      save();
-      closeModal("modal-profile");
-      renderProfile();
-      toastMini("已保存");
-    }
-    function confirmReset(){
-      const ok = confirm("【系統重置】確定清除所有紀錄？");
-      if(!ok) return;
-      localStorage.removeItem(STORAGE_KEY);
-      location.reload();
+    function shiftDay(delta){
+      const k = activeKey();
+      const d = new Date(k + "T00:00:00");
+      d.setDate(d.getDate()+delta);
+      const nk = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+      setActiveDate(nk);
+      toastMini(delta<0 ? "已切換前一天" : "已切換後一天");
     }
 
-    /***************
-     * Body actions
-     ***************/
+    function openDatePicker(){
+      const input = $("date-picker");
+      if(!input) return;
+      input.value = toISODateInput(activeKey());
+      input.click();
+    }
+
+    function bindDatePickerOnce(){
+      const input = $("date-picker");
+      if(!input) return;
+      input.addEventListener("change", ()=>{
+        if(!input.value) return;
+        const key = fromISODateInput(input.value);
+        setActiveDate(key);
+      });
+    }
+
+    /**********************
+     * Body actions (tap / minimal buttons)
+     **********************/
     function modifyWater(delta){
-      const d = ensureDay(activeKey());
-      const before = computeCompletion(d).points.waterPts;
-      d.waterMl = Math.max(0, d.waterMl + delta);
-      const after = computeCompletion(d).points.waterPts;
+      const day = ensureDay(activeKey());
+      const before = overallScore(day).dayXp;
+      day.waterMl = Math.max(0, day.waterMl + delta);
+      const after = overallScore(day).dayXp;
       save();
       renderAll();
       popScore(after - before);
     }
 
-    function setBowel(val){
-      const d = ensureDay(activeKey());
-      const before = (d.bowelStatus==="正常") ? POINTS.bowel : 0;
-      d.bowelStatus = val;
-      const after = (d.bowelStatus==="正常") ? POINTS.bowel : 0;
+    function toggleBowel(){
+      const day = ensureDay(activeKey());
+      const before = overallScore(day).dayXp;
+      day.bowelOk = !day.bowelOk;
+      const after = overallScore(day).dayXp;
       save();
       renderAll();
       popScore(after - before);
     }
 
-    function toggleCheckTask(id){
-      const d = ensureDay(activeKey());
-      const t = d.tasks.find(x=>x.id===id);
+    function toggleTaskDone(id){
+      const day = ensureDay(activeKey());
+      const t = day.tasks.find(x=>x.id===id);
       if(!t) return;
+
+      const before = overallScore(day).dayXp;
+
+      // If timer task currently running and user marks done, stop it
+      if(t.type==="timer") t.running = false;
+
       t.done = !t.done;
+      if(t.type==="timer" && t.done) t.remainingSec = 0;
+      if(t.type==="timer" && !t.done && t.remainingSec<=0) t.remainingSec = (t.minutes||10)*60;
+
+      const after = overallScore(day).dayXp;
       save();
       renderAll();
-      popScore(t.done ? +POINTS.taskCheck : -POINTS.taskCheck);
+      popScore(after - before);
     }
 
-    /***************
-     * ✅ FIX: Timers - start works, only one running, pause/resume stable
-     ***************/
+    /**********************
+     * Timers (stable)
+     **********************/
     let tickHandle = null;
 
     function startTick(){
@@ -961,7 +1035,6 @@
         const day = ensureDay(activeKey());
         let changed=false;
 
-        // tasks timers
         day.tasks.forEach(t=>{
           if(t.type==="timer" && t.running && !t.done){
             t.remainingSec = Math.max(0, t.remainingSec - 1);
@@ -969,206 +1042,346 @@
             if(t.remainingSec === 0){
               t.running=false;
               t.done=true;
-              save();
-              renderAll();
-              popScore(+POINTS.taskTimerEach);
             }
           }
         });
 
-        // reading
         if(day.reading.running && !day.reading.done){
           day.reading.remainingSec = Math.max(0, day.reading.remainingSec - 1);
           changed=true;
           if(day.reading.remainingSec === 0){
-            day.reading.running=false; day.reading.done=true;
-            save(); renderAll(); popScore(+POINTS.reading);
+            day.reading.running=false;
+            day.reading.done=true;
           }
         }
-        // devotion
+
         if(day.devotion.running && !day.devotion.done){
           day.devotion.remainingSec = Math.max(0, day.devotion.remainingSec - 1);
           changed=true;
           if(day.devotion.remainingSec === 0){
-            day.devotion.running=false; day.devotion.done=true;
-            save(); renderAll(); popScore(+POINTS.devotion);
+            day.devotion.running=false;
+            day.devotion.done=true;
           }
         }
 
         if(changed){
           save();
           renderTimersOnly();
-          renderCompletionOnly();
+          renderHeaderOnly();
         }
       }, 1000);
     }
 
     function stopAllRunning(day){
       day.tasks.forEach(t=>{ if(t.type==="timer") t.running=false; });
-      day.reading.running=false;
-      day.devotion.running=false;
+      day.reading.running = false;
+      day.devotion.running = false;
     }
 
     function toggleTimer(kind, id){
       const day = ensureDay(activeKey());
-      let ref=null;
+      let ref = null;
 
-      if(kind==="reading"){ ref=day.reading; }
-      else if(kind==="devotion"){ ref=day.devotion; }
-      else if(kind==="task"){ ref=day.tasks.find(t=>t.id===id); }
+      if(kind==="reading") ref = day.reading;
+      else if(kind==="devotion") ref = day.devotion;
+      else if(kind==="task") ref = day.tasks.find(t=>t.id===id);
+
       if(!ref) return;
-
-      // cannot start if done (need cancel)
       if(ref.done){
-        toastMini("已完成，先取消才可重新計時");
+        toastMini("已完成（要重新計時請先取消完成）");
         return;
       }
 
-      // if currently running -> pause
       if(ref.running){
         ref.running=false;
-        save();
-        renderAll();
+        save(); renderAll();
         toastMini("暫停");
         return;
       }
 
-      // start: stop others
       stopAllRunning(day);
 
-      // if remaining is 0 (fresh start), restore full duration
       if(ref.remainingSec<=0){
-        const mins = Number(ref.minutes||10);
-        ref.remainingSec = mins*60;
+        ref.remainingSec = (ref.minutes||10)*60;
       }
 
       ref.running=true;
-      save();
-      renderAll();
+      save(); renderAll();
       startTick();
       toastMini("開始");
     }
 
-    // ✅ FIX: Done / Cancel scoring direction
     function toggleDone(kind, id){
       const day = ensureDay(activeKey());
-      let ref=null, pts=0;
+      const before = overallScore(day).dayXp;
 
-      if(kind==="reading"){ ref=day.reading; pts=POINTS.reading; }
-      else if(kind==="devotion"){ ref=day.devotion; pts=POINTS.devotion; }
-      else if(kind==="task"){ ref=day.tasks.find(t=>t.id===id); pts=POINTS.taskTimerEach; }
-      if(!ref) return;
-
-      const next = !ref.done;
-      ref.done = next;
-      ref.running = false;
-
-      if(next){
-        ref.remainingSec = 0;
-        popScore(+pts);
-      }else{
-        ref.remainingSec = Number(ref.minutes||10)*60;
-        popScore(-pts);
+      if(kind==="reading"){
+        day.reading.done = !day.reading.done;
+        day.reading.running = false;
+        if(day.reading.done) day.reading.remainingSec = 0;
+        else day.reading.remainingSec = (day.reading.minutes||20)*60;
+      } else if(kind==="devotion"){
+        day.devotion.done = !day.devotion.done;
+        day.devotion.running = false;
+        if(day.devotion.done) day.devotion.remainingSec = 0;
+        else day.devotion.remainingSec = (day.devotion.minutes||10)*60;
+      } else if(kind==="task"){
+        const t = day.tasks.find(x=>x.id===id);
+        if(!t) return;
+        t.done = !t.done;
+        t.running = false;
+        if(t.done) t.remainingSec = 0;
+        else t.remainingSec = (t.minutes||10)*60;
       }
 
-      save();
-      renderAll();
-    }
-
-    function cancelTimer(kind, id){
-      const day = ensureDay(activeKey());
-      let ref=null, pts=0;
-
-      if(kind==="reading"){ ref=day.reading; pts=POINTS.reading; }
-      else if(kind==="devotion"){ ref=day.devotion; pts=POINTS.devotion; }
-      else if(kind==="task"){ ref=day.tasks.find(t=>t.id===id); pts=POINTS.taskTimerEach; }
-      if(!ref) return;
-
-      // cancel means: back to not done, reset time, and if it WAS done, deduct points
-      const wasDone = ref.done;
-      ref.running=false;
-      ref.done=false;
-      ref.remainingSec = Number(ref.minutes||10)*60;
-
-      save();
-      renderAll();
-      if(wasDone) popScore(-pts); else toastMini("已取消");
+      const after = overallScore(day).dayXp;
+      save(); renderAll();
+      popScore(after - before);
     }
 
     function resetTimer(kind, id){
       const day = ensureDay(activeKey());
-      let ref=null;
+      const before = overallScore(day).dayXp;
 
-      if(kind==="reading"){ ref=day.reading; }
-      else if(kind==="devotion"){ ref=day.devotion; }
-      else if(kind==="task"){ ref=day.tasks.find(t=>t.id===id); }
-      if(!ref) return;
+      if(kind==="reading"){
+        day.reading.running=false;
+        day.reading.done=false;
+        day.reading.remainingSec=(day.reading.minutes||20)*60;
+      } else if(kind==="devotion"){
+        day.devotion.running=false;
+        day.devotion.done=false;
+        day.devotion.remainingSec=(day.devotion.minutes||10)*60;
+      } else if(kind==="task"){
+        const t = day.tasks.find(x=>x.id===id);
+        if(!t) return;
+        t.running=false;
+        t.done=false;
+        t.remainingSec=(t.minutes||10)*60;
+      }
 
-      ref.running=false;
-      ref.remainingSec = Number(ref.minutes||10)*60;
-
-      save();
-      renderAll();
+      const after = overallScore(day).dayXp;
+      save(); renderAll();
+      popScore(after - before);
       toastMini("已重置");
     }
 
-    /***************
-     * Duration modal
-     ***************/
-    let durationTarget = null;
-
-    function openDuration(target){
-      durationTarget = target;
+    function setTimerMinutes(kind, minutes, id){
       const day = ensureDay(activeKey());
+      const before = overallScore(day).dayXp;
+      const m = clamp(parseInt(minutes,10), 1, 180);
 
-      if(target==="reading"){
-        setText("dur-title","深度閱讀");
-        $("dur-min").value = day.reading.minutes;
-      }else if(target==="devotion"){
-        setText("dur-title","靜默靈修");
-        $("dur-min").value = day.devotion.minutes;
-      }else{
-        const t = day.tasks.find(x=>x.id===target);
-        setText("dur-title", t ? t.title : "任務");
-        $("dur-min").value = t ? t.minutes : 10;
-      }
-      openModal("modal-duration");
-    }
-
-    function quickMin(m){ $("dur-min").value = m; }
-
-    function applyDuration(){
-      const m = clamp(parseInt($("dur-min").value || "10",10), 1, 180);
-      const day = ensureDay(activeKey());
-
-      if(durationTarget==="reading"){
+      if(kind==="reading"){
         day.reading.minutes = m;
         day.reading.running=false;
         day.reading.done=false;
         day.reading.remainingSec = m*60;
-      }else if(durationTarget==="devotion"){
+      } else if(kind==="devotion"){
         day.devotion.minutes = m;
         day.devotion.running=false;
         day.devotion.done=false;
         day.devotion.remainingSec = m*60;
-      }else{
-        const t = day.tasks.find(x=>x.id===durationTarget);
-        if(t && t.type==="timer"){
-          t.minutes=m;
-          t.running=false;
-          t.done=false;
-          t.remainingSec=m*60;
-        }
+      } else if(kind==="task"){
+        const t = day.tasks.find(x=>x.id===id);
+        if(!t) return;
+        t.minutes = m;
+        t.running=false;
+        t.done=false;
+        t.remainingSec = m*60;
       }
-      save();
-      closeModal("modal-duration");
-      renderAll();
-      toastMini(`已套用 ${m}min`);
+
+      const after = overallScore(day).dayXp;
+      save(); renderAll();
+      popScore(after - before);
+      toastMini(`倒數設為 ${m} 分`);
     }
 
-    /***************
+    /**********************
+     * Timer sheet (minimal UI)
+     **********************/
+    let sheetTarget = null; // { kind, id }
+    function openTimerSheet(kind, id=null){
+      sheetTarget = { kind, id };
+      const title = (kind==="reading") ? "深度閱讀"
+                   : (kind==="devotion") ? "靜默靈修"
+                   : "計時任務";
+      setText("sheet-title", title);
+      $("sheet-backdrop").classList.remove("hidden");
+      $("timer-sheet").classList.add("show");
+    }
+    function closeSheet(){
+      $("timer-sheet").classList.remove("show");
+      $("sheet-backdrop").classList.add("hidden");
+      sheetTarget = null;
+    }
+    function sheetReset(){
+      if(!sheetTarget) return;
+      resetTimer(sheetTarget.kind, sheetTarget.id);
+      closeSheet();
+    }
+    function sheetSetMin(m){
+      if(!sheetTarget) return;
+      setTimerMinutes(sheetTarget.kind, m, sheetTarget.id);
+      closeSheet();
+    }
+    function sheetPromptCustom(){
+      if(!sheetTarget) return;
+      const v = prompt("輸入分鐘（1–180）", "15");
+      if(!v) return;
+      setTimerMinutes(sheetTarget.kind, v, sheetTarget.id);
+      closeSheet();
+    }
+    function sheetCancelDone(){
+      if(!sheetTarget) return;
+      const day = ensureDay(activeKey());
+      const before = overallScore(day).dayXp;
+
+      if(sheetTarget.kind==="reading"){
+        day.reading.done=false; day.reading.running=false; day.reading.remainingSec=(day.reading.minutes||20)*60;
+      } else if(sheetTarget.kind==="devotion"){
+        day.devotion.done=false; day.devotion.running=false; day.devotion.remainingSec=(day.devotion.minutes||10)*60;
+      } else if(sheetTarget.kind==="task"){
+        const t = day.tasks.find(x=>x.id===sheetTarget.id);
+        if(t){ t.done=false; t.running=false; t.remainingSec=(t.minutes||10)*60; }
+      }
+
+      const after = overallScore(day).dayXp;
+      save(); renderAll();
+      popScore(after - before);
+      closeSheet();
+    }
+
+    /**********************
+     * Mind inputs + points (auto XP via recompute)
+     **********************/
+    let inputsBound = false;
+    function bindInputsOnce(){
+      if(inputsBound) return;
+      inputsBound = true;
+
+      const bind = (id, setter)=>{
+        const el=$(id);
+        if(!el) return;
+        el.addEventListener("input", ()=>{
+          const day = ensureDay(activeKey());
+          const before = overallScore(day).dayXp;
+          setter(day, el.value);
+          const after = overallScore(day).dayXp;
+          save();
+          renderHeaderOnly();
+          popScore(after - before);
+        });
+      };
+
+      bind("growth-input", (day,v)=> day.mind.growth = v);
+      bind("brand-input",  (day,v)=> day.mind.brand  = v);
+      bind("scripture-input", (day,v)=> day.spirit.scripture = v);
+      bind("spirit-input",   (day,v)=> day.spirit.note = v);
+    }
+
+    /**********************
+     * Speech-to-Text (best effort + multi-language mode)
+     **********************/
+    let recognition = null;
+    function getSTTLangCode(){
+      const mode = state.ui.sttLang || "AUTO";
+      // AUTO: use en-US (often captures mixed speech better in practice)
+      if(mode==="EN") return "en-US";
+      if(mode==="ZH") return "cmn-Hant-TW";
+      if(mode==="YUE") return "yue-Hant-HK";
+      return "en-US";
+    }
+
+    function startDictation(targetId){
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if(!SpeechRecognition){
+        toastMini("此瀏覽器不支援語音輸入");
+        return;
+      }
+      if(recognition){
+        try{ recognition.stop(); }catch(e){}
+        recognition = null;
+      }
+
+      recognition = new SpeechRecognition();
+      recognition.lang = getSTTLangCode();
+      recognition.interimResults = true;
+      recognition.continuous = false;
+
+      const el = $(targetId);
+      if(!el){ toastMini("找不到輸入框"); return; }
+
+      let finalText = "";
+
+      toastMini("聆聽中…");
+      recognition.onresult = (event)=>{
+        let interim = "";
+        for(let i=event.resultIndex; i<event.results.length; i++){
+          const transcript = event.results[i][0].transcript;
+          if(event.results[i].isFinal) finalText += transcript;
+          else interim += transcript;
+        }
+        // show interim in placeholder-ish way by appending
+        const base = el.value || "";
+        // keep base + interim (visual)
+        el.value = base + (finalText ? finalText : "") + (interim ? interim : "");
+      };
+      recognition.onerror = ()=> toastMini("語音輸入失敗，請重試");
+      recognition.onend = ()=>{
+        // normalize: keep what’s currently in the field; trigger input event to score
+        el.dispatchEvent(new Event("input", { bubbles:true }));
+        toastMini("完成");
+        recognition = null;
+      };
+
+      try{ recognition.start(); }catch(e){ toastMini("無法啟動語音"); }
+    }
+
+    function openLangSheet(){
+      $("lang-backdrop").classList.remove("hidden");
+      $("lang-sheet").classList.add("show");
+    }
+    function closeLangSheet(){
+      $("lang-sheet").classList.remove("show");
+      $("lang-backdrop").classList.add("hidden");
+    }
+    function setSTTLang(mode){
+      state.ui.sttLang = mode;
+      save();
+      setText("stt-lang", mode);
+      closeLangSheet();
+      toastMini("已切換語言");
+    }
+
+    /**********************
+     * Avatar upload (FIXED: no URL needed)
+     **********************/
+    function bindAvatarUploadOnce(){
+      const btn = $("btn-avatar-upload");
+      const file = $("avatar-file");
+      if(!btn || !file) return;
+
+      btn.addEventListener("click", ()=> file.click());
+      file.addEventListener("change", ()=>{
+        const f = file.files && file.files[0];
+        if(!f) return;
+        if(!f.type.startsWith("image/")){
+          toastMini("請選圖片檔");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = ()=>{
+          state.profile.avatar = String(reader.result || DEFAULT_AVATAR);
+          save();
+          renderHeaderOnly();
+          toastMini("頭像已更新");
+        };
+        reader.readAsDataURL(f);
+      });
+    }
+
+    /**********************
      * Calendar
-     ***************/
+     **********************/
     function ymToDate(ym){
       const [y,m]=ym.split("-").map(Number);
       return new Date(y, m-1, 1);
@@ -1186,8 +1399,8 @@
     function calBuildDays(ym){
       const first = ymToDate(ym);
       const year = first.getFullYear();
-      const month = first.getMonth(); // 0-index
-      const startDay = first.getDay(); // 0 Sun
+      const month = first.getMonth();
+      const startDay = first.getDay();
       const daysInMonth = new Date(year, month+1, 0).getDate();
       const cells = [];
       for(let i=0;i<startDay;i++) cells.push(null);
@@ -1205,16 +1418,45 @@
     }
     function useSelectedDate(){
       if(!state.ui.selectedDate) return;
-      state.ui.activeDate = state.ui.selectedDate;
-      save();
-      renderAll();
+      setActiveDate(state.ui.selectedDate);
       toastMini("已切換日期");
     }
 
-    /***************
-     * Rendering
-     ***************/
+    /**********************
+     * Profile modal
+     **********************/
+    function openModal(id){
+      const el=$(id); if(!el) return;
+      el.classList.remove("hidden");
+      document.body.style.overflow="hidden";
+    }
+    function closeModal(id){
+      const el=$(id); if(!el) return;
+      el.classList.add("hidden");
+      document.body.style.overflow="";
+    }
+    function saveProfile(){
+      const name = ($("inp-name")?.value || "").trim() || "覺醒女神";
+      const title = ($("inp-title")?.value || "").trim() || "Aether Trinity Evolution";
+      state.profile.name = name;
+      state.profile.title = title;
+      save();
+      closeModal("modal-profile");
+      renderHeaderOnly();
+      toastMini("已保存");
+    }
+    function confirmReset(){
+      const ok = confirm("【系統重置】確定清除所有紀錄？");
+      if(!ok) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    /**********************
+     * UI render
+     **********************/
     function renderAll(){
+      // view switching
       ["hub","body","mind","calendar"].forEach(v=>{
         const el = $("view-"+v);
         if(!el) return;
@@ -1232,7 +1474,7 @@
         if(txt) txt.className = (active ? "text-[10px] font-black text-white" : "text-[10px] font-extrabold text-slate-400");
       });
 
-      renderProfile();
+      renderHeaderOnly();
       renderHub();
       renderBody();
       renderMind();
@@ -1241,145 +1483,121 @@
       startTick();
     }
 
-    function renderProfile(){
-      setText("profile-name", state.profile.name);
-      setText("profile-title", state.profile.title);
-      const av = $("profile-avatar"); if(av) av.src = state.profile.avatar || DEFAULT_AVATAR;
-
-      // XP bar
-      setText("hub-xp", state.gamification.xp);
-      setText("hub-xpmax", state.gamification.xpMax);
-      const pct = clamp(state.gamification.xpMax ? (state.gamification.xp/state.gamification.xpMax)*100 : 0, 0, 100);
-      setWidth("hub-xpbar", pct.toFixed(0)+"%");
-
-      setText("profile-level-mini", `LV ${state.gamification.level}`);
-
-      const day = ensureDay(activeKey());
-      const c = computeCompletion(day);
-
-      setText("profile-completion", `${c.percent}%`);
-      setText("profile-xp-est", `${c.xp}`);
-      setText("profile-streak", `${computeStreak()}`);
-
-      const settled = day.settle?.settled;
-      const settleEl = $("profile-settled");
-      if(settleEl){
-        settleEl.textContent = settled ? `+${day.settle.xpAwarded}` : "未結算";
-        settleEl.className = settled ? "text-[10px] text-lime font-black" : "text-[10px] text-slate-400 font-semibold";
-      }
-    }
-
-    function renderHub(){
+    function renderHeaderOnly(){
       const key = activeKey();
-      const day = ensureDay(key);
-      const c = computeCompletion(day);
+      ensureDay(key);
 
-      setText("hub-date", (key===todayKey()) ? "Today" : key);
-      setText("hub-completion", c.percent);
-      setText("hub-body-score", c.percent);
-      setWidth("hub-body-bar", `${c.percent}%`);
-      setText("hub-xp-est", c.xp);
+      // top date
+      setText("top-date", formatKey(key));
+      const isToday = key === todayKey();
+      $("top-date-tag").style.display = isToday ? "inline-flex" : "none";
 
-      // Verse EN
+      // verse (daily by day-of-year)
       const now = new Date();
       const idx = Math.floor((now - new Date(now.getFullYear(),0,0))/86400000) % VERSES_EN.length;
       setText("daily-verse", "“"+VERSES_EN[idx].t+"”");
       setText("daily-verse-ref", VERSES_EN[idx].r);
+
+      // profile
+      setText("profile-name", state.profile.name || "—");
+      setText("profile-title", state.profile.title || "—");
+      const av = $("profile-avatar"); if(av) av.src = state.profile.avatar || DEFAULT_AVATAR;
+
+      // XP / level (global)
+      const totalXp = totalXpAllDays();
+      const lv = levelModel(totalXp);
+      setText("profile-level", `LV ${lv.level}`);
+      setText("xp-in-level", lv.inLevel);
+      setText("xp-next", lv.next);
+      const pct = clamp(lv.next ? (lv.inLevel/lv.next)*100 : 0, 0, 100);
+      setWidth("xp-bar", pct.toFixed(0)+"%");
+
+      // today
+      const day = ensureDay(key);
+      const o = overallScore(day);
+      setText("hub-overall", `${o.percent}%`);
+      setText("hub-xp-today", `+${o.dayXp}`);
+      setText("hub-xp-total", `${totalXp}`);
+
+      // bonus tag
+      setText("hub-bonus-tag", o.bonusOn ? "BONUS ON" : "BONUS OFF");
+
+      // STT mode
+      setText("stt-lang", state.ui.sttLang || "AUTO");
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      setText("stt-hint", SpeechRecognition ? "※ 點麥克風直接語音輸入（混語：AUTO 最佳努力）" : "※ 若瀏覽器不支援語音，請用鍵盤麥克風");
+    }
+
+    function renderHub(){
+      if(state.ui.view !== "hub") return;
+      const day = ensureDay(activeKey());
+      const o = overallScore(day);
+
+      setWidth("hub-overall-bar", `${o.percent}%`);
+
+      // section percent
+      setText("hub-body", o.b.percent);
+      setWidth("hub-body-bar", `${o.b.percent}%`);
+
+      setText("hub-mind", Math.round((o.m.got + o.s.got) / (o.m.total + o.s.total) * 100) || 0);
+      setWidth("hub-mind-bar", `${(Math.round((o.m.got + o.s.got) / (o.m.total + o.s.total) * 100) || 0)}%`);
     }
 
     function renderBody(){
       if(state.ui.view !== "body") return;
-      const key = activeKey();
-      const day = ensureDay(key);
-      const c = computeCompletion(day);
+      const day = ensureDay(activeKey());
+      const b = bodyScore(day);
 
-      setText("body-date", (key===todayKey()) ? "Today" : formatKey(key));
-      setText("body-completion", c.percent);
+      // ✅ This is BODY-only completion (fix for your 57% confusion)
+      setText("body-completion", `${b.percent}%`);
 
+      // water
       setText("water-goal", day.waterGoalMl);
       setText("water-val", day.waterMl);
-      setWidth("water-bar", `${Math.round(c.points.waterRatio*100)}%`);
-      setText("water-points-hint", `${Math.round(POINTS.waterMax*c.points.waterRatio)}/${POINTS.waterMax}`);
+      setWidth("water-bar", `${Math.round(b.water.ratio*100)}%`);
+      setText("water-pts", b.water.pts);
 
-      const a=$("bowel-a"), b=$("bowel-b");
-      const on=(btn, active)=>{
-        if(!btn) return;
-        btn.classList.toggle("bg-white/10", active);
-        btn.classList.toggle("border-violet/30", active);
-        btn.classList.toggle("text-white", active);
-        btn.classList.toggle("text-slate-200", !active);
-      };
-      on(a, day.bowelStatus==="未完成");
-      on(b, day.bowelStatus==="正常");
+      // bowel
+      setText("bowel-toggle", day.bowelOk ? "正常 +10" : "未完成");
 
-      // tasks
+      // tasks list (compact, tap)
       const list = $("task-list");
       if(!list) return;
 
       list.innerHTML = day.tasks.map(t=>{
-        if(t.type==="check"){
-          return `
-            <div class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass">
-              <div class="flex items-center justify-between gap-3">
+        const pts = (t.type==="timer") ? P.taskTimer : P.taskCheck;
+        const running = (t.type==="timer") && t.running && !t.done;
+
+        // single tap toggles done; small play icon for timer; ... opens sheet
+        return `
+          <div class="item p-3 shadow-glass ${running?'ring-1 ring-violet/35':''}">
+            <div class="flex items-center justify-between gap-2">
+              <button class="flex items-center gap-3 min-w-0 flex-1 text-left active:opacity-90"
+                      onclick="toggleTaskDone(${t.id})" title="點一下：完成/取消">
+                <span class="ms ${t.done?'fill text-lime':'text-slate-400'} text-[22px]">${t.done?'check_circle':'radio_button_unchecked'}</span>
                 <div class="min-w-0">
                   <div class="text-[13px] font-black text-white truncate">${escapeHtml(t.title)}</div>
-                  <div class="mt-0.5 text-[10px] text-slate-400 font-semibold truncate">${escapeHtml(t.sub)}</div>
+                  <div class="text-[10px] text-slate-400 font-semibold truncate">${escapeHtml(t.sub||'')}</div>
                 </div>
-                <div class="flex items-center gap-2">
-                  <div class="text-[11px] font-black ${t.done?'text-lime':'text-slate-400'}">
-                    ${t.done?`+${POINTS.taskCheck}`:`0`}
-                  </div>
-                  <button onclick="toggleCheckTask(${t.id})"
-                          class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform ${t.done?'bg-violet/15 border-violet/30':''}">
-                    <span class="ms ${t.done?'fill text-violet2':'text-slate-300'} text-[20px]">done</span>
+              </button>
+
+              <div class="shrink-0 flex items-center gap-2">
+                ${t.type==="timer" ? `
+                  <div class="text-[11px] font-black text-white tabular-nums w-[62px] text-right">${tickLabel(t.remainingSec)}</div>
+                  <button onclick="toggleTimer('task', ${t.id})"
+                          class="rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform border border-white/10 ${t.done?'bg-white/5':'bg-gradient-to-r from-violet via-violet2 to-cyan'}"
+                          title="開始/暫停" ${t.done?'disabled':''}>
+                    <span class="ms fill text-[20px] ${t.done?'text-slate-500':'text-white'}">${running?'pause':'play_arrow'}</span>
                   </button>
-                </div>
+                  <button onclick="openTimerSheet('task', ${t.id})"
+                          class="glass2 border border-white/10 rounded-full w-10 h-10 flex items-center justify-center active:scale-95 transition-transform" title="更多">
+                    <span class="ms text-[20px] text-slate-300">more_horiz</span>
+                  </button>
+                ` : `
+                  <div class="text-[11px] font-black ${t.done?'text-lime':'text-slate-500'} w-[62px] text-right">${t.done?`+${pts}`:'0'}</div>
+                `}
+                <div class="text-[10px] text-slate-500 font-extrabold w-[30px] text-right">${pts}</div>
               </div>
-            </div>
-          `;
-        }
-
-        const running = t.running && !t.done;
-        const done = t.done;
-        return `
-          <div class="glass2 rounded-2xl p-3 border border-white/10 shadow-glass ${running?'ringPulse':''}">
-            <div class="flex items-start justify-between gap-2">
-              <div class="min-w-0">
-                <div class="text-[13px] font-black text-white truncate">${escapeHtml(t.title)}</div>
-                <div class="mt-0.5 text-[10px] text-slate-400 font-semibold truncate">${escapeHtml(t.sub)}</div>
-                <div class="mt-2 text-3xl font-light tracking-tighter tabular-nums text-white">${tickLabel(t.remainingSec)}</div>
-              </div>
-
-              <div class="shrink-0 flex flex-col items-end gap-2">
-                <button onclick="openDuration(${t.id})" class="glass2 border border-white/10 rounded-full px-3 py-1.5 text-[11px] font-black text-slate-200 active:scale-95 transition-transform">
-                  ${t.minutes}m
-                </button>
-
-                <div class="text-[11px] font-black ${done?'text-lime':'text-slate-400'}">
-                  ${done?`+${POINTS.taskTimerEach}`:`0`}
-                </div>
-              </div>
-            </div>
-
-            <div class="mt-2 grid grid-cols-3 gap-2">
-              <button onclick="toggleTimer('task', ${t.id})"
-                      class="rounded-xl py-2 text-[12px] font-black border active:scale-95 transition-transform
-                      ${done ? "bg-white/5 text-slate-400 border-white/10 cursor-not-allowed" :
-                        (running ? "bg-white text-ink border-white" : "bg-gradient-to-r from-violet via-violet2 to-cyan text-white border-white/10")}"
-                      ${done ? "disabled" : ""}>
-                ${running?'暫停':'開始'}
-              </button>
-              <button onclick="toggleDone('task', ${t.id})" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-black text-white active:scale-95 transition-transform">
-                ${done?'取消完成':'完成'}
-              </button>
-              <button onclick="cancelTimer('task', ${t.id})" class="glass2 border border-white/10 rounded-xl py-2 text-[12px] font-extrabold text-slate-200 active:scale-95 transition-transform">
-                取消
-              </button>
-            </div>
-
-            <div class="mt-2 flex items-center justify-between">
-              <button onclick="resetTimer('task', ${t.id})" class="text-[11px] font-extrabold text-slate-400 active:opacity-70">重置時間</button>
-              <div class="text-[10px] text-slate-500 font-extrabold">完成 +10 / 取消 -10</div>
             </div>
           </div>
         `;
@@ -1388,36 +1606,49 @@
 
     function renderMind(){
       if(state.ui.view !== "mind") return;
-      const key = activeKey();
-      const day = ensureDay(key);
-      const c = computeCompletion(day);
+      const day = ensureDay(activeKey());
+      const m = mindScore(day);
+      const s = spiritScore(day);
+      // show combined percent for this screen (mind+spirit)
+      const total = m.total + s.total;
+      const got = m.got + s.got;
+      const percent = total ? Math.round((got/total)*100) : 0;
+      setText("mind-completion", `${percent}%`);
 
-      setText("mind-date", (key===todayKey()) ? "Today" : formatKey(key));
-      setText("mind-completion", c.percent);
-
-      setText("reading-min", day.reading.minutes);
+      // reading/devotion displays
       setText("reading-display", tickLabel(day.reading.remainingSec));
-      setText("reading-done-btn", day.reading.done ? "取消完成" : "完成");
-      setText("reading-start", day.reading.running ? "暫停" : "開始");
-      if($("reading-display")){
-        $("reading-display").classList.toggle("ringPulse", day.reading.running && !day.reading.done);
-      }
-
-      setText("devotion-min", day.devotion.minutes);
       setText("devotion-display", tickLabel(day.devotion.remainingSec));
-      setText("devotion-done-btn", day.devotion.done ? "取消完成" : "完成");
-      setText("devotion-start", day.devotion.running ? "暫停" : "開始");
-      if($("devotion-display")){
-        $("devotion-display").classList.toggle("ringPulse", day.devotion.running && !day.devotion.done);
-      }
 
-      // fill inputs (don’t fight user typing)
+      // icon states
+      const rdDone = $("reading-done-ico");
+      if(rdDone){
+        rdDone.textContent = "done";
+        rdDone.className = "ms text-[20px] " + (day.reading.done ? "fill text-lime" : "text-slate-300");
+      }
+      const rdPlay = $("reading-play-ico");
+      if(rdPlay) rdPlay.textContent = (day.reading.running ? "pause" : "play_arrow");
+
+      const dvDone = $("devotion-done-ico");
+      if(dvDone){
+        dvDone.textContent = "done";
+        dvDone.className = "ms text-[20px] " + (day.devotion.done ? "fill text-lime" : "text-slate-300");
+      }
+      const dvPlay = $("devotion-play-ico");
+      if(dvPlay) dvPlay.textContent = (day.devotion.running ? "pause" : "play_arrow");
+
+      // fill inputs without fighting typing
       const growth=$("growth-input"), brand=$("brand-input"), scripture=$("scripture-input"), spirit=$("spirit-input");
       if(growth && document.activeElement !== growth) growth.value = day.mind.growth || "";
       if(brand && document.activeElement !== brand) brand.value = day.mind.brand || "";
       if(scripture && document.activeElement !== scripture) scripture.value = day.spirit.scripture || "";
       if(spirit && document.activeElement !== spirit) spirit.value = day.spirit.note || "";
 
+      renderMindTabs();
+    }
+
+    function switchTab(tab){
+      state.ui.mindTab = tab;
+      save();
       renderMindTabs();
     }
 
@@ -1449,23 +1680,21 @@
         grid.innerHTML = cells.map(key=>{
           if(!key) return `<div class="aspect-square"></div>`;
           const day = ensureDay(key);
-          const c = computeCompletion(day);
+          const o = overallScore(day);
           const isToday = key===todayKey();
           const isSel = key===state.ui.selectedDate;
-          const dot70 = c.perfect;
-          const settled = day.settle?.settled;
+          const dot70 = o.bonusOn;
 
           const cls = [
             "aspect-square","rounded-lg","border","border-white/10","flex","items-center","justify-center","relative","select-none",
             isSel ? "bg-white/10 border-white/25" : "bg-white/0",
-            isToday ? "ring-1 ring-gold/40" : ""
+            isToday ? "ring-1 ring-cyan/40" : ""
           ].join(" ");
 
           return `
             <button onclick="setSelectedDate('${key}')" class="${cls}">
-              <div class="text-[12px] font-black ${isToday?'text-gold':'text-slate-200'}">${Number(key.slice(-2))}</div>
+              <div class="text-[12px] font-black ${isToday?'text-cyan':'text-slate-200'}">${Number(key.slice(-2))}</div>
               ${dot70 ? `<span class="absolute bottom-1 left-1 w-2 h-2 rounded-full bg-gold shadow-gold"></span>` : ""}
-              ${settled ? `<span class="absolute bottom-1 right-1 w-2 h-2 rounded-full bg-violet2 shadow-glow"></span>` : ""}
             </button>
           `;
         }).join("");
@@ -1473,153 +1702,149 @@
 
       const sel = state.ui.selectedDate || todayKey();
       const day = ensureDay(sel);
-      const c = computeCompletion(day);
+      const o = overallScore(day);
 
       setText("cal-selected", formatKey(sel));
-      setText("cal-comp", c.percent);
-      setText("cal-xp", c.xp);
-      setText("cal-settled", day.settle?.settled ? "YES" : "NO");
 
-      const summary = [
-        `水分：${day.waterMl}/${day.waterGoalMl} ml`,
-        `任務完成：${day.tasks.filter(t=>t.done).length}/${day.tasks.length}`,
-        `排便：${day.bowelStatus}`,
-        `閱讀：${day.reading.done?'完成':'未完成'}（${day.reading.minutes}m）`,
-        `靈修：${day.devotion.done?'完成':'未完成'}（${day.devotion.minutes}m）`,
-        `反思：${day.mind.growth.trim()? '有':'無'}`,
-        `筆記：${day.mind.brand.trim()? '有':'無'}`,
-        `經文：${(day.spirit.scripture.trim()||day.spirit.note.trim())? '有':'無'}`
+      // ✅ categorized bullet summary
+      const body = o.b;
+      const tasksDone = day.tasks.filter(t=>t.done).length;
+      const tasksTotal = day.tasks.length;
+
+      const mindDone = [
+        { label:"深度閱讀", ok: day.reading.done, pts:P.reading },
+        { label:"今日復盤", ok: !!day.mind.growth.trim(), pts:P.growth },
+        { label:"策略筆記", ok: !!day.mind.brand.trim(), pts:P.brand },
       ];
-      setText("cal-summary", summary.join(" · "));
-    }
+      const spiritDone = [
+        { label:"靜默靈修", ok: day.devotion.done, pts:P.devotion },
+        { label:"經文/領受", ok: !!(day.spirit.scripture.trim() || day.spirit.note.trim()), pts:P.scripture },
+      ];
 
-    function renderCompletionOnly(){
-      const day = ensureDay(activeKey());
-      const c = computeCompletion(day);
-      setText("hub-completion", c.percent);
-      setText("hub-body-score", c.percent);
-      setWidth("hub-body-bar", `${c.percent}%`);
-      setText("body-completion", c.percent);
-      setText("mind-completion", c.percent);
-      setText("profile-completion", `${c.percent}%`);
-      setText("profile-xp-est", `${c.xp}`);
-      setText("profile-streak", `${computeStreak()}`);
-      setText("hub-xp-est", c.xp);
+      const ul = (rows)=>`
+        <ul class="mt-2 space-y-1">
+          ${rows.map(r=>`
+            <li class="flex items-center justify-between text-[12px]">
+              <div class="flex items-center gap-2 min-w-0">
+                <span class="ms ${r.ok?'fill text-lime':'text-slate-500'} text-[18px]">${r.ok?'check_circle':'radio_button_unchecked'}</span>
+                <span class="text-slate-200 font-semibold truncate">${escapeHtml(r.label)}</span>
+              </div>
+              <span class="text-[11px] font-black ${r.ok?'text-lime':'text-slate-500'}">${r.ok?`+${r.pts}`:'0'}</span>
+            </li>
+          `).join("")}
+        </ul>
+      `;
+
+      const summaryEl = $("cal-summary");
+      if(summaryEl){
+        summaryEl.innerHTML = `
+          <div class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-violet2">percent</span>
+                <div class="text-[13px] font-extrabold text-white">總完成率</div>
+              </div>
+              <div class="text-[12px] font-black text-white">${o.percent}%</div>
+            </div>
+            <div class="mt-2 flex items-center justify-between text-[11px] text-slate-400 font-semibold">
+              <span>當日 XP</span>
+              <span class="text-gold font-black">+${o.dayXp} ${o.bonusOn?`(含 +${P.bonus70} Bonus)`:""}</span>
+            </div>
+          </div>
+
+          <div class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-rose">fitness_center</span>
+                <div class="text-[13px] font-extrabold text-white">身體</div>
+              </div>
+              <div class="text-[12px] font-black text-white">${body.percent}%</div>
+            </div>
+            <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
+              <li class="flex items-center justify-between">
+                <span class="text-slate-300 font-semibold">水分</span>
+                <span class="font-black">${day.waterMl}/${day.waterGoalMl} ml · <span class="text-lime">+${body.water.pts}</span></span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="text-slate-300 font-semibold">任務</span>
+                <span class="font-black">${tasksDone}/${tasksTotal} · <span class="text-lime">+${body.taskPts}</span></span>
+              </li>
+              <li class="flex items-center justify-between">
+                <span class="text-slate-300 font-semibold">排便</span>
+                <span class="font-black">${day.bowelOk?"正常":"未完成"} · <span class="${day.bowelOk?'text-lime':'text-slate-500'}">${day.bowelOk?`+${P.bowel}`:'0'}</span></span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-violet2">auto_stories</span>
+                <div class="text-[13px] font-extrabold text-white">心智</div>
+              </div>
+              <div class="text-[12px] font-black text-white">${mindScore(day).percent}%</div>
+            </div>
+            ${ul(mindDone)}
+          </div>
+
+          <div class="glass rounded-2xl p-3 shadow-glass">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="ms fill text-cyan">self_improvement</span>
+                <div class="text-[13px] font-extrabold text-white">靈修</div>
+              </div>
+              <div class="text-[12px] font-black text-white">${spiritScore(day).percent}%</div>
+            </div>
+            ${ul(spiritDone)}
+          </div>
+        `;
+      }
     }
 
     function renderTimersOnly(){
       const day = ensureDay(activeKey());
-      if(state.ui.view==="body") renderBody();
-      if(state.ui.view==="mind"){
+      // body timers (if in body view, re-render list only would be heavier; keep light)
+      if(state.ui.view === "body"){
+        // simplest: rerender body tasks part
+        renderBody();
+      }
+      if(state.ui.view === "mind"){
         setText("reading-display", tickLabel(day.reading.remainingSec));
         setText("devotion-display", tickLabel(day.devotion.remainingSec));
+        const rdPlay = $("reading-play-ico"); if(rdPlay) rdPlay.textContent = (day.reading.running ? "pause" : "play_arrow");
+        const dvPlay = $("devotion-play-ico"); if(dvPlay) dvPlay.textContent = (day.devotion.running ? "pause" : "play_arrow");
+      }
+      if(state.ui.view === "hub"){
+        // nothing critical
       }
     }
 
-    /***************
-     * Inputs bind (once)
-     ***************/
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, (m)=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;" }[m]));
-    }
+    /**********************
+     * Bindings
+     **********************/
+    function bindOnce(){
+      bindInputsOnce();
+      bindDatePickerOnce();
+      bindAvatarUploadOnce();
 
-    let inputsBound=false;
-    function bindInputsOnce(){
-      if(inputsBound) return;
-      inputsBound=true;
-
-      const bind = (id, setter)=>{
-        const el=$(id);
-        if(!el) return;
-        el.addEventListener("input", ()=>{
-          const day = ensureDay(activeKey());
-          setter(day, el.value);
-          save();
-          // show only points delta on first non-empty
-          renderCompletionOnly();
-        });
-        el.addEventListener("blur", ()=>{
-          toastMini("已保存");
-        });
-      };
-
-      bind("growth-input", (day,v)=>{
-        const before = day.mind.growth.trim()? POINTS.growth : 0;
-        day.mind.growth = v;
-        const after = day.mind.growth.trim()? POINTS.growth : 0;
-        if(after!==before) popScore(after-before);
-      });
-
-      bind("brand-input", (day,v)=>{
-        const before = day.mind.brand.trim()? POINTS.brand : 0;
-        day.mind.brand = v;
-        const after = day.mind.brand.trim()? POINTS.brand : 0;
-        if(after!==before) popScore(after-before);
-      });
-
-      bind("scripture-input", (day,v)=>{
-        const before = (day.spirit.scripture.trim()||day.spirit.note.trim()) ? POINTS.scripture : 0;
-        day.spirit.scripture = v;
-        const after = (day.spirit.scripture.trim()||day.spirit.note.trim()) ? POINTS.scripture : 0;
-        if(after!==before) popScore(after-before);
-      });
-
-      bind("spirit-input", (day,v)=>{
-        const before = (day.spirit.scripture.trim()||day.spirit.note.trim()) ? POINTS.scripture : 0;
-        day.spirit.note = v;
-        const after = (day.spirit.scripture.trim()||day.spirit.note.trim()) ? POINTS.scripture : 0;
-        if(after!==before) popScore(after-before);
-      });
-    }
-
-    /***************
-     * Click handlers
-     ***************/
-    document.addEventListener("click", (e)=>{
-      if(e.target?.closest("#btn-profile")){
-        $("inp-name").value = state.profile.name || "";
-        $("inp-avatar").value = state.profile.avatar || "";
-        $("inp-title").value = state.profile.title || "";
-        openModal("modal-profile");
-      }
-      if(e.target?.closest("#btn-reset")) confirmReset();
-
-      if(e.target?.closest("#btn-settle")){
-        const day = ensureDay(activeKey());
-        const c = computeCompletion(day);
-
-        // settle = award xp once, can re-settle (recompute delta)
-        const prev = day.settle?.settled ? (day.settle.xpAwarded||0) : 0;
-        const next = c.xp;
-
-        day.settle = { settled:true, xpAwarded: next, percentAtSettle: c.percent };
-
-        // Apply delta to profile xp
-        const delta = next - prev;
-        state.gamification.xp += delta;
-
-        // Level up simple
-        while(state.gamification.xp >= state.gamification.xpMax){
-          state.gamification.xp -= state.gamification.xpMax;
-          state.gamification.level += 1;
-          state.gamification.xpMax = Math.round(state.gamification.xpMax * 1.12 + 35);
-          toastMini("LEVEL UP!");
+      // profile modal open
+      document.addEventListener("click", (e)=>{
+        if(e.target?.closest("#btn-profile")){
+          $("inp-name").value = state.profile.name || "";
+          $("inp-title").value = state.profile.title || "";
+          openModal("modal-profile");
         }
+      });
+    }
 
-        save();
-        renderAll();
-        popScore(delta);
-        toastMini("已結算");
-      }
-    });
-
-    /***************
+    /**********************
      * Init
-     ***************/
+     **********************/
     ensureDay(todayKey());
-    ensureDay(state.ui.activeDate || todayKey());
+    ensureDay(activeKey());
     ensureDay(state.ui.selectedDate || todayKey());
     save();
+    bindOnce();
     renderAll();
     startTick();
   </script>
