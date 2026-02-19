@@ -1,44 +1,43 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" class="dark">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <title>ATE Mobile (V4 - UX Tweak)</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ATE — Aether Trinity Evolution</title>
 
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Noto+Sans+TC:wght@300;400;500;700&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet"/>
+  <!-- Icons (minimal use) -->
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200..700&display=swap" rel="stylesheet"/>
-  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
 
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script>
     tailwind.config = {
       darkMode: "class",
       theme: {
         extend: {
-          colors: {
-            ink: "#05060A",
-            obsidian: "#0B0D14",
-            surface: "#0F1424",
-            panel: "#10192E",
-            stroke: "rgba(255,255,255,0.10)",
-            stroke2: "rgba(255,255,255,0.14)",
-            gold: "#D4AF37",
-            gold2: "#F4E09A",
-            violet: "#8B5CF6",
-            violet2: "#A78BFA",
-            cyan: "#22D3EE",
-            rose: "#FB7185",
-            lime: "#A3E635",
-          },
           fontFamily: {
-            display: ["Manrope", "Noto Sans TC", "sans-serif"],
-            body: ["Noto Sans TC", "Manrope", "sans-serif"],
+            display: ["Playfair Display","Manrope","Noto Sans TC","sans-serif"],
+            body: ["Manrope","Noto Sans TC","sans-serif"],
+          },
+          colors: {
+            ink: "#050508",
+            obsidian: "#0A0A0F",
+            surface: "#0F1220",
+            surface2: "#141A2B",
+            line: "rgba(255,255,255,0.10)",
+            gold: "#D4AF37",
+            gold2: "#F9E076",
+            violet: "#8B5CF6",
+            blue: "#4A5CD8",
+            cyan: "#06B6D4",
           },
           boxShadow: {
-            glass: "0 14px 44px rgba(0,0,0,0.35)",
-            glow: "0 0 18px rgba(139,92,246,0.22)",
-            gold: "0 0 18px rgba(212,175,55,0.18)",
+            glass: "0 18px 60px rgba(0,0,0,0.35)",
+            glow: "0 0 22px rgba(212,175,55,0.22)",
           }
         }
       }
@@ -46,672 +45,1686 @@
   </script>
 
   <style>
-    :root{ color-scheme: dark; }
-
-    /* =========
-      MOBILE SCALE (NEW)
-      - Bigger text & tap targets
-      - More comfortable spacing
-    ========= */
-    html{ font-size: 17px; }               /* up from default ~16 */
-    @media (max-width: 390px){
-      html{ font-size: 16.5px; }
-    }
-    @media (min-width: 430px){
-      html{ font-size: 18px; }             /* iPhone Pro Max etc */
-    }
-
+    :root { color-scheme: dark; }
     body{
-      min-height:100dvh;background:#05060A;-webkit-tap-highlight-color:transparent;overflow-x:hidden;
+      min-height: 100dvh;
+      background:
+        radial-gradient(at 10% 0%, rgba(139,92,246,0.20) 0, transparent 55%),
+        radial-gradient(at 80% 10%, rgba(74,92,216,0.18) 0, transparent 50%),
+        radial-gradient(at 60% 90%, rgba(212,175,55,0.10) 0, transparent 55%),
+        #050508;
+      background-attachment: fixed;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
       font-family: Manrope, "Noto Sans TC", sans-serif;
-      line-height: 1.35;
     }
-
-    .ms{font-family:'Material Symbols Outlined';font-variation-settings:'FILL' 0,'wght' 420,'GRAD' 0,'opsz' 24;}
-    .ms.fill{font-variation-settings:'FILL' 1,'wght' 520,'GRAD' 0,'opsz' 24;}
-
     .glass{
-      background:rgba(16,25,46,0.58);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
-      border:1px solid rgba(255,255,255,0.10);
+      background: linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.10);
+      box-shadow: 0 18px 60px rgba(0,0,0,0.35);
     }
     .glass2{
-      background:linear-gradient(145deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
-      backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
-      border:1px solid rgba(255,255,255,0.10);
+      background: rgba(20,24,38,0.55);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.10);
+    }
+    .no-scrollbar::-webkit-scrollbar{ display:none; }
+    .no-scrollbar{ scrollbar-width:none; -ms-overflow-style:none; }
+
+    .ms{
+      font-family: "Material Symbols Outlined";
+      font-variation-settings: "wght" 320, "opsz" 24;
+      line-height: 1;
     }
 
-    .no-scrollbar::-webkit-scrollbar{display:none;}
-    .no-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
-    .fade-in{animation:fadeIn .18s ease-out;}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+    .view { display:none; }
+    .view.active { display:flex; }
 
-    /* =========
-      CHIP (bigger & easier to read)
-    ========= */
-    .chip{
-      display:inline-flex;align-items:center;gap:.42rem;
-      padding:.28rem .62rem;border-radius:999px;
-      border:1px solid rgba(255,255,255,0.11);
-      background:rgba(255,255,255,0.045);
-      font-size:11px;font-weight:900;color:rgba(226,232,240,0.92);
-      letter-spacing:.08em;text-transform:uppercase;user-select:none;white-space:nowrap;
+    /* small, game-like XP toast */
+    .toast {
+      position: fixed;
+      top: 16px;
+      right: 14px;
+      z-index: 9999;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity .18s ease, transform .18s ease;
     }
-    .chip .ms{font-size:16px;}
-
-    /* =========
-      SCORE POP (slightly smaller, less intrusive)
-    ========= */
-    .pop{
-      position:fixed;left:50%;top:44%;
-      transform:translate(-50%,-50%);
-      z-index:9999;pointer-events:none;
-      animation:popMove .78s ease-out forwards;
-      filter: drop-shadow(0 8px 16px rgba(0,0,0,0.45));
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0px);
     }
-    @keyframes popMove{
-      0%{opacity:0;transform:translate(-50%,-50%) scale(.92);}
-      18%{opacity:1;transform:translate(-50%,-58%) scale(1.02);}
-      100%{opacity:0;transform:translate(-50%,-94%) scale(1.0);}
-    }
-    .popBadge{
-      padding:.30rem .58rem;border-radius:999px;
-      border:1px solid rgba(255,255,255,0.12);
-      background:rgba(15,20,36,0.78);
-      font-weight:950;letter-spacing:.08em;
-      font-size:13px;
+    .toast.hide {
+      opacity: 0;
+      transform: translateY(-10px);
     }
 
-    /* =========
-      Toast slightly larger
-    ========= */
-    .toast{
-      position:fixed;left:50%;bottom:6.4rem;
-      transform:translateX(-50%);
-      z-index:9998;
-      animation:toastIn .18s ease-out, toastOut .22s ease-in 1.35s forwards;
-      pointer-events:none;
+    /* subtle “pop” for completion */
+    @keyframes pop {
+      0%{ transform: scale(0.98); }
+      45%{ transform: scale(1.02); }
+      100%{ transform: scale(1.00); }
     }
-    @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(8px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
-    @keyframes toastOut{to{opacity:0;transform:translateX(-50%) translateY(8px);}}
+    .pop { animation: pop .22s ease; }
 
-    /* =========
-      Layout: fill page more evenly
-      - increase header padding a bit
-      - reduce giant empty gaps
-      - ensure sections have consistent rhythm
-    ========= */
-    .pb-safe{ padding-bottom: calc(6.2rem + env(safe-area-inset-bottom)); }
-    .nav-safe{ padding-bottom: calc(1.0rem + env(safe-area-inset-bottom)); }
-
-    .noise{
-      opacity:0.045;
-      background-image:url('data:image/svg+xml,%3Csvg viewBox=%220 0 240 240%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.75%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E');
+    /* Confetti canvas */
+    #confetti {
+      position: fixed;
+      inset: 0;
+      z-index: 9998;
+      pointer-events: none;
+      display: none;
     }
 
-    /* =========
-      Cards / items slightly bigger
-    ========= */
-    .item{
-      border:1px solid rgba(255,255,255,0.11);
-      background:rgba(255,255,255,0.035);
-      border-radius:18px;
-    }
-
-    /* =========
-      Tap targets: minimum 44px height for main actions
-    ========= */
-    button, a { touch-action: manipulation; }
-    .tap44{ min-height:44px; min-width:44px; }
-
-    /* =========
-      Sheet
-    ========= */
-    .sheet{
-      position:fixed;left:0;right:0;bottom:0;
-      z-index:120;
-      transform:translateY(110%);
-      transition:transform .22s ease-out;
-    }
-    .sheet.show{ transform:translateY(0); }
+    /* make clickable areas safe on iOS */
+    button, [role="button"] { touch-action: manipulation; }
   </style>
 </head>
 
-<body class="bg-ink text-slate-100 selection:bg-violet selection:text-white">
-  <!-- Ambient -->
-  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-    <div class="absolute -top-[18%] left-[12%] w-[95%] h-[55%] bg-violet/18 rounded-full blur-[130px]"></div>
-    <div class="absolute -bottom-[18%] right-[-12%] w-[70%] h-[45%] bg-cyan/10 rounded-full blur-[120px]"></div>
-    <div class="absolute inset-0 noise"></div>
+<body class="text-slate-100">
+  <canvas id="confetti"></canvas>
+
+  <!-- TOAST -->
+  <div id="toast" class="toast">
+    <div class="glass2 rounded-full px-3 py-1.5 text-xs font-semibold tracking-wide border border-white/10">
+      <span id="toastText" class="text-gold">+5 XP</span>
+    </div>
   </div>
 
-  <div class="relative z-10 mx-auto w-full max-w-md min-h-[100dvh] flex flex-col pb-safe">
+  <!-- APP SHELL -->
+  <div class="relative mx-auto w-full max-w-[440px] min-h-[100dvh] overflow-hidden">
+    <!-- top safe padding -->
+    <div class="h-4"></div>
 
-    <!-- TOP DATE BAR -->
-    <header class="pt-9 px-4 pb-3">
-      <div class="glass rounded-2xl px-3.5 py-2.5 shadow-glass">
-        <div class="flex items-center justify-between gap-2">
-          <button class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform"
-                  onclick="shiftDay(-1)" title="前一天">
-            <span class="ms text-[20px]">chevron_left</span>
-          </button>
+    <!-- ===== HUB ===== -->
+    <section id="view-hub" class="view active flex-col min-h-[100dvh]">
+      <header class="px-5 pt-6 pb-4">
+        <div class="glass rounded-3xl p-4">
+          <div class="flex items-center justify-between gap-3">
+            <!-- Profile -->
+            <div class="flex items-center gap-3 min-w-0">
+              <button id="profileBtn" class="relative shrink-0">
+                <div class="h-14 w-14 rounded-full overflow-hidden border border-white/15 bg-white/5">
+                  <img id="profileImg" alt="profile" class="h-full w-full object-cover" />
+                </div>
+                <div class="absolute -bottom-1 -right-1 glass2 border border-white/10 rounded-full px-2 py-0.5 text-[10px] font-bold text-gold">
+                  LV <span id="profileLevel">1</span>
+                </div>
+              </button>
 
-          <div class="min-w-0 flex-1 text-center">
-            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Active Date</div>
-            <button class="mt-1 inline-flex items-center justify-center gap-2 active:scale-[0.99] transition-transform"
-                    onclick="openDatePicker()">
-              <span id="top-date" class="text-[15px] font-black text-white">—</span>
-              <span id="top-date-tag" class="chip"><span class="ms fill text-gold">today</span>Today</span>
-            </button>
-            <input id="date-picker" type="date" class="hidden"/>
-          </div>
-
-          <button class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform"
-                  onclick="shiftDay(1)" title="後一天">
-            <span class="ms text-[20px]">chevron_right</span>
-          </button>
-        </div>
-      </div>
-    </header>
-
-    <!-- HUB -->
-    <section id="view-hub" class="flex flex-col flex-1 fade-in">
-      <header class="px-4 pb-4">
-        <!-- Profile / XP -->
-        <div class="glass rounded-2xl p-4 shadow-glass">
-          <div class="flex items-center gap-3.5">
-            <button id="btn-avatar-upload" class="shrink-0 tap44" title="上傳頭像">
-              <div class="h-12 w-12 rounded-full overflow-hidden border border-white/15 bg-surface">
-                <img id="profile-avatar" alt="avatar" class="h-full w-full object-cover"/>
-              </div>
-            </button>
-            <input id="avatar-file" type="file" accept="image/*" class="hidden"/>
-
-            <div class="min-w-0 flex-1">
-              <div class="flex items-center gap-2 min-w-0">
-                <div id="profile-name" class="text-[16px] font-extrabold text-white truncate">—</div>
-                <span class="chip"><span class="ms fill text-gold">workspace_premium</span><span id="profile-level">LV 1</span></span>
-              </div>
-              <div id="profile-title" class="mt-1 text-[12px] text-slate-400 font-semibold truncate">—</div>
-
-              <div class="mt-3 flex flex-wrap gap-2.5">
-                <span class="chip"><span class="ms fill text-violet2">percent</span><span id="hub-overall">0%</span></span>
-                <span class="chip"><span class="ms fill text-gold">bolt</span><span id="hub-xp-today">+0</span></span>
-                <span class="chip"><span class="ms fill text-cyan">all_inclusive</span><span id="hub-xp-total">0</span></span>
+              <div class="min-w-0">
+                <div class="flex items-center gap-2 min-w-0">
+                  <h1 id="profileName" class="font-display text-lg font-semibold tracking-wide text-white truncate">Your Name</h1>
+                </div>
+                <div class="flex items-center gap-2 text-[11px] text-slate-400 mt-0.5">
+                  <span class="tracking-widest uppercase">XP</span>
+                  <span class="text-slate-200 font-semibold"><span id="profileXP">0</span></span>
+                  <span class="text-slate-500">/</span>
+                  <span class="text-slate-400"><span id="profileXPNext">300</span></span>
+                </div>
               </div>
             </div>
 
-            <button id="btn-profile" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="設定">
-              <span class="ms text-[20px]">tune</span>
-            </button>
+            <!-- Streak -->
+            <div class="glass2 rounded-2xl px-3 py-2 border border-white/10">
+              <div class="text-[10px] text-slate-400 tracking-widest uppercase text-right">Streak</div>
+              <div class="text-right text-base font-bold text-white">
+                <span id="streakDays">0</span><span class="text-slate-400 text-xs font-semibold ml-1">days</span>
+              </div>
+            </div>
           </div>
 
-          <!-- Level progress -->
+          <!-- XP bar -->
           <div class="mt-4">
-            <div class="flex items-center justify-between text-[12px] text-slate-300 font-semibold">
-              <span class="tracking-widest uppercase text-slate-400">LEVEL PROGRESS</span>
-              <span class="text-violet2 font-extrabold"><span id="xp-in-level">0</span> / <span id="xp-next">100</span></span>
+            <div class="flex justify-between text-[11px] text-slate-400">
+              <span>Today XP</span>
+              <span class="text-gold font-semibold"><span id="todayXP">0</span> XP</span>
             </div>
-            <div class="mt-2 h-3 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-              <div id="xp-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
+            <div class="mt-2 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
+              <div id="todayXPBar" class="h-full w-[0%] bg-gradient-to-r from-gold to-gold2 shadow-glow rounded-full transition-all duration-300"></div>
             </div>
           </div>
         </div>
 
-        <!-- Daily Verse (EN) -->
-        <div class="mt-4 glass2 rounded-2xl px-4 py-3.5 border border-white/10 shadow-glass">
-          <div class="flex items-center justify-between">
-            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Daily Verse</div>
-            <div class="text-[11px] text-gold font-extrabold tracking-widest">EN</div>
-          </div>
-          <div id="daily-verse" class="mt-2.5 text-[14px] leading-relaxed text-white font-semibold"></div>
-          <div id="daily-verse-ref" class="mt-2 text-[12px] text-slate-400 font-semibold"></div>
+        <!-- Daily Verse -->
+        <div class="mt-4 glass rounded-3xl p-4">
+          <div class="text-[10px] text-slate-400 tracking-[0.2em] uppercase">Daily Verse</div>
+          <div id="dailyVerseText" class="mt-2 font-display text-[15px] leading-relaxed text-white/95"></div>
+          <div id="dailyVerseRef" class="mt-2 text-[11px] text-gold font-semibold tracking-wide"></div>
         </div>
       </header>
 
-      <main class="px-4 pb-6 flex-1 space-y-4">
-        <div class="grid grid-cols-3 gap-3">
-          <button onclick="navTo('body')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
-            <div class="flex items-center justify-between">
-              <div class="text-[12px] font-black text-white">身體</div>
-              <span class="ms text-[20px] text-rose">fitness_center</span>
-            </div>
-            <div class="mt-3 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-              <div id="hub-body-bar" class="h-full w-[0%] bg-gradient-to-r from-rose via-violet2 to-cyan rounded-full transition-all duration-500"></div>
-            </div>
-            <div class="mt-2 text-[12px] text-slate-300 font-semibold"><span id="hub-body">0</span>%</div>
-          </button>
-
-          <button onclick="navTo('mind')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
-            <div class="flex items-center justify-between">
-              <div class="text-[12px] font-black text-white">心智</div>
-              <span class="ms text-[20px] text-violet2">auto_stories</span>
-            </div>
-            <div class="mt-3 h-2.5 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-              <div id="hub-mind-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
-            </div>
-            <div class="mt-2 text-[12px] text-slate-300 font-semibold"><span id="hub-mind">0</span>%</div>
-          </button>
-
-          <button onclick="navTo('calendar')" class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass text-left active:scale-[0.99] transition-transform">
-            <div class="flex items-center justify-between">
-              <div class="text-[12px] font-black text-white">日曆</div>
-              <span class="ms text-[20px] text-cyan">calendar_month</span>
-            </div>
-            <div class="mt-3 text-[12px] text-slate-400 font-semibold">回顧/分類</div>
-          </button>
+      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-base font-semibold tracking-wide text-white">Evolution Overview</h2>
+          <div class="text-[11px] text-slate-400">
+            <span id="todayLabel"></span>
+          </div>
         </div>
 
-        <section class="glass rounded-2xl p-4 shadow-glass">
-          <div class="flex items-center justify-between">
-            <div class="text-[15px] font-extrabold text-white">今日進度（總）</div>
-            <div class="chip"><span class="ms fill text-gold">stars</span><span id="hub-bonus-tag">BONUS OFF</span></div>
-          </div>
-          <div class="mt-3 h-3 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-            <div id="hub-overall-bar" class="h-full w-[0%] bg-gradient-to-r from-violet via-violet2 to-cyan rounded-full transition-all duration-500"></div>
-          </div>
-          <div class="mt-3 text-[12px] text-slate-400 font-semibold leading-relaxed">
-            這裡是「總完成率」；身體/心智各自也有自己的完成率。
-          </div>
-        </section>
-      </main>
-    </section>
-
-    <!-- BODY / MIND / CALENDAR / MODALS / JS -->
-    <!-- 下面內容：為了確保你「功能完全不變」，請把你上一版的 BODY/MIND/CALENDAR/MODAL/JS 原封不動貼回來即可 -->
-    <!-- ✅ 你只需要保留我已經替換過的 head+style + HUB 的結構即可 -->
-    <!-- 但你說要“一份可直接貼上”，所以我下面還是把你上一版剩餘部分完整保留（未改功能） -->
-
-    <!-- ====== 你上一版其餘 section + modal + sheet + JS 原封不動開始 ====== -->
-
-    <!-- BODY -->
-    <section id="view-body" class="hidden flex-col flex-1 fade-in">
-      <header class="px-4 pb-3">
-        <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-            <span class="ms text-[20px]">chevron_left</span>
-          </button>
-          <div class="text-center">
-            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Body</div>
-            <div class="mt-1 text-[16px] font-extrabold text-white">身體進化</div>
-          </div>
-          <div class="w-11"></div>
-        </div>
-
-        <div class="mt-3 flex items-center justify-between">
-          <span class="chip"><span class="ms fill text-rose">fitness_center</span><span>BODY</span></span>
-          <span class="chip"><span class="ms fill text-violet2">percent</span><span id="body-completion">0%</span></span>
-        </div>
-      </header>
-
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-3">
-        <section class="glass rounded-2xl p-4 shadow-glass">
-          <div class="flex items-start justify-between">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="ms fill text-cyan text-[20px]">water_drop</span>
-                <div class="text-[14px] font-black text-white">水分</div>
+        <!-- Overview cards -->
+        <div class="grid grid-cols-1 gap-3">
+          <!-- Body -->
+          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('body')">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Body</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Water • Muscle • Digest</div>
               </div>
-              <div class="mt-2 text-[12px] text-slate-400 font-semibold">目標 <span id="water-goal">1900</span>ml · 最高 +25</div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-white"><span id="hubBodyPct">0</span>%</div>
+                <div class="text-[10px] text-slate-400 tracking-widest uppercase">today</div>
+              </div>
+            </div>
+            <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
+              <div id="hubBodyBar" class="h-full w-[0%] bg-gradient-to-r from-blue to-cyan rounded-full transition-all duration-300"></div>
+            </div>
+          </button>
+
+          <!-- Mind -->
+          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('mind')">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Mind</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Reading • Reflection • Notes</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-white"><span id="hubMindPct">0</span>%</div>
+                <div class="text-[10px] text-slate-400 tracking-widest uppercase">today</div>
+              </div>
+            </div>
+            <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
+              <div id="hubMindBar" class="h-full w-[0%] bg-gradient-to-r from-violet to-gold rounded-full transition-all duration-300"></div>
+            </div>
+          </button>
+
+          <!-- Calendar -->
+          <button class="glass rounded-3xl p-4 text-left active:scale-[0.99] transition-transform" onclick="navTo('calendar')">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">History</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Backfill & review any day</div>
+              </div>
+              <div class="text-right">
+                <div class="text-xl font-bold text-white"><span id="perfectDays">0</span></div>
+                <div class="text-[10px] text-slate-400 tracking-widest uppercase">perfect</div>
+              </div>
+            </div>
+            <div class="mt-3 text-[11px] text-slate-400">
+              Tap a date → edit / backfill.
+            </div>
+          </button>
+        </div>
+
+        <!-- Weekly reward -->
+        <div class="mt-4 glass rounded-3xl p-4">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <div class="text-[10px] text-slate-400 tracking-[0.2em] uppercase">Weekly Unlock</div>
+              <div class="mt-1 text-white font-semibold">Mystery Reward</div>
+              <div class="mt-1 text-[11px] text-slate-400">Get 3 perfect days to unlock.</div>
             </div>
             <div class="text-right">
-              <div class="text-2xl font-extrabold text-white"><span id="water-val">0</span><span class="text-[12px] text-slate-400 font-semibold ml-1">ml</span></div>
-              <div class="text-[12px] font-black text-lime"><span id="water-pts">0</span> XP</div>
+              <div class="text-[11px] text-slate-400">progress</div>
+              <div class="text-gold font-bold"><span id="weeklyProgress">0</span>/3</div>
             </div>
           </div>
-
-          <div class="mt-3 h-3 w-full rounded-full bg-white/5 border border-white/10 overflow-hidden">
-            <div id="water-bar" class="h-full w-[0%] bg-gradient-to-r from-cyan via-violet2 to-gold rounded-full transition-all duration-500"></div>
+          <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
+            <div id="weeklyBar" class="h-full w-[0%] bg-gradient-to-r from-gold to-gold2 rounded-full transition-all duration-300"></div>
           </div>
-
-          <div class="mt-3 grid grid-cols-4 gap-2.5">
-            <button onclick="modifyWater(-250)" class="tap44 glass2 border border-white/10 rounded-xl py-2.5 text-[13px] font-extrabold text-slate-200 active:scale-95 transition-transform">-250</button>
-            <button onclick="modifyWater(250)" class="tap44 glass2 border border-white/10 rounded-xl py-2.5 text-[13px] font-extrabold text-white active:scale-95 transition-transform">+250</button>
-            <button onclick="modifyWater(500)" class="tap44 glass2 border border-white/10 rounded-xl py-2.5 text-[13px] font-extrabold text-white active:scale-95 transition-transform">+500</button>
-            <button onclick="modifyWater(1000)" class="tap44 rounded-xl py-2.5 text-[13px] font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">+1L</button>
-          </div>
-        </section>
-
-        <div class="flex items-center justify-between mt-1">
-          <div class="text-[14px] font-extrabold text-white">任務</div>
-          <div class="text-[11px] text-slate-400 font-extrabold tracking-widest">TAP</div>
-        </div>
-        <div id="task-list" class="space-y-3"></div>
-
-        <section class="glass rounded-2xl p-4 shadow-glass">
-          <div class="flex items-center justify-between">
-            <div class="flex items-center gap-2">
-              <span class="ms fill text-lime text-[20px]">health_and_safety</span>
-              <div>
-                <div class="text-[14px] font-black text-white">排便</div>
-                <div class="text-[11px] text-slate-400 font-semibold">正常才 +10</div>
-              </div>
-            </div>
-            <button id="bowel-toggle" onclick="toggleBowel()" class="tap44 glass2 border border-white/10 rounded-full px-4 py-2 text-[13px] font-black text-white active:scale-95 transition-transform">
-              未完成
-            </button>
-          </div>
-        </section>
-      </main>
-    </section>
-
-    <!-- MIND -->
-    <section id="view-mind" class="hidden flex-col flex-1 fade-in">
-      <header class="px-4 pb-3">
-        <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-            <span class="ms text-[20px]">chevron_left</span>
+          <button id="weeklyBtn" class="mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed" disabled>
+            Locked
           </button>
-          <div class="text-center">
-            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Mind</div>
-            <div class="mt-1 text-[16px] font-extrabold text-white">心智 / 靈修</div>
-          </div>
-          <div class="w-11"></div>
-        </div>
-
-        <div class="mt-3 flex items-center justify-between">
-          <span class="chip"><span class="ms fill text-violet2">auto_stories</span><span>MIND</span></span>
-          <span class="chip"><span class="ms fill text-violet2">percent</span><span id="mind-completion">0%</span></span>
-        </div>
-
-        <div class="mt-3 glass2 rounded-full p-1.5 border border-white/10 flex relative">
-          <div id="tab-slider" class="absolute left-1.5 top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-gradient-to-r from-violet to-violet2 rounded-full shadow-glow transition-transform duration-300"></div>
-          <button id="tab-btn-mind" onclick="switchTab('mind')" class="flex-1 relative z-10 py-2.5 text-[14px] font-black text-white text-center rounded-full">心智</button>
-          <button id="tab-btn-spirit" onclick="switchTab('spirit')" class="flex-1 relative z-10 py-2.5 text-[14px] font-extrabold text-slate-300 text-center rounded-full">靈修</button>
-        </div>
-      </header>
-
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-3">
-        <div id="tab-mind" class="space-y-3">
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-center justify-between gap-2">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <span class="ms fill text-violet2 text-[20px]">menu_book</span>
-                  <div class="text-[14px] font-black text-white">深度閱讀</div>
-                  <div class="text-[11px] text-slate-400 font-semibold">+10</div>
-                </div>
-                <div class="mt-2 text-[38px] font-light tracking-tighter tabular-nums text-white" id="reading-display">20:00</div>
-              </div>
-
-              <div class="shrink-0 flex items-center gap-2.5">
-                <button onclick="toggleDone('reading')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="完成/取消">
-                  <span id="reading-done-ico" class="ms text-[22px] text-slate-300">done</span>
-                </button>
-                <button onclick="toggleTimer('reading')" class="tap44 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform border border-white/10 bg-gradient-to-r from-violet via-violet2 to-cyan" title="開始/暫停">
-                  <span id="reading-play-ico" class="ms fill text-[22px] text-white">play_arrow</span>
-                </button>
-                <button onclick="openTimerSheet('reading')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="更多">
-                  <span class="ms text-[22px] text-slate-300">more_horiz</span>
-                </button>
-              </div>
-            </div>
-          </section>
-
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <span class="ms fill text-gold text-[20px]">rate_review</span>
-                <div class="text-[14px] font-black text-white">今日復盤</div>
-                <div class="text-[11px] text-slate-400 font-semibold">填了 +10</div>
-              </div>
-              <button onclick="startDictation('growth-input')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="語音輸入">
-                <span class="ms fill text-[22px] text-cyan">mic</span>
-              </button>
-            </div>
-            <input id="growth-input" class="mt-3 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"
-                   placeholder="一句話也可以（可中/英/粵混講）"/>
-            <div class="mt-3 flex items-center justify-between">
-              <div class="text-[11px] text-slate-500 font-semibold" id="stt-hint">※ 若瀏覽器不支援語音，請用鍵盤麥克風</div>
-              <button onclick="openLangSheet()" class="chip"><span class="ms fill text-violet2">language</span><span id="stt-lang">AUTO</span></button>
-            </div>
-          </section>
-
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-center justify-between gap-2">
-              <div class="flex items-center gap-2">
-                <span class="ms fill text-violet2 text-[20px]">note_alt</span>
-                <div class="text-[14px] font-black text-white">策略筆記</div>
-                <div class="text-[11px] text-slate-400 font-semibold">填了 +10</div>
-              </div>
-              <button onclick="startDictation('brand-input')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="語音輸入">
-                <span class="ms fill text-[22px] text-cyan">mic</span>
-              </button>
-            </div>
-            <textarea id="brand-input" class="mt-3 w-full h-28 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
-                      placeholder="記一個重點就好（可中/英/粵混講）"></textarea>
-          </section>
-        </div>
-
-        <div id="tab-spirit" class="hidden space-y-3">
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-center justify-between gap-2">
-              <div class="min-w-0">
-                <div class="flex items-center gap-2">
-                  <span class="ms fill text-cyan text-[20px]">self_improvement</span>
-                  <div class="text-[14px] font-black text-white">靜默靈修</div>
-                  <div class="text-[11px] text-slate-400 font-semibold">+10</div>
-                </div>
-                <div class="mt-2 text-[38px] font-light tracking-tighter tabular-nums text-white" id="devotion-display">10:00</div>
-              </div>
-
-              <div class="shrink-0 flex items-center gap-2.5">
-                <button onclick="toggleDone('devotion')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="完成/取消">
-                  <span id="devotion-done-ico" class="ms text-[22px] text-slate-300">done</span>
-                </button>
-                <button onclick="toggleTimer('devotion')" class="tap44 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform border border-white/10 bg-gradient-to-r from-violet via-violet2 to-cyan" title="開始/暫停">
-                  <span id="devotion-play-ico" class="ms fill text-[22px] text-white">play_arrow</span>
-                </button>
-                <button onclick="openTimerSheet('devotion')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform" title="更多">
-                  <span class="ms text-[22px] text-slate-300">more_horiz</span>
-                </button>
-              </div>
-            </div>
-          </section>
-
-          <section class="glass rounded-2xl p-4 shadow-glass">
-            <div class="flex items-center gap-2">
-              <span class="ms fill text-gold text-[20px]">menu_book</span>
-              <div class="text-[14px] font-black text-white">經文與領受</div>
-              <div class="text-[11px] text-slate-400 font-semibold">填了 +10</div>
-            </div>
-
-            <input id="scripture-input" class="mt-3 w-full rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40"
-                   placeholder="Psalm 23:1"/>
-            <textarea id="spirit-input" class="mt-3 w-full h-24 rounded-xl bg-white/5 border border-white/10 text-white placeholder:text-slate-500 px-3.5 py-3 focus:outline-none focus:ring-2 focus:ring-violet/40 resize-none"
-                      placeholder="一句領受也可以"></textarea>
-          </section>
         </div>
       </main>
     </section>
 
-    <!-- CALENDAR -->
-    <section id="view-calendar" class="hidden flex-col flex-1 fade-in">
-      <header class="px-4 pb-3">
+    <!-- ===== BODY ===== -->
+    <section id="view-body" class="view flex-col min-h-[100dvh]">
+      <header class="px-5 pt-5 pb-3">
         <div class="flex items-center justify-between">
-          <button onclick="navTo('hub')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-            <span class="ms text-[20px]">chevron_left</span>
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
+            <span class="ms align-[-2px]">chevron_left</span> Hub
           </button>
           <div class="text-center">
-            <div class="text-[11px] tracking-[0.22em] uppercase text-slate-400 font-extrabold">Evolution</div>
-            <div class="mt-1 text-[16px] font-extrabold text-white">日曆回顧</div>
+            <div class="font-display text-lg font-semibold">Body</div>
+            <div id="bodyDateLabel" class="text-[11px] text-slate-400 mt-0.5"></div>
           </div>
-          <div class="w-11"></div>
-        </div>
-
-        <div class="mt-3 glass rounded-2xl p-4 shadow-glass">
-          <div class="flex items-center justify-between">
-            <button onclick="calShift(-1)" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-              <span class="ms text-[20px]">chevron_left</span>
-            </button>
-            <div class="text-[15px] font-extrabold text-white tracking-wider"><span id="cal-title">—</span></div>
-            <button onclick="calShift(1)" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-              <span class="ms text-[20px]">chevron_right</span>
-            </button>
-          </div>
-
-          <div class="mt-4 grid grid-cols-7 gap-1.5 text-center">
-            <div class="text-[11px] text-slate-400 font-extrabold">日</div><div class="text-[11px] text-slate-400 font-extrabold">一</div><div class="text-[11px] text-slate-400 font-extrabold">二</div>
-            <div class="text-[11px] text-slate-400 font-extrabold">三</div><div class="text-[11px] text-slate-400 font-extrabold">四</div><div class="text-[11px] text-slate-400 font-extrabold">五</div>
-            <div class="text-[11px] text-slate-400 font-extrabold">六</div>
-          </div>
-          <div id="cal-grid" class="mt-3 grid grid-cols-7 gap-1.5"></div>
-
-          <div class="mt-4 flex items-center justify-between text-[11px] text-slate-400 font-extrabold">
-            <div class="flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full bg-gold shadow-gold"></span> 70%+ Bonus</div>
-            <div class="flex items-center gap-2"><span class="inline-block w-2.5 h-2.5 rounded-full bg-cyan"></span> Today</div>
-          </div>
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="openDayPicker()">
+            <span class="ms align-[-2px]">calendar_month</span>
+          </button>
         </div>
       </header>
 
-      <main class="px-4 pb-6 flex-1 overflow-y-auto no-scrollbar space-y-3">
-        <section class="glass rounded-2xl p-4 shadow-glass">
+      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
+        <!-- Water -->
+        <div class="glass rounded-3xl p-4">
+          <div class="flex items-start justify-between">
+            <div>
+              <div class="text-sm font-semibold text-white">Water</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Target: <span id="waterTargetLabel">1900</span> ml</div>
+            </div>
+            <div class="text-right">
+              <div class="text-2xl font-bold text-white tabular-nums"><span id="waterVal">0</span></div>
+              <div class="text-[11px] text-slate-400">ml</div>
+            </div>
+          </div>
+          <div class="mt-3 h-2.5 rounded-full bg-white/5 overflow-hidden border border-white/10">
+            <div id="waterBar" class="h-full w-[0%] bg-gradient-to-r from-blue to-cyan rounded-full transition-all duration-300"></div>
+          </div>
+
+          <div class="mt-4 grid grid-cols-3 gap-2">
+            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(-250)">-250 <span class="text-[10px] text-slate-400">(<span id="xpWaterMinus">-5</span>)</span></button>
+            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(250)">+250 <span class="text-[10px] text-slate-400">(<span id="xpWaterPlus">+5</span>)</span></button>
+            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="waterDelta(500)">+500 <span class="text-[10px] text-slate-400">(<span id="xpWaterPlus2">+10</span>)</span></button>
+          </div>
+        </div>
+
+        <!-- Tasks -->
+        <div class="mt-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="text-sm font-semibold text-white">Tasks</div>
+            <div class="text-[11px] text-slate-400">Tap card = complete / undo</div>
+          </div>
+          <div id="bodyTasks" class="space-y-2"></div>
+        </div>
+
+        <!-- Digest -->
+        <div class="mt-4 glass rounded-3xl p-4">
           <div class="flex items-center justify-between">
             <div>
-              <div class="text-[11px] tracking-widest uppercase text-slate-400 font-extrabold">Selected</div>
-              <div class="mt-1 text-[15px] font-extrabold text-white" id="cal-selected">—</div>
-              <div class="mt-2 text-[12px] text-slate-400 font-semibold">點日期 → 切換查看內容</div>
+              <div class="text-sm font-semibold text-white">Digest</div>
+              <div class="text-[11px] text-slate-400 mt-0.5">Daily check</div>
             </div>
-            <button onclick="useSelectedDate()" class="tap44 rounded-xl px-5 py-2.5 text-[13px] font-black text-white bg-gradient-to-r from-violet via-violet2 to-cyan border border-white/10 active:scale-95 transition-transform">
-              切換
-            </button>
+            <div class="text-right">
+              <div class="text-[11px] text-slate-400 mb-1">(<span id="xpBowelLabel">+5</span>)</div>
+              <label class="relative inline-flex items-center cursor-pointer select-none">
+                <input id="bowelToggle" type="checkbox" class="sr-only peer" onchange="toggleBowel(this.checked)" />
+                <div class="w-14 h-8 bg-white/10 border border-white/10 rounded-full peer peer-checked:bg-gold/30 peer-checked:border-gold/40 transition-colors"></div>
+                <div class="absolute top-[4px] left-[4px] h-6 w-6 rounded-full bg-slate-200/50 peer-checked:bg-gold2 peer-checked:translate-x-6 transition-all"></div>
+              </label>
+            </div>
           </div>
-        </section>
+        </div>
 
-        <section class="glass2 rounded-2xl p-4 border border-white/10 shadow-glass">
-          <div class="text-[14px] font-extrabold text-white">當天摘要（分類）</div>
-          <div class="mt-4 space-y-3" id="cal-summary"></div>
-        </section>
+        <!-- Summary -->
+        <div class="mt-4 glass rounded-3xl p-4">
+          <div class="text-sm font-semibold text-white">Today Summary</div>
+          <div id="bodySummary" class="mt-2 text-[12px] text-slate-300 leading-relaxed"></div>
+        </div>
       </main>
     </section>
 
-    <!-- Bottom Nav -->
-    <nav class="fixed bottom-0 left-0 right-0 z-50 flex justify-center nav-safe">
-      <div class="glass mx-auto w-[92%] max-w-[390px] rounded-full flex justify-between items-center py-3.5 px-6 shadow-glass border border-white/10 bg-obsidian/80">
-        <button onclick="navTo('hub')" class="navbtn flex flex-col items-center gap-1 w-16" data-view="hub">
-          <span class="ms fill text-[24px]" id="nav-ico-hub">dashboard</span>
-          <span class="text-[11px] font-black" id="nav-txt-hub">Hub</span>
-        </button>
-        <button onclick="navTo('body')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="body">
-          <span class="ms text-[24px]" id="nav-ico-body">fitness_center</span>
-          <span class="text-[11px] font-extrabold" id="nav-txt-body">Body</span>
-        </button>
-        <button onclick="navTo('mind')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="mind">
-          <span class="ms text-[24px]" id="nav-ico-mind">auto_stories</span>
-          <span class="text-[11px] font-extrabold" id="nav-txt-mind">Mind</span>
-        </button>
-        <button onclick="navTo('calendar')" class="navbtn flex flex-col items-center gap-1 w-16 opacity-70" data-view="calendar">
-          <span class="ms text-[24px]" id="nav-ico-calendar">calendar_month</span>
-          <span class="text-[11px] font-extrabold" id="nav-txt-calendar">Evo</span>
-        </button>
+    <!-- ===== MIND ===== -->
+    <section id="view-mind" class="view flex-col min-h-[100dvh]">
+      <header class="px-5 pt-5 pb-3">
+        <div class="flex items-center justify-between">
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
+            <span class="ms align-[-2px]">chevron_left</span> Hub
+          </button>
+          <div class="text-center">
+            <div class="font-display text-lg font-semibold">Mind & Spirit</div>
+            <div id="mindDateLabel" class="text-[11px] text-slate-400 mt-0.5"></div>
+          </div>
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="openDayPicker()">
+            <span class="ms align-[-2px]">calendar_month</span>
+          </button>
+        </div>
+
+        <!-- Tabs -->
+        <div class="mt-3 glass2 rounded-2xl p-1 border border-white/10">
+          <div class="grid grid-cols-2 gap-1">
+            <button id="tabBtnMind" class="rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10" onclick="switchMindTab('mind')">Mind</button>
+            <button id="tabBtnSpirit" class="rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400" onclick="switchMindTab('spirit')">Spirit</button>
+          </div>
+        </div>
+      </header>
+
+      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
+        <!-- MIND TAB -->
+        <div id="mindTabMind" class="space-y-3">
+          <!-- Reading timer (20m) -->
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Deep Reading</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Optional timer • tap card to complete / undo</div>
+                <div class="mt-1 text-[11px] text-slate-400">(<span id="xpReadLabel">+20</span>)</div>
+              </div>
+              <div class="text-right">
+                <div id="readTime" class="text-2xl font-bold tabular-nums text-white">20:00</div>
+                <div class="text-[11px] text-slate-400">min</div>
+              </div>
+            </div>
+            <div class="mt-3 grid grid-cols-3 gap-2">
+              <button id="readStartBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleTimer('read')">Start</button>
+              <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="resetTimer('read')">Reset</button>
+              <button id="readDoneBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleDone('readDone')">Done</button>
+            </div>
+          </div>
+
+          <!-- Growth reflection -->
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Growth Reflection</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
+              </div>
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('growthNote')">
+                <span class="ms align-[-2px]">mic</span> Dictate
+              </button>
+            </div>
+            <textarea id="growthNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Write your key insight..."></textarea>
+          </div>
+
+          <!-- Brand strategy -->
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Brand Strategy Notes</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
+              </div>
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('brandNote')">
+                <span class="ms align-[-2px]">mic</span> Dictate
+              </button>
+            </div>
+            <textarea id="brandNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Capture your thinking..."></textarea>
+          </div>
+        </div>
+
+        <!-- SPIRIT TAB -->
+        <div id="mindTabSpirit" class="space-y-3 hidden">
+          <!-- Silent devotion timer (10m) -->
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-start justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Silent Devotion</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">10-min timer • no music</div>
+                <div class="mt-1 text-[11px] text-slate-400">(<span id="xpDevotionLabel">+20</span>)</div>
+              </div>
+              <div class="text-right">
+                <div id="devoteTime" class="text-2xl font-bold tabular-nums text-white">10:00</div>
+                <div class="text-[11px] text-slate-400">min</div>
+              </div>
+            </div>
+            <div class="mt-3 grid grid-cols-3 gap-2">
+              <button id="devoteStartBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleTimer('devotion')">Start</button>
+              <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="resetTimer('devotion')">Reset</button>
+              <button id="devoteDoneBtn" class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="toggleDone('devotionDone')">Done</button>
+            </div>
+          </div>
+
+          <!-- Scripture + Notes -->
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Scripture</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
+              </div>
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('scripture')">
+                <span class="ms align-[-2px]">mic</span> Dictate
+              </button>
+            </div>
+            <input id="scripture" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 px-3 py-3 text-sm" placeholder="e.g., Psalm 23:1" />
+          </div>
+
+          <div class="glass rounded-3xl p-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm font-semibold text-white">Devotion Notes</div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Auto-save</div>
+              </div>
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="voiceToText('spiritNote')">
+                <span class="ms align-[-2px]">mic</span> Dictate
+              </button>
+            </div>
+            <textarea id="spiritNote" class="mt-3 w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 p-3 text-sm leading-relaxed resize-none h-28" placeholder="Write what you received..."></textarea>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div class="mt-4 glass rounded-3xl p-4">
+          <div class="text-sm font-semibold text-white">Today Summary</div>
+          <div id="mindSummary" class="mt-2 text-[12px] text-slate-300 leading-relaxed"></div>
+        </div>
+      </main>
+    </section>
+
+    <!-- ===== CALENDAR ===== -->
+    <section id="view-calendar" class="view flex-col min-h-[100dvh]">
+      <header class="px-5 pt-5 pb-3">
+        <div class="flex items-center justify-between">
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="navTo('hub')">
+            <span class="ms align-[-2px]">chevron_left</span> Hub
+          </button>
+          <div class="text-center">
+            <div class="font-display text-lg font-semibold">History</div>
+            <div class="text-[11px] text-slate-400 mt-0.5">Tap a date to review / backfill</div>
+          </div>
+          <div class="w-[74px]"></div>
+        </div>
+      </header>
+
+      <main class="px-5 pb-24 flex-1 overflow-y-auto no-scrollbar">
+        <div class="glass rounded-3xl p-4">
+          <div class="flex items-center justify-between">
+            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="changeMonth(-1)">
+              <span class="ms align-[-2px]">chevron_left</span>
+            </button>
+            <div id="calMonth" class="text-base font-semibold text-white"></div>
+            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="changeMonth(1)">
+              <span class="ms align-[-2px]">chevron_right</span>
+            </button>
+          </div>
+
+          <div class="mt-3 grid grid-cols-7 text-center text-[11px] text-slate-400">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          <div id="calGrid" class="mt-2 grid grid-cols-7 gap-1"></div>
+
+          <div class="mt-3 flex items-center justify-between text-[11px] text-slate-400">
+            <div>Perfect: <span class="text-white font-semibold" id="calPerfect">0</span></div>
+            <div>Streak: <span class="text-white font-semibold" id="calStreak">0</span></div>
+          </div>
+        </div>
+
+        <!-- Detail -->
+        <div class="mt-4 glass rounded-3xl p-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <div id="detailDate" class="text-sm font-semibold text-white">Select a day</div>
+              <div id="detailPct" class="text-[11px] text-slate-400 mt-0.5"></div>
+            </div>
+            <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm active:scale-[0.99]" onclick="editSelectedDay()">
+              Edit
+            </button>
+          </div>
+
+          <div class="mt-3 text-[12px] text-slate-200">
+            <div class="text-[11px] text-slate-400 tracking-widest uppercase mb-2">Summary</div>
+            <div id="detailBullets" class="space-y-2"></div>
+          </div>
+        </div>
+      </main>
+    </section>
+
+    <!-- ===== Bottom Nav ===== -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 pb-[max(14px,env(safe-area-inset-bottom))] pt-2">
+      <div class="mx-auto w-[92%] max-w-[420px] glass2 rounded-[28px] border border-white/10 px-3 py-2">
+        <div class="grid grid-cols-4 gap-1">
+          <button class="navItem rounded-2xl py-2 text-center" data-view="hub" onclick="navTo('hub')">
+            <div class="text-[11px] font-semibold text-white">Hub</div>
+          </button>
+          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="body" onclick="navTo('body')">
+            <div class="text-[11px] font-semibold text-white">Body</div>
+          </button>
+          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="mind" onclick="navTo('mind')">
+            <div class="text-[11px] font-semibold text-white">Mind</div>
+          </button>
+          <button class="navItem rounded-2xl py-2 text-center opacity-70" data-view="calendar" onclick="navTo('calendar')">
+            <div class="text-[11px] font-semibold text-white">History</div>
+          </button>
+        </div>
       </div>
     </nav>
-  </div>
 
-  <!-- ====== MODALS / SHEETS / JS ====== -->
-  <!-- 下面完全沿用你上一版（我不動邏輯，只讓 UI 放大），所以直接貼你上一版原內容即可 -->
-  <!-- ✅ 為了讓你“一貼就能跑”，我把你上一版的 modal+sheet+JS 全部照貼回來（未改邏輯） -->
-
-  <!-- Profile Modal -->
-  <div id="modal-profile" class="hidden fixed inset-0 z-[200]">
-    <div class="absolute inset-0 bg-black/55" onclick="closeModal('modal-profile')"></div>
-    <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-md glass rounded-2xl p-4 border border-white/10 shadow-glass">
-      <div class="flex items-center justify-between">
-        <div class="text-base font-black text-white">個人設定</div>
-        <button onclick="closeModal('modal-profile')" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-          <span class="ms text-[20px]">close</span>
-        </button>
-      </div>
-
-      <div class="mt-4 space-y-3">
-        <div>
-          <label class="text-[11px] text-slate-400 font-extrabold">名字</label>
-          <input id="inp-name" class="mt-2 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
-        </div>
-        <div>
-          <label class="text-[11px] text-slate-400 font-extrabold">標題</label>
-          <input id="inp-title" class="mt-2 w-full rounded-xl bg-white/5 border border-white/10 text-white px-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-violet/40"/>
-        </div>
-
-        <div class="grid grid-cols-2 gap-3 mt-2">
-          <button onclick="saveProfile()" class="tap44 rounded-xl py-3.5 font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">保存</button>
-          <button onclick="confirmReset()" class="tap44 glass2 border border-white/10 rounded-xl py-3.5 font-black text-white active:scale-95 transition-transform">系統重置</button>
-        </div>
-
-        <div class="mt-2 text-[12px] text-slate-400 font-semibold leading-relaxed">
-          XP 會「每次點擊即時更新」，等級會自動依總 XP 升級（不需要結算）。
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Timer Action Sheet -->
-  <div id="sheet-backdrop" class="hidden fixed inset-0 z-[250] bg-black/55" onclick="closeSheet()"></div>
-  <div id="timer-sheet" class="sheet z-[260]">
-    <div class="mx-auto max-w-md w-full px-3 pb-4">
-      <div class="glass rounded-2xl border border-white/10 shadow-glass p-4">
+    <!-- ===== Profile Modal ===== -->
+    <div id="profileModal" class="fixed inset-0 z-[9997] hidden">
+      <div class="absolute inset-0 bg-black/60" onclick="closeProfile()"></div>
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[420px] glass rounded-3xl p-4 border border-white/10">
         <div class="flex items-center justify-between">
-          <div>
-            <div class="text-[11px] tracking-widest uppercase text-slate-400 font-extrabold">Timer</div>
-            <div id="sheet-title" class="mt-1 text-[15px] font-extrabold text-white">—</div>
+          <div class="font-display text-lg font-semibold text-white">Profile</div>
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="closeProfile()">Close</button>
+        </div>
+
+        <div class="mt-4 flex items-center gap-3">
+          <div class="h-16 w-16 rounded-full overflow-hidden border border-white/15 bg-white/5 shrink-0">
+            <img id="profileImgPreview" class="h-full w-full object-cover" alt="preview"/>
           </div>
-          <button onclick="closeSheet()" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-            <span class="ms text-[20px]">close</span>
+          <div class="flex-1 min-w-0">
+            <div class="text-[11px] text-slate-400 mb-1">Name</div>
+            <input id="nameInput" class="w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-0 px-3 py-3 text-sm" placeholder="Type your name" />
+            <div class="mt-2 flex items-center justify-between">
+              <div class="text-[11px] text-slate-400">Level <span class="text-gold font-semibold">LV <span id="modalLevel">1</span></span></div>
+              <div class="text-[11px] text-slate-400">Total XP <span class="text-white font-semibold" id="modalXP">0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <div class="text-[11px] text-slate-400 mb-2">Photo (upload from phone)</div>
+          <input id="photoInput" type="file" accept="image/*" class="block w-full text-xs text-slate-300 file:mr-3 file:rounded-xl file:border-0 file:bg-white/10 file:px-3 file:py-2 file:text-slate-100 file:font-semibold" />
+          <div class="mt-2 text-[10px] text-slate-500">We compress image to avoid freezing & storage issues.</div>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="saveProfile()">
+            Save
+          </button>
+          <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold text-red-300 active:scale-[0.99]" onclick="confirmReset()">
+            Reset System
           </button>
         </div>
-
-        <div class="mt-4 grid grid-cols-3 gap-3">
-          <button onclick="sheetReset()" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">重置</button>
-          <button onclick="sheetSetMin(10)" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">10m</button>
-          <button onclick="sheetSetMin(20)" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">20m</button>
-        </div>
-
-        <div class="mt-3 grid grid-cols-3 gap-3">
-          <button onclick="sheetSetMin(30)" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">30m</button>
-          <button onclick="sheetPromptCustom()" class="tap44 rounded-xl py-3 text-[13px] font-black text-ink bg-gradient-to-r from-gold via-gold2 to-gold shadow-gold active:scale-95 transition-transform">自訂</button>
-          <button onclick="sheetCancelDone()" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">取消完成</button>
-        </div>
-
-        <div class="mt-3 text-[12px] text-slate-400 font-semibold">提示：完成/取消會影響 XP（即時）</div>
       </div>
     </div>
-  </div>
 
-  <!-- STT Language Sheet -->
-  <div id="lang-backdrop" class="hidden fixed inset-0 z-[300] bg-black/55" onclick="closeLangSheet()"></div>
-  <div id="lang-sheet" class="sheet z-[310]">
-    <div class="mx-auto max-w-md w-full px-3 pb-4">
-      <div class="glass rounded-2xl border border-white/10 shadow-glass p-4">
+    <!-- ===== Day Picker Modal ===== -->
+    <div id="dayPicker" class="fixed inset-0 z-[9996] hidden">
+      <div class="absolute inset-0 bg-black/60" onclick="closeDayPicker()"></div>
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[92%] max-w-[420px] glass rounded-3xl p-4 border border-white/10">
         <div class="flex items-center justify-between">
-          <div>
-            <div class="text-[11px] tracking-widest uppercase text-slate-400 font-extrabold">Speech</div>
-            <div class="mt-1 text-[15px] font-extrabold text-white">語音語言</div>
+          <div class="font-display text-lg font-semibold text-white">Select Date</div>
+          <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-sm" onclick="closeDayPicker()">Close</button>
+        </div>
+        <div class="mt-4">
+          <input id="datePickerInput" type="date" class="w-full rounded-2xl bg-white/5 border border-white/10 text-slate-100 focus:outline-none focus:ring-0 px-3 py-3 text-sm" />
+          <div class="mt-3 grid grid-cols-2 gap-2">
+            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="applyPickedDate()">Apply</button>
+            <button class="glass2 rounded-2xl py-3 border border-white/10 text-sm font-semibold active:scale-[0.99]" onclick="jumpToday()">Today</button>
           </div>
-          <button onclick="closeLangSheet()" class="tap44 glass2 border border-white/10 rounded-full w-11 h-11 flex items-center justify-center active:scale-95 transition-transform">
-            <span class="ms text-[20px]">close</span>
-          </button>
-        </div>
-
-        <div class="mt-4 grid grid-cols-2 gap-3">
-          <button onclick="setSTTLang('AUTO')" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">AUTO（混語最佳努力）</button>
-          <button onclick="setSTTLang('EN')" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">EN</button>
-          <button onclick="setSTTLang('ZH')" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">中文</button>
-          <button onclick="setSTTLang('YUE')" class="tap44 glass2 border border-white/10 rounded-xl py-3 text-[13px] font-black text-white active:scale-95 transition-transform">粵語</button>
-        </div>
-
-        <div class="mt-3 text-[12px] text-slate-400 font-semibold leading-relaxed">
-          小提醒：Web Speech API 本身是一個「單一語言設定」；AUTO 會用最常見的英語引擎去捕捉混語（實務上混講更容易被吃到），如果辨識不準再切換中文/粵語重錄一段。
         </div>
       </div>
     </div>
+
   </div>
 
-  <!-- ====== JS：沿用你上一版（功能不變） ====== -->
-  <!-- 為了不打斷你已驗證過的功能，我這裡請你直接貼回你上一版那段完整 <script> ... </script> -->
-  <!-- ✅ 但你說要 “一貼就能跑”，所以你只要把你上一版 script 原封不動貼在這裡即可。 -->
+<script>
+/* =========================
+   ATE — Single-file Stable Build
+   Fixes:
+   - Profile name save (reliable localStorage writes)
+   - Photo upload compress + non-blocking render (prevents freeze)
+   - All actions use “delta XP” (undo deducts properly)
+   - Date switching always edits selected day (not stuck on today)
+   - Timers: start/pause/reset + done/undo
+   - Calendar present + backfill via Edit button
+========================= */
 
-  <script>
-    /* 這裡請貼你上一版完整的 JS（從 /********************** * Helpers ... 到 Init 結束） */
-    /* 我沒有改你任何計算/功能邏輯，只有 UI 放大與排版節奏。 */
-  </script>
+const STORAGE_KEY = "ate_mobile_ultra_v1";
+const PROFILE_KEY = "ate_profile_v1";
+
+const WATER_TARGET = 1900;
+const WATER_STEP = 250;
+
+/* XP RULES (transparent + shown) */
+const XP = {
+  waterPerStep: 5,           // per 250ml credited up to target
+  muscle30: 40,              // 30-min muscle training
+  squat15: 25,               // 15-min squat
+  breakfast: 10,             // yogurt breakfast
+  bowel: 5,                  // digest toggle
+  reading: 20,               // reading done
+  devotion: 20,              // devotion done
+};
+
+const TASKS_BODY = [
+  { id: "squat", type: "timer", title: "Squat Practice", sub: "15 min", dur: 15*60, xp: XP.squat15 },
+  { id: "muscle", type: "timer", title: "Muscle Training", sub: "30 min", dur: 30*60, xp: XP.muscle30 },
+  { id: "breakfast", type: "check", title: "Yogurt Breakfast", sub: "Quick win", xp: XP.breakfast },
+];
+
+// Daily Verse (EN)
+const VERSES = [
+  { t:"Be still, and know that I am God.", r:"Psalm 46:10" },
+  { t:"I can do all things through Christ who strengthens me.", r:"Philippians 4:13" },
+  { t:"The LORD is my shepherd; I shall not want.", r:"Psalm 23:1" },
+  { t:"Trust in the LORD with all your heart.", r:"Proverbs 3:5" },
+  { t:"My grace is sufficient for you.", r:"2 Corinthians 12:9" },
+  { t:"Let all that you do be done in love.", r:"1 Corinthians 16:14" },
+  { t:"The joy of the LORD is your strength.", r:"Nehemiah 8:10" },
+  { t:"Peace I leave with you; my peace I give you.", r:"John 14:27" },
+  { t:"Do not be anxious about anything.", r:"Philippians 4:6" },
+  { t:"Your word is a lamp to my feet and a light to my path.", r:"Psalm 119:105" },
+  { t:"The LORD is near to the brokenhearted.", r:"Psalm 34:18" },
+  { t:"Seek first the kingdom of God.", r:"Matthew 6:33" },
+  { t:"If anyone is in Christ, he is a new creation.", r:"2 Corinthians 5:17" },
+  { t:"Let your light shine before others.", r:"Matthew 5:16" },
+  { t:"He will renew your strength.", r:"Isaiah 40:31" },
+  { t:"God is our refuge and strength.", r:"Psalm 46:1" },
+  { t:"Blessed are the pure in heart.", r:"Matthew 5:8" },
+  { t:"The LORD will fight for you; you need only to be still.", r:"Exodus 14:14" },
+  { t:"In all your ways acknowledge Him.", r:"Proverbs 3:6" },
+  { t:"We love because He first loved us.", r:"1 John 4:19" },
+];
+
+let state = safeParse(localStorage.getItem(STORAGE_KEY)) || {};
+let profile = safeParse(localStorage.getItem(PROFILE_KEY)) || {
+  name: "Your Name",
+  photo: "",      // dataURL (compressed)
+  totalXP: 0,
+};
+
+let activeView = "hub";
+let selectedDateKey = todayKey();
+let mindTab = "mind";
+
+/* timers */
+let timers = {
+  squat:   { remaining: 15*60, running:false, handle:null, base:15*60 },
+  muscle:  { remaining: 30*60, running:false, handle:null, base:30*60 },
+  read:    { remaining: 20*60, running:false, handle:null, base:20*60 },
+  devotion:{ remaining: 10*60, running:false, handle:null, base:10*60 },
+};
+
+let calCursor = new Date();
+
+/* -------------------------
+   Utils
+------------------------- */
+function safeParse(x){ try{ return JSON.parse(x); } catch(e){ return null; } }
+function pad2(n){ return String(n).padStart(2,"0"); }
+function todayKey(){
+  const d = new Date();
+  return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+}
+function ensureDay(key){
+  if(!state[key]){
+    state[key] = {
+      water: 0,
+      waterCreditedSteps: 0, // how many 250ml steps were credited for XP (capped to target)
+      bowel: false,
+      bodyTasks: { squat:false, muscle:false, breakfast:false },
+      readDone: false,
+      devotionDone: false,
+      growthNote: "",
+      brandNote: "",
+      scripture: "",
+      spiritNote: "",
+      dayXP: 0,
+      isPerfect: false,
+      lastUpdated: Date.now(),
+    };
+  }
+  return state[key];
+}
+function saveState(){
+  // perfect definition (you can tune): water target + all body tasks done + devotion or reading not required
+  const d = ensureDay(selectedDateKey);
+  const allBody = TASKS_BODY.every(t => d.bodyTasks[t.id]);
+  d.isPerfect = (d.water >= WATER_TARGET && allBody);
+  d.lastUpdated = Date.now();
+
+  try{
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){
+    // If storage quota fails, we still keep in-memory to avoid crash.
+    toast("Storage full — saved in memory only", "warn");
+  }
+  render();
+}
+function saveProfileStorage(){
+  try{
+    localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+  }catch(e){
+    toast("Profile save failed (storage full)", "warn");
+  }
+}
+
+/* XP + delta system (no infinite stacking) */
+function applyXP(delta){
+  if(!delta) return;
+  const d = ensureDay(selectedDateKey);
+
+  // clamp so dayXP and totalXP never below 0
+  d.dayXP = Math.max(0, d.dayXP + delta);
+  profile.totalXP = Math.max(0, profile.totalXP + delta);
+
+  // Level calc
+  saveProfileStorage();
+  saveState(); // will call render()
+  showXPDelta(delta);
+  checkHype();
+}
+
+/* show +/-, small */
+function showXPDelta(delta){
+  const sign = delta > 0 ? "+" : "";
+  toast(`${sign}${delta} XP`, delta > 0 ? "pos" : "neg");
+}
+function toast(msg, type="pos"){
+  const el = document.getElementById("toast");
+  const t = document.getElementById("toastText");
+  t.textContent = msg;
+  t.className = type==="neg" ? "text-red-300" : (type==="warn" ? "text-slate-200" : "text-gold");
+  el.classList.remove("hide");
+  el.classList.add("show");
+  clearTimeout(toast._t);
+  toast._t = setTimeout(()=>{ el.classList.remove("show"); el.classList.add("hide"); }, 700);
+}
+
+/* light confetti when crossing 70% */
+function checkHype(){
+  const pct = dayTotalPercent(selectedDateKey);
+  const d = ensureDay(selectedDateKey);
+  // fire once per day when first >=70
+  if(pct >= 70 && !d._hyped){
+    d._hyped = true;
+    saveState();
+    confettiBurst();
+    try{ navigator.vibrate && navigator.vibrate(25); }catch(e){}
+  }
+}
+
+/* confetti burst */
+function confettiBurst(){
+  const canvas = document.getElementById("confetti");
+  const ctx = canvas.getContext("2d");
+  const w = canvas.width = window.innerWidth;
+  const h = canvas.height = window.innerHeight;
+  canvas.style.display = "block";
+
+  const pieces = Array.from({length: 80}).map(()=>({
+    x: Math.random()*w,
+    y: -20 - Math.random()*200,
+    r: 2 + Math.random()*3,
+    vx: -1.2 + Math.random()*2.4,
+    vy: 2.5 + Math.random()*3.2,
+    a: 0.8 + Math.random()*0.2,
+    rot: Math.random()*Math.PI,
+    vr: -0.2 + Math.random()*0.4,
+  }));
+
+  let frames = 0;
+  function tick(){
+    frames++;
+    ctx.clearRect(0,0,w,h);
+    for(const p of pieces){
+      p.x += p.vx; p.y += p.vy; p.rot += p.vr; p.vy *= 0.995;
+      ctx.save();
+      ctx.globalAlpha = p.a;
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      // gold / violet / blue (kept subtle)
+      const c = (frames%3===0) ? "rgba(212,175,55,0.9)" : (frames%3===1 ? "rgba(139,92,246,0.85)" : "rgba(74,92,216,0.85)");
+      ctx.fillStyle = c;
+      ctx.fillRect(-p.r, -p.r, p.r*2.1, p.r*1.6);
+      ctx.restore();
+    }
+    if(frames < 55){
+      requestAnimationFrame(tick);
+    }else{
+      canvas.style.display = "none";
+      ctx.clearRect(0,0,w,h);
+    }
+  }
+  requestAnimationFrame(tick);
+}
+
+/* -------------------------
+   Scoring
+------------------------- */
+function levelInfo(totalXP){
+  // 300 xp per level (mobile-friendly)
+  const per = 300;
+  const level = Math.floor(totalXP / per) + 1;
+  const nextAt = level * per;
+  const into = totalXP - (level-1)*per;
+  const pct = Math.min(100, Math.round((into/per)*100));
+  return { level, nextAt, into, per, pct };
+}
+
+function bodyPercent(key){
+  const d = ensureDay(key);
+  const waterPct = Math.min(100, Math.round((d.water / WATER_TARGET)*100));
+  const tasksDone = TASKS_BODY.reduce((acc,t)=>acc + (d.bodyTasks[t.id] ? 1 : 0), 0);
+  const tasksPct = Math.round((tasksDone / TASKS_BODY.length)*100);
+  const bowelPct = d.bowel ? 100 : 0;
+
+  // weights (sum 100): water 45, tasks 45, bowel 10
+  return Math.round(waterPct*0.45 + tasksPct*0.45 + bowelPct*0.10);
+}
+
+function mindPercent(key){
+  const d = ensureDay(key);
+  const readPct = d.readDone ? 100 : 0;
+  const devoPct = d.devotionDone ? 100 : 0;
+  const notesPct = ((d.growthNote?.trim()?1:0) + (d.brandNote?.trim()?1:0) + (d.scripture?.trim()?1:0) + (d.spiritNote?.trim()?1:0)) > 0 ? 100 : 0;
+
+  // weights: reading 35, devotion 35, notes 30
+  return Math.round(readPct*0.35 + devoPct*0.35 + notesPct*0.30);
+}
+
+function dayTotalPercent(key){
+  // total: body 60, mind 40
+  return Math.round(bodyPercent(key)*0.60 + mindPercent(key)*0.40);
+}
+
+/* -------------------------
+   Navigation / Views
+------------------------- */
+function navTo(view){
+  activeView = view;
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.getElementById("view-"+view).classList.add("active");
+
+  document.querySelectorAll(".navItem").forEach(btn=>{
+    const is = btn.dataset.view === view;
+    btn.classList.toggle("opacity-70", !is);
+    btn.classList.toggle("bg-white/10", is);
+    btn.classList.toggle("border", is);
+    btn.classList.toggle("border-white/10", is);
+  });
+
+  render();
+}
+
+function openProfile(){
+  document.getElementById("profileModal").classList.remove("hidden");
+  document.getElementById("nameInput").value = profile.name || "";
+  document.getElementById("profileImgPreview").src = profile.photo || defaultAvatar();
+  const li = levelInfo(profile.totalXP||0);
+  document.getElementById("modalLevel").textContent = li.level;
+  document.getElementById("modalXP").textContent = profile.totalXP||0;
+}
+function closeProfile(){
+  document.getElementById("profileModal").classList.add("hidden");
+}
+
+function openDayPicker(){
+  document.getElementById("dayPicker").classList.remove("hidden");
+  document.getElementById("datePickerInput").value = selectedDateKey;
+}
+function closeDayPicker(){
+  document.getElementById("dayPicker").classList.add("hidden");
+}
+function applyPickedDate(){
+  const v = document.getElementById("datePickerInput").value;
+  if(v){
+    selectedDateKey = v;
+    ensureDay(selectedDateKey);
+    // Reset timers display to base when switching day (timers are session-based, completion is stored)
+    resetAllTimersToBase();
+    closeDayPicker();
+    render();
+  }
+}
+function jumpToday(){
+  selectedDateKey = todayKey();
+  ensureDay(selectedDateKey);
+  resetAllTimersToBase();
+  closeDayPicker();
+  render();
+}
+
+function resetAllTimersToBase(){
+  // stop all
+  Object.keys(timers).forEach(k=>{
+    if(timers[k].handle) clearInterval(timers[k].handle);
+    timers[k].handle = null;
+    timers[k].running = false;
+    timers[k].remaining = timers[k].base;
+  });
+}
+
+/* -------------------------
+   Profile: Save + Photo Upload Fix
+------------------------- */
+function saveProfile(){
+  const name = (document.getElementById("nameInput").value || "").trim();
+  profile.name = name || "Your Name";
+  saveProfileStorage();
+  closeProfile();
+  render();
+  toast("Saved", "pos");
+}
+
+function confirmReset(){
+  if(confirm("【RESET】Clear all records and restart from 0?")){
+    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(PROFILE_KEY);
+    location.reload();
+  }
+}
+
+/* compress image to avoid freeze + quota */
+async function fileToCompressedDataURL(file, maxSize=256, quality=0.82){
+  const imgData = await readFileAsDataURL(file);
+  const img = await loadImage(imgData);
+
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
+
+  const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+  const w = Math.max(1, Math.round(img.width * scale));
+  const h = Math.max(1, Math.round(img.height * scale));
+  canvas.width = w; canvas.height = h;
+  ctx.drawImage(img, 0, 0, w, h);
+
+  return canvas.toDataURL("image/jpeg", quality);
+}
+function readFileAsDataURL(file){
+  return new Promise((resolve, reject)=>{
+    const r = new FileReader();
+    r.onload = ()=> resolve(r.result);
+    r.onerror = reject;
+    r.readAsDataURL(file);
+  });
+}
+function loadImage(src){
+  return new Promise((resolve, reject)=>{
+    const img = new Image();
+    img.onload = ()=> resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+}
+
+/* -------------------------
+   Body Actions
+------------------------- */
+function waterDelta(delta){
+  const d = ensureDay(selectedDateKey);
+  const prev = d.water;
+  d.water = Math.max(0, prev + delta);
+
+  // XP credit: based on credited steps up to target
+  const maxSteps = Math.floor(WATER_TARGET / WATER_STEP);
+  const newSteps = Math.min(maxSteps, Math.floor(d.water / WATER_STEP));
+  const oldSteps = d.waterCreditedSteps || 0;
+
+  const stepDelta = newSteps - oldSteps;
+  d.waterCreditedSteps = newSteps;
+
+  if(stepDelta !== 0){
+    applyXP(stepDelta * XP.waterPerStep);
+  }else{
+    saveState(); // still update UI
+  }
+}
+
+function toggleBowel(checked){
+  const d = ensureDay(selectedDateKey);
+  const prev = !!d.bowel;
+  d.bowel = !!checked;
+
+  if(d.bowel !== prev){
+    applyXP(d.bowel ? XP.bowel : -XP.bowel);
+  }else{
+    saveState();
+  }
+}
+
+function toggleBodyTask(taskId){
+  const d = ensureDay(selectedDateKey);
+  const was = !!d.bodyTasks[taskId];
+  d.bodyTasks[taskId] = !was;
+
+  const task = TASKS_BODY.find(t=>t.id===taskId);
+  if(task){
+    applyXP(d.bodyTasks[taskId] ? task.xp : -task.xp);
+  }else{
+    saveState();
+  }
+}
+
+/* Done toggles in Mind/Spirit */
+function toggleDone(flag){
+  const d = ensureDay(selectedDateKey);
+
+  if(flag === "readDone"){
+    const was = !!d.readDone;
+    d.readDone = !was;
+    applyXP(d.readDone ? XP.reading : -XP.reading);
+    if(d.readDone) { timers.read.running=false; if(timers.read.handle) clearInterval(timers.read.handle); timers.read.handle=null; }
+    return;
+  }
+
+  if(flag === "devotionDone"){
+    const was = !!d.devotionDone;
+    d.devotionDone = !was;
+    applyXP(d.devotionDone ? XP.devotion : -XP.devotion);
+    if(d.devotionDone) { timers.devotion.running=false; if(timers.devotion.handle) clearInterval(timers.devotion.handle); timers.devotion.handle=null; }
+    return;
+  }
+}
+
+/* -------------------------
+   Timers (start/pause/reset)
+------------------------- */
+function toggleTimer(which){
+  // map
+  let key = which;
+  if(which === "devotion") key = "devotion";
+  if(which === "read") key = "read";
+
+  if(!timers[key]) return;
+
+  // If already done, ignore start
+  const d = ensureDay(selectedDateKey);
+  if(key==="read" && d.readDone){ toast("Already done (undo to re-run)", "warn"); return; }
+  if(key==="devotion" && d.devotionDone){ toast("Already done (undo to re-run)", "warn"); return; }
+  if((key==="squat" || key==="muscle") && d.bodyTasks[key]){ toast("Already done (undo to re-run)", "warn"); return; }
+
+  const t = timers[key];
+
+  if(t.running){
+    // pause
+    t.running = false;
+    if(t.handle) clearInterval(t.handle);
+    t.handle = null;
+    render();
+    return;
+  }
+
+  // start/resume
+  t.running = true;
+  if(t.handle) clearInterval(t.handle);
+  t.handle = setInterval(()=>{
+    t.remaining = Math.max(0, t.remaining - 1);
+    // update only relevant time text to keep smooth
+    updateTimerText(key);
+
+    if(t.remaining <= 0){
+      // auto complete
+      if(t.handle) clearInterval(t.handle);
+      t.handle = null;
+      t.running = false;
+
+      if(key==="read"){
+        if(!d.readDone){ d.readDone = true; applyXP(XP.reading); }
+      }else if(key==="devotion"){
+        if(!d.devotionDone){ d.devotionDone = true; applyXP(XP.devotion); }
+      }else if(key==="squat" || key==="muscle"){
+        if(!d.bodyTasks[key]){ d.bodyTasks[key] = true; const task = TASKS_BODY.find(x=>x.id===key); applyXP(task ? task.xp : 0); }
+      }else{
+        saveState();
+      }
+
+      // reset timer to base for next use
+      t.remaining = t.base;
+      render();
+    }
+  }, 1000);
+
+  render();
+}
+
+function resetTimer(which){
+  let key = which;
+  if(which === "devotion") key = "devotion";
+  if(which === "read") key = "read";
+
+  if(!timers[key]) return;
+  const t = timers[key];
+
+  // stop + reset
+  if(t.handle) clearInterval(t.handle);
+  t.handle = null;
+  t.running = false;
+  t.remaining = t.base;
+
+  render();
+  toast("Reset", "warn");
+}
+
+function updateTimerText(key){
+  const t = timers[key];
+  const m = Math.floor(t.remaining/60);
+  const s = t.remaining%60;
+  const str = `${pad2(m)}:${pad2(s)}`;
+
+  if(key==="read"){
+    const el = document.getElementById("readTime");
+    if(el) el.textContent = str;
+  }else if(key==="devotion"){
+    const el = document.getElementById("devoteTime");
+    if(el) el.textContent = str;
+  }else if(key==="squat" || key==="muscle"){
+    const el = document.getElementById(`t_${key}`);
+    if(el) el.textContent = str;
+  }
+}
+
+/* -------------------------
+   Mind tab switch
+------------------------- */
+function switchMindTab(tab){
+  mindTab = tab;
+
+  const a = document.getElementById("mindTabMind");
+  const b = document.getElementById("mindTabSpirit");
+  const bm = document.getElementById("tabBtnMind");
+  const bs = document.getElementById("tabBtnSpirit");
+
+  if(tab==="mind"){
+    a.classList.remove("hidden");
+    b.classList.add("hidden");
+    bm.className = "rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10";
+    bs.className = "rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400";
+  }else{
+    a.classList.add("hidden");
+    b.classList.remove("hidden");
+    bs.className = "rounded-xl py-2 text-sm font-semibold bg-white/10 border border-white/10";
+    bm.className = "rounded-xl py-2 text-sm font-semibold bg-transparent border border-transparent text-slate-400";
+  }
+}
+
+/* -------------------------
+   Notes: autosave + voice input
+------------------------- */
+function bindAutosave(){
+  const fields = ["growthNote","brandNote","scripture","spiritNote"];
+  fields.forEach(id=>{
+    const el = document.getElementById(id);
+    if(!el) return;
+    el.oninput = ()=>{
+      const d = ensureDay(selectedDateKey);
+      d[id] = el.value || "";
+      // no XP for text itself (keep clean)
+      saveState();
+    };
+  });
+}
+
+function voiceToText(fieldId){
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if(!SR){
+    toast("Voice input not supported on this browser", "warn");
+    return;
+  }
+  const rec = new SR();
+  // best-effort for mixed zh/en/yue: zh-HK tends to accept Cantonese + English terms better than zh-TW on many engines
+  rec.lang = "zh-HK";
+  rec.interimResults = true;
+  rec.continuous = false;
+
+  const target = document.getElementById(fieldId);
+  if(!target){ toast("Field not found", "warn"); return; }
+
+  let finalText = "";
+  rec.onresult = (e)=>{
+    let interim = "";
+    for(let i=e.resultIndex;i<e.results.length;i++){
+      const txt = e.results[i][0].transcript;
+      if(e.results[i].isFinal) finalText += txt;
+      else interim += txt;
+    }
+    // show as you speak
+    const base = (target.value || "");
+    target.value = base + (finalText || interim);
+    target.dispatchEvent(new Event("input"));
+  };
+  rec.onerror = ()=> toast("Voice input failed", "warn");
+  rec.onend = ()=> toast("Captured", "pos");
+
+  try{
+    rec.start();
+    toast("Listening…", "warn");
+  }catch(e){
+    toast("Voice input busy", "warn");
+  }
+}
+
+/* -------------------------
+   Calendar
+------------------------- */
+function changeMonth(offset){
+  calCursor.setMonth(calCursor.getMonth() + offset);
+  renderCalendar();
+}
+function renderCalendar(){
+  const y = calCursor.getFullYear();
+  const m = calCursor.getMonth();
+  const first = new Date(y,m,1).getDay();
+  const days = new Date(y,m+1,0).getDate();
+  const monthName = calCursor.toLocaleString("en-US",{month:"long"});
+  document.getElementById("calMonth").textContent = `${monthName} ${y}`;
+
+  const grid = document.getElementById("calGrid");
+  grid.innerHTML = "";
+
+  // empty cells
+  for(let i=0;i<first;i++){
+    const cell = document.createElement("div");
+    cell.className = "aspect-square";
+    grid.appendChild(cell);
+  }
+
+  const today = new Date();
+  const todayK = todayKey();
+  let perfectCount = 0;
+
+  for(let d=1; d<=days; d++){
+    const key = `${y}-${pad2(m+1)}-${pad2(d)}`;
+    const entry = state[key];
+    if(entry?.isPerfect) perfectCount++;
+
+    const isToday = key === todayK;
+    const isSelected = key === selectedDateKey;
+    const isPerfect = !!entry?.isPerfect;
+
+    const btn = document.createElement("button");
+    btn.className = "aspect-square rounded-xl border text-sm font-semibold transition-all active:scale-[0.99]";
+
+    if(isSelected){
+      btn.classList.add("bg-white/10","border-white/30","text-white");
+    }else if(isPerfect){
+      btn.classList.add("bg-gold/15","border-gold/30","text-white","shadow-glow");
+    }else if(isToday){
+      btn.classList.add("bg-violet/15","border-violet/30","text-white");
+    }else{
+      btn.classList.add("bg-white/0","border-white/0","text-slate-400","hover:bg-white/5");
+    }
+
+    btn.textContent = String(d);
+    btn.onclick = ()=>{
+      selectedDateKey = key;
+      ensureDay(selectedDateKey);
+      resetAllTimersToBase();
+      render(); // also updates detail
+      // keep on calendar view
+    };
+
+    grid.appendChild(btn);
+  }
+
+  document.getElementById("calPerfect").textContent = perfectCount;
+
+  // streak calc (simple consecutive perfect up to today)
+  document.getElementById("calStreak").textContent = calcStreak();
+}
+
+function showCalendarDetail(){
+  const d = ensureDay(selectedDateKey);
+  const pct = dayTotalPercent(selectedDateKey);
+  const dt = new Date(selectedDateKey+"T00:00:00");
+  const label = dt.toLocaleDateString("en-US",{weekday:"short", month:"short", day:"numeric", year:"numeric"});
+  document.getElementById("detailDate").textContent = label;
+  document.getElementById("detailPct").textContent = `Total: ${pct}% • Day XP: ${d.dayXP||0} XP`;
+
+  const bullets = document.getElementById("detailBullets");
+  bullets.innerHTML = "";
+
+  const bodyB = document.createElement("div");
+  bodyB.className = "glass2 rounded-2xl p-3 border border-white/10";
+  bodyB.innerHTML = `
+    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Body</div>
+    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
+      <li>• Water: <span class="font-semibold text-white">${d.water} ml</span></li>
+      <li>• Squat: <span class="font-semibold ${d.bodyTasks.squat?'text-gold':'text-slate-400'}">${d.bodyTasks.squat?'Done':'Not yet'}</span></li>
+      <li>• Muscle: <span class="font-semibold ${d.bodyTasks.muscle?'text-gold':'text-slate-400'}">${d.bodyTasks.muscle?'Done':'Not yet'}</span></li>
+      <li>• Breakfast: <span class="font-semibold ${d.bodyTasks.breakfast?'text-gold':'text-slate-400'}">${d.bodyTasks.breakfast?'Done':'Not yet'}</span></li>
+      <li>• Digest: <span class="font-semibold ${d.bowel?'text-gold':'text-slate-400'}">${d.bowel?'Checked':'Not yet'}</span></li>
+    </ul>
+  `;
+  bullets.appendChild(bodyB);
+
+  const mindB = document.createElement("div");
+  mindB.className = "glass2 rounded-2xl p-3 border border-white/10";
+  mindB.innerHTML = `
+    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Mind</div>
+    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
+      <li>• Reading: <span class="font-semibold ${d.readDone?'text-gold':'text-slate-400'}">${d.readDone?'Done':'Not yet'}</span></li>
+      <li>• Growth: <span class="font-semibold ${d.growthNote?.trim()?'text-white':'text-slate-400'}">${d.growthNote?.trim() ? 'Saved' : 'Empty'}</span></li>
+      <li>• Brand: <span class="font-semibold ${d.brandNote?.trim()?'text-white':'text-slate-400'}">${d.brandNote?.trim() ? 'Saved' : 'Empty'}</span></li>
+    </ul>
+  `;
+  bullets.appendChild(mindB);
+
+  const spiritB = document.createElement("div");
+  spiritB.className = "glass2 rounded-2xl p-3 border border-white/10";
+  spiritB.innerHTML = `
+    <div class="text-[11px] text-slate-400 tracking-widest uppercase">Spirit</div>
+    <ul class="mt-2 space-y-1 text-[12px] text-slate-200">
+      <li>• Devotion: <span class="font-semibold ${d.devotionDone?'text-gold':'text-slate-400'}">${d.devotionDone?'Done':'Not yet'}</span></li>
+      <li>• Scripture: <span class="font-semibold ${d.scripture?.trim()?'text-white':'text-slate-400'}">${d.scripture?.trim() ? d.scripture : 'Empty'}</span></li>
+      <li>• Notes: <span class="font-semibold ${d.spiritNote?.trim()?'text-white':'text-slate-400'}">${d.spiritNote?.trim() ? 'Saved' : 'Empty'}</span></li>
+    </ul>
+  `;
+  bullets.appendChild(spiritB);
+}
+
+function editSelectedDay(){
+  // open picker is optional, but edit means “go to Body to backfill that date”
+  navTo("body");
+}
+function calcStreak(){
+  // current streak of perfect days ending at today
+  let streak = 0;
+  let cursor = new Date(todayKey()+"T00:00:00");
+  for(let i=0;i<365;i++){
+    const k = `${cursor.getFullYear()}-${pad2(cursor.getMonth()+1)}-${pad2(cursor.getDate())}`;
+    if(state[k]?.isPerfect) streak++;
+    else break;
+    cursor.setDate(cursor.getDate()-1);
+  }
+  return streak;
+}
+
+/* -------------------------
+   Render
+------------------------- */
+function defaultAvatar(){
+  // simple gradient SVG data URL (no network)
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">
+    <defs>
+      <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+        <stop offset="0" stop-color="#8B5CF6"/>
+        <stop offset="0.5" stop-color="#4A5CD8"/>
+        <stop offset="1" stop-color="#D4AF37"/>
+      </linearGradient>
+    </defs>
+    <rect width="200" height="200" fill="url(#g)"/>
+  </svg>`;
+  return "data:image/svg+xml;base64," + btoa(svg);
+}
+
+function setDailyVerse(){
+  // deterministic by date
+  const key = selectedDateKey || todayKey();
+  let hash = 0;
+  for(let i=0;i<key.length;i++) hash = (hash*31 + key.charCodeAt(i)) >>> 0;
+  const v = VERSES[hash % VERSES.length];
+  document.getElementById("dailyVerseText").textContent = `“${v.t}”`;
+  document.getElementById("dailyVerseRef").textContent = v.r;
+}
+
+function render(){
+  // ensure selected day exists
+  const d = ensureDay(selectedDateKey);
+
+  // profile render
+  const li = levelInfo(profile.totalXP||0);
+  document.getElementById("profileLevel").textContent = li.level;
+  document.getElementById("profileXP").textContent = profile.totalXP||0;
+  document.getElementById("profileXPNext").textContent = li.nextAt;
+
+  document.getElementById("profileName").textContent = profile.name || "Your Name";
+  const img = profile.photo || defaultAvatar();
+  document.getElementById("profileImg").src = img;
+  const prev = document.getElementById("profileImgPreview");
+  if(prev) prev.src = img;
+
+  document.getElementById("todayLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
+
+  // streak
+  const streak = calcStreak();
+  document.getElementById("streakDays").textContent = streak;
+
+  // today xp
+  document.getElementById("todayXP").textContent = d.dayXP||0;
+  document.getElementById("todayXPBar").style.width = `${Math.min(100, Math.round(((d.dayXP||0)/120)*100))}%`; // “today xp” visual cap
+
+  // daily verse
+  setDailyVerse();
+
+  // perfect days count
+  const perfect = Object.values(state).filter(x=>x && x.isPerfect).length;
+  document.getElementById("perfectDays").textContent = perfect;
+
+  // weekly progress (perfect in last 7 days)
+  const weekly = countPerfectLast7();
+  document.getElementById("weeklyProgress").textContent = Math.min(weekly, 3);
+  document.getElementById("weeklyBar").style.width = `${Math.min(100, Math.round((Math.min(weekly,3)/3)*100))}%`;
+  const wb = document.getElementById("weeklyBtn");
+  if(weekly>=3){
+    wb.disabled = false;
+    wb.className = "mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-gradient-to-r from-gold to-gold2 text-black shadow-glow active:scale-[0.99]";
+    wb.textContent = "Unlock";
+    wb.onclick = ()=> toast("Unlocked ✨", "pos");
+  }else{
+    wb.disabled = true;
+    wb.className = "mt-3 w-full rounded-2xl py-3 text-sm font-semibold bg-white/5 border border-white/10 text-slate-400 cursor-not-allowed";
+    wb.textContent = "Locked";
+    wb.onclick = null;
+  }
+
+  // hub overview
+  const bp = bodyPercent(selectedDateKey);
+  const mp = mindPercent(selectedDateKey);
+  document.getElementById("hubBodyPct").textContent = bp;
+  document.getElementById("hubMindPct").textContent = mp;
+  document.getElementById("hubBodyBar").style.width = `${bp}%`;
+  document.getElementById("hubMindBar").style.width = `${mp}%`;
+
+  // BODY view
+  document.getElementById("bodyDateLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
+  document.getElementById("waterTargetLabel").textContent = WATER_TARGET;
+
+  document.getElementById("waterVal").textContent = d.water;
+  document.getElementById("waterBar").style.width = `${Math.min(100, (d.water/WATER_TARGET)*100)}%`;
+
+  document.getElementById("xpWaterMinus").textContent = `-${XP.waterPerStep}`;
+  document.getElementById("xpWaterPlus").textContent = `+${XP.waterPerStep}`;
+  document.getElementById("xpWaterPlus2").textContent = `+${XP.waterPerStep*2}`;
+  document.getElementById("xpBowelLabel").textContent = `+${XP.bowel}`;
+
+  document.getElementById("bowelToggle").checked = !!d.bowel;
+
+  // render body tasks
+  renderBodyTasks();
+
+  // body summary
+  document.getElementById("bodySummary").innerHTML = summaryBullets(selectedDateKey).body;
+
+  // MIND view
+  document.getElementById("mindDateLabel").textContent = (selectedDateKey===todayKey()) ? "Today" : selectedDateKey;
+  document.getElementById("xpReadLabel").textContent = `+${XP.reading}`;
+  document.getElementById("xpDevotionLabel").textContent = `+${XP.devotion}`;
+
+  // notes
+  document.getElementById("growthNote").value = d.growthNote || "";
+  document.getElementById("brandNote").value = d.brandNote || "";
+  document.getElementById("scripture").value = d.scripture || "";
+  document.getElementById("spiritNote").value = d.spiritNote || "";
+
+  // done buttons labels
+  document.getElementById("readDoneBtn").textContent = d.readDone ? "Undo" : "Done";
+  document.getElementById("devoteDoneBtn").textContent = d.devotionDone ? "Undo" : "Done";
+
+  // timer text + start labels
+  updateTimerText("read");
+  updateTimerText("devotion");
+  document.getElementById("readStartBtn").textContent = timers.read.running ? "Pause" : "Start";
+  document.getElementById("devoteStartBtn").textContent = timers.devotion.running ? "Pause" : "Start";
+
+  document.getElementById("mindSummary").innerHTML = summaryBullets(selectedDateKey).mind;
+
+  // calendar
+  renderCalendar();
+  showCalendarDetail();
+
+  // bind autosave once per render (safe re-bind)
+  bindAutosave();
+}
+
+function countPerfectLast7(){
+  let count = 0;
+  const t = new Date(todayKey()+"T00:00:00");
+  for(let i=0;i<7;i++){
+    const k = `${t.getFullYear()}-${pad2(t.getMonth()+1)}-${pad2(t.getDate())}`;
+    if(state[k]?.isPerfect) count++;
+    t.setDate(t.getDate()-1);
+  }
+  return count;
+}
+
+function renderBodyTasks(){
+  const d = ensureDay(selectedDateKey);
+  const box = document.getElementById("bodyTasks");
+  box.innerHTML = "";
+
+  TASKS_BODY.forEach(task=>{
+    const done = !!d.bodyTasks[task.id];
+    const card = document.createElement("div");
+    card.className = "glass rounded-3xl p-4 transition-all";
+    card.onclick = ()=> toggleBodyTask(task.id);
+
+    // time display for timers
+    let right = "";
+    if(task.type === "timer"){
+      const t = timers[task.id];
+      const m = Math.floor(t.remaining/60);
+      const s = t.remaining%60;
+      right = `
+        <div class="text-right">
+          <div id="t_${task.id}" class="text-2xl font-bold tabular-nums ${done?'text-gold':'text-white'}">${pad2(m)}:${pad2(s)}</div>
+          <div class="text-[11px] text-slate-400">${task.sub}</div>
+        </div>
+      `;
+    }else{
+      right = `
+        <div class="text-right">
+          <div class="text-[11px] text-slate-400">${task.sub}</div>
+        </div>
+      `;
+    }
+
+    const xpText = done ? `-${task.xp} if undo` : `+${task.xp}`;
+    const badge = done
+      ? `<div class="text-[11px] font-semibold text-gold">Done</div>`
+      : `<div class="text-[11px] font-semibold text-slate-300">${xpText}</div>`;
+
+    card.innerHTML = `
+      <div class="flex items-start justify-between gap-3">
+        <div class="min-w-0">
+          <div class="text-sm font-semibold text-white">${task.title}</div>
+          <div class="mt-1">${badge}</div>
+          <div class="mt-2 flex items-center gap-2">
+            ${task.type==="timer" ? `
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); toggleTimer('${task.id}')">
+                ${timers[task.id].running ? "Pause" : "Start"}
+              </button>
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); resetTimer('${task.id}')">
+                Reset
+              </button>
+            ` : `
+              <button class="glass2 rounded-2xl px-3 py-2 border border-white/10 text-xs font-semibold active:scale-[0.99]" onclick="event.stopPropagation(); toggleBodyTask('${task.id}')">
+                ${done ? "Undo" : "Done"}
+              </button>
+            `}
+            <div class="text-[11px] text-slate-500">tap card to ${done?'undo':'complete'}</div>
+          </div>
+        </div>
+        ${right}
+      </div>
+    `;
+
+    if(done) card.classList.add("border","border-gold/25","shadow-glow","pop");
+    box.appendChild(card);
+  });
+}
+
+function summaryBullets(key){
+  const d = ensureDay(key);
+  const bp = bodyPercent(key);
+  const mp = mindPercent(key);
+  const tp = dayTotalPercent(key);
+
+  const body = `
+    <div class="space-y-1">
+      <div>• <span class="text-slate-400">Body:</span> <span class="text-white font-semibold">${bp}%</span></div>
+      <div class="pl-3 text-slate-400 text-[11px]">
+        Water ${d.water}ml • Squat ${d.bodyTasks.squat?'Done':'—'} • Muscle ${d.bodyTasks.muscle?'Done':'—'} • Breakfast ${d.bodyTasks.breakfast?'Done':'—'} • Digest ${d.bowel?'Yes':'—'}
+      </div>
+      <div class="mt-2">• <span class="text-slate-400">Total:</span> <span class="text-white font-semibold">${tp}%</span></div>
+    </div>
+  `;
+
+  const mind = `
+    <div class="space-y-1">
+      <div>• <span class="text-slate-400">Mind:</span> <span class="text-white font-semibold">${mp}%</span></div>
+      <div class="pl-3 text-slate-400 text-[11px]">
+        Reading ${d.readDone?'Done':'—'} • Devotion ${d.devotionDone?'Done':'—'} • Notes ${(d.growthNote||d.brandNote||d.scripture||d.spiritNote) ? 'Saved' : '—'}
+      </div>
+      <div class="mt-2">• <span class="text-slate-400">Day XP:</span> <span class="text-gold font-semibold">${d.dayXP||0} XP</span></div>
+    </div>
+  `;
+
+  return { body, mind };
+}
+
+/* -------------------------
+   Event wiring
+------------------------- */
+document.getElementById("profileBtn").addEventListener("click", openProfile);
+
+document.getElementById("photoInput").addEventListener("change", async (e)=>{
+  const file = e.target.files && e.target.files[0];
+  if(!file) return;
+
+  // prevent UI freeze: show small toast + yield to UI
+  toast("Processing photo…", "warn");
+  await new Promise(r=>setTimeout(r, 0));
+
+  try{
+    const dataUrl = await fileToCompressedDataURL(file, 320, 0.85);
+    profile.photo = dataUrl;
+    saveProfileStorage();
+
+    // update preview immediately without re-render loop
+    document.getElementById("profileImgPreview").src = dataUrl;
+    document.getElementById("profileImg").src = dataUrl;
+
+    toast("Photo updated", "pos");
+  }catch(err){
+    toast("Photo failed", "warn");
+  }
+});
+
+/* init */
+(function init(){
+  // ensure today exists
+  ensureDay(todayKey());
+  // set selected default to today initially
+  if(!selectedDateKey) selectedDateKey = todayKey();
+
+  // fill missing profile photo
+  if(!profile.photo) profile.photo = defaultAvatar();
+
+  // set datepicker min/max optional
+  document.getElementById("datePickerInput").value = selectedDateKey;
+
+  // keep mind tab stable
+  switchMindTab("mind");
+
+  render();
+  navTo("hub");
+})();
+
+window.addEventListener("resize", ()=>{
+  // prevent layout weirdness on iOS after rotation
+  render();
+});
+
+/* expose to inline onclick */
+window.navTo = navTo;
+window.openDayPicker = openDayPicker;
+window.closeDayPicker = closeDayPicker;
+window.applyPickedDate = applyPickedDate;
+window.jumpToday = jumpToday;
+
+window.waterDelta = waterDelta;
+window.toggleBowel = toggleBowel;
+window.toggleBodyTask = toggleBodyTask;
+window.toggleDone = toggleDone;
+
+window.toggleTimer = toggleTimer;
+window.resetTimer = resetTimer;
+
+window.switchMindTab = switchMindTab;
+
+window.changeMonth = changeMonth;
+window.editSelectedDay = editSelectedDay;
+
+window.openProfile = openProfile;
+window.closeProfile = closeProfile;
+window.saveProfile = saveProfile;
+window.confirmReset = confirmReset;
+
+window.voiceToText = voiceToText;
+
+/* helper */
+function countDaysBetween(a,b){
+  const A = new Date(a+"T00:00:00");
+  const B = new Date(b+"T00:00:00");
+  return Math.round((B-A)/86400000);
+}
+</script>
 </body>
 </html>
